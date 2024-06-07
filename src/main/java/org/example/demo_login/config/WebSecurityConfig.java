@@ -9,6 +9,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,6 +18,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.web.firewall.HttpFirewall;
+import org.springframework.security.web.firewall.StrictHttpFirewall;
 
 
 @Configuration
@@ -52,6 +55,26 @@ public class WebSecurityConfig {
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
+    }
+    public void configure(WebSecurity web) throws Exception {
+        web.httpFirewall(allowUrlEncodedPercentHttpFirewall());
+    }
+
+    @Bean
+    public HttpFirewall allowUrlEncodedPercentHttpFirewall() {
+        StrictHttpFirewall firewall = new StrictHttpFirewall();
+        firewall.setAllowUrlEncodedPercent(true); // URL에 % 문자를 허용
+        firewall.setAllowUrlEncodedSlash(true); // URL에 / 문자를 허용
+        firewall.setAllowSemicolon(true); // URL에 세미콜론(;) 문자를 허용
+        firewall.setAllowUrlEncodedDoubleSlash(true); // URL에 이중 슬래시(//) 허용
+        firewall.setAllowBackSlash(true); // URL에 백슬래시(\) 허용
+        firewall.setAllowUrlEncodedPeriod(true); // URL에 마침표(.) 허용
+        firewall.setAllowNull(true); // URL에 null 문자 허용
+        firewall.setAllowUrlEncodedCarriageReturn(true); // URL에 캐리지 리턴 허용
+        firewall.setAllowUrlEncodedLineFeed(true); // URL에 줄 바꿈 문자 허용
+        firewall.setAllowUrlEncodedParagraphSeparator(true); // URL에 문단 구분자 허용
+        firewall.setAllowUrlEncodedLineSeparator(true); // URL에 줄 구분자 허용
+        return firewall;
     }
 
     @Bean

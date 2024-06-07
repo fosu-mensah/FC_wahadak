@@ -1,6 +1,8 @@
 package org.example.demo_login.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -22,5 +24,12 @@ public class WebConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry){
         registry.addResourceHandler("/images/**")
                 .addResourceLocations("file:///C:/Workspace/images/");
+    }
+
+    //RestTemplate 빈을 설정하고 주입받도록 코드를 약간 더 개선
+    //RestTemplate이 Spring의 의존성 주입을 통해 관리되며, 테스트 가능성 up, 코두 유지 보수성 up.
+    @Bean
+    public RestTemplate restTemplate(){
+        return new RestTemplate();
     }
 }
