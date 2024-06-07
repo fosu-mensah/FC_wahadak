@@ -37,7 +37,7 @@ public class SwaggerConfig {
     private Info apiInfo() {
         // Info 객체는 API 문서의 제목, 설명 및 버전을 정의합니다.
         return new Info()
-                .title("API Test")  // API 문서의 제목을 설정합니다.
+                .title("FC wahadak API Test")  // API 문서의 제목을 설정합니다.
                 .description("FC wahadak Swagger")  // API 문서에 대한 설명을 설정합니다.
                 .version("1.0.0");  // API 문서의 버전을 설정합니다.
     }

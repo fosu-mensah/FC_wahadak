@@ -36,4 +36,9 @@ public class MemberService {
     public void updateMemberRole(int id, Member.Role role) {
         mapper.updateRole(id, role.name());
     }
+
+    // 전화번호 중복 확인용
+    public Member findByPhone(String phone) {
+        return mapper.findByPhone(phone);
+    }
 }

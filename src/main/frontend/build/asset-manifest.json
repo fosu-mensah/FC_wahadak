@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/poco/static/css/main.0e9a35e7.css",
+    "main.css": "/poco/static/css/main.5aa9a1ba.css",
     "main.js": "/poco/static/js/main.946f74bd.js",
     "static/media/icofont.svg?v=1.0.0-beta": "/poco/static/media/icofont.4f7f7bf78dfd2979cbba.svg",
     "static/media/auth-bg.mp4": "/poco/static/media/auth-bg.aa8635d8c1d045ce0510.mp4",
@@ -72,11 +72,11 @@
     "static/media/slick.ttf": "/poco/static/media/slick.c94f7671dcc99dce43e2.ttf",
     "static/media/slick.woff": "/poco/static/media/slick.295183786cd8a1389865.woff",
     "index.html": "/poco/index.html",
-    "main.0e9a35e7.css.map": "/poco/static/css/main.0e9a35e7.css.map",
+    "main.5aa9a1ba.css.map": "/poco/static/css/main.5aa9a1ba.css.map",
     "main.946f74bd.js.map": "/poco/static/js/main.946f74bd.js.map"
   },
   "entrypoints": [
-    "static/css/main.0e9a35e7.css",
+    "static/css/main.5aa9a1ba.css",
     "static/js/main.946f74bd.js"
   ]
 }

@@ -29,6 +29,10 @@ public interface MemberRepository {
     @Select("SELECT * FROM member WHERE email = #{email}")
     Member findByEmail(@Param("email") String email);
 
+    // 전화번호로 회원 조회
+    @Select("SELECT * FROM member WHERE phone = #{phone}")
+    Member findByPhone(@Param("phone") String phone);
+
     // 역할 업데이트
     @Update("UPDATE member SET role = #{role} WHERE id = #{id}")
     void updateRole(@Param("id") int id, @Param("role") String role);

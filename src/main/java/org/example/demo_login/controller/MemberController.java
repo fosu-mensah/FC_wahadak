@@ -36,8 +36,20 @@ public class MemberController {
     }
 
 
+    // 회원 가입
     @PostMapping("/insert")
     public ResponseEntity<String> insertDemoVo(@RequestBody Member member) {
+        // 요청 바디에서 role 필드가 누락되었을 때 기본값 설정
+        if (member.getRole() == null) {
+            member.setRole(Member.Role.USER);
+        }
+
+        // 전화번호 중복 체크
+        Member existingMember = memberService.findByPhone(member.getPhone());
+        if (existingMember != null) {
+            return new ResponseEntity<>("Phone number already exists", HttpStatus.BAD_REQUEST);
+        }
+
         memberService.insert(member);
         return new ResponseEntity<>("Data inserted successfully", HttpStatus.OK);
     }
