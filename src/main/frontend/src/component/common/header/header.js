@@ -209,7 +209,7 @@ const Header = (props) => {
                   <div className="form-group">
                     <div className="Typeahead Typeahead--twitterUsers">
                       <div className="u-posRelative">
-                        <input className="Typeahead-input form-control-plaintext" id="demo-input" type="text" placeholder="Search Your Page..." defaultValue={searchValue} onChange={(e) => handleSearchKeyword(e.target.value)} />
+                        <input className="Typeahead-input form-control-plaintext" id="demo-input" type="text" placeholder="Search Your Player..." defaultValue={searchValue} onChange={(e) => handleSearchKeyword(e.target.value)} />
                         <div className={`spinner-border Typeahead-spinner ${spinner === true ? "show" : ""}`} role="status">
                           <span className="sr-only">Loading...</span>
                         </div>
@@ -263,8 +263,8 @@ const Header = (props) => {
               </span>
                 <ul className="onhover-show-div profile-dropdown">
                   <li className="gradient-primary">
-                    <h5 className="f-w-600 mb-0">Elana Saint</h5>
-                    <span>Web Designer</span>
+                    <h5 className="f-w-600 mb-0">heeggung</h5>
+                    <span>Wahadak's Henchman</span>
                   </li>
                   <li>
                     <Link to={`${process.env.PUBLIC_URL}/users/user-profile`}>

@@ -14,17 +14,26 @@ public class MemberService {
     @Autowired
     private final MemberRepository mapper;
 
+    // 생성자 초기화
     public MemberService(MemberRepository mapper) {
         this.mapper = mapper;
     }
 
     public List<Member> select(){return mapper.selectAll();}
+
     public void insert(Member member){ mapper.insert(member);}
+
     /*서비스에 로그인 메서드 추가 */
     public Member login(String email,String password) {
         return mapper.login(email,password);
     }
+
     public Member findByUserName(String username) {
         return mapper.findByUsername(username);
+    }
+
+    // 사용자 역할 업데이트
+    public void updateMemberRole(int id, Member.Role role) {
+        mapper.updateRole(id, role.name());
     }
 }

@@ -1,10 +1,12 @@
 package org.example.demo_login.config;
 
-import org.example.demo_login.service.CustomOAuth2UserService;
-import org.example.demo_login.service.CustomUserDetailsService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.demo_login.util.JwtUtil;
+import org.example.demo_login.service.CustomUserDetailsService;
+import org.example.demo_login.filter.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -17,7 +19,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.util.HashMap;
+import java.util.Map;
 
 @Configuration
 @EnableWebSecurity
@@ -26,14 +33,10 @@ public class WebSecurityConfig {
 
     private final JwtUtil jwtUtil;
     private final CustomUserDetailsService customUserDetailsService;
-    private final CustomOAuth2UserService customOAuth2UserService;
 
-    public WebSecurityConfig(JwtUtil jwtUtil,
-                             CustomUserDetailsService customUserDetailsService,
-                             CustomOAuth2UserService customOAuth2UserService) {
+    public WebSecurityConfig(JwtUtil jwtUtil, CustomUserDetailsService customUserDetailsService) {
         this.jwtUtil = jwtUtil;
         this.customUserDetailsService = customUserDetailsService;
-        this.customOAuth2UserService = customOAuth2UserService;
     }
 
     @Bean
@@ -42,16 +45,38 @@ public class WebSecurityConfig {
 
         http
                 .csrf(AbstractHttpConfigurer::disable)
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers("/","/oauth2/**", "/login", "/error", "/api/members/oauth2/loginSuccess").permitAll()
+                                .requestMatchers("/", "/api/members/login", "/api/members/insert", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
                                 .requestMatchers("/api/members/userinfo").authenticated()
-                                .anyRequest().permitAll()
+                                .anyRequest().authenticated()
+                )
+                .logout(logout -> logout
+                        .logoutUrl("/api/members/logout")
+                        .logoutSuccessHandler((request, response, authentication) -> {
+                            response.setStatus(HttpStatus.OK.value());
+                            Map<String, String> responseBody = new HashMap<>();
+                            responseBody.put("message", "로그아웃 성공!");
+                            response.getWriter().write(new ObjectMapper().writeValueAsString(responseBody));
+                        })
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(true);
+        config.addAllowedOrigin("http://localhost:3000"); // 허용할 도메인 설정
+        config.addAllowedHeader("*");
+        config.addAllowedMethod("*");
+        source.registerCorsConfiguration("/**", config);
+        return source;
     }
 
     @Bean

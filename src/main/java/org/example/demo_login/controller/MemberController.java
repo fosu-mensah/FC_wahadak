@@ -1,6 +1,5 @@
 package org.example.demo_login.controller;
 
-
 import jakarta.servlet.http.HttpServletRequest;
 import org.example.demo_login.domain.Member;
 import org.example.demo_login.service.MemberService;
@@ -8,10 +7,9 @@ import org.example.demo_login.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.security.core.Authentication;
+
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.HashMap;
 import java.util.List;
@@ -36,6 +34,7 @@ public class MemberController {
         List<Member> result = memberService.select();
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
 
     @PostMapping("/insert")
     public ResponseEntity<String> insertDemoVo(@RequestBody Member member) {
@@ -70,6 +69,8 @@ public class MemberController {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }
+
+
     @PostMapping("/logout")
     public ResponseEntity<Map<String,String>> logout(HttpServletRequest request) {
         // 로그 아웃시에는 클라이언트에서 JWT를 삭제
@@ -78,6 +79,7 @@ public class MemberController {
         response.put("message","로그아웃 성공!");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
 
     // 사용자 정보를 가져오는것이 때문에 get 매핑을 쓴다.
     @GetMapping("/userinfo")
@@ -94,5 +96,14 @@ public class MemberController {
         }
         // 토큰이 유효하지 않거나 사용자를 찾을 수 없는 경우 UNAUTHORIZED 반환
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    }
+
+
+    // 관리자 역할 설정
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/{id}/role/admin")
+    public ResponseEntity<String> setAdminRole(@PathVariable int id) {
+        memberService.updateMemberRole(id, Member.Role.ADMIN);
+        return new ResponseEntity<>("Role updated to ADMIN", HttpStatus.OK);
     }
 }

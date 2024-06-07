@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/poco/static/css/main.d0b510ab.css",
-    "main.js": "/poco/static/js/main.257e86e6.js",
+    "main.css": "/poco/static/css/main.a1d0b9e2.css",
+    "main.js": "/poco/static/js/main.946f74bd.js",
     "static/media/icofont.svg?v=1.0.0-beta": "/poco/static/media/icofont.4f7f7bf78dfd2979cbba.svg",
     "static/media/auth-bg.mp4": "/poco/static/media/auth-bg.aa8635d8c1d045ce0510.mp4",
     "static/media/coming-soon-bg.jpg": "/poco/static/media/coming-soon-bg.3c2bbaefebfc67192660.jpg",
@@ -72,11 +72,11 @@
     "static/media/slick.ttf": "/poco/static/media/slick.c94f7671dcc99dce43e2.ttf",
     "static/media/slick.woff": "/poco/static/media/slick.295183786cd8a1389865.woff",
     "index.html": "/poco/index.html",
-    "main.d0b510ab.css.map": "/poco/static/css/main.d0b510ab.css.map",
-    "main.257e86e6.js.map": "/poco/static/js/main.257e86e6.js.map"
+    "main.a1d0b9e2.css.map": "/poco/static/css/main.a1d0b9e2.css.map",
+    "main.946f74bd.js.map": "/poco/static/js/main.946f74bd.js.map"
   },
   "entrypoints": [
-    "static/css/main.d0b510ab.css",
-    "static/js/main.257e86e6.js"
+    "static/css/main.a1d0b9e2.css",
+    "static/js/main.946f74bd.js"
   ]
 }

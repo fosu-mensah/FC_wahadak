@@ -4,7 +4,6 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
-import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +12,6 @@ import java.util.Date;
 
 @Component
 public class JwtUtil {
-
 
     private String secretKey;
 
@@ -25,6 +23,7 @@ public class JwtUtil {
         this.secretKey = secretKey;
         this.key = Keys.hmacShaKeyFor(this.secretKey.getBytes());
     }
+
 
     //토큰을 생성하는 메서드
     public String generateToken(String subject) {
