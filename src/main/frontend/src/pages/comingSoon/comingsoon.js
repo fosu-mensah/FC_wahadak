@@ -11,7 +11,7 @@ const ComingSoon = () => {
           <div className="comingsoon">
             <div className="comingsoon-inner text-center">
               <Link to={`${process.env.PUBLIC_URL}/dashboard/default`}>
-                <img src={require("../../assets/images/logo/logo.png")} alt="" />
+                <img src={require("../../assets/images/logo/logo1.png")} alt="" />
               </Link>
               <h5>WE ARE COMING SOON</h5>
               <div className="countdown" id="clockdiv">

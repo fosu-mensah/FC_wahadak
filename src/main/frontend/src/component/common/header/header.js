@@ -190,8 +190,8 @@ const Header = (props) => {
         <div className="main-header-right">
           <div className="main-header-left text-center">
             <div className="logo-wrapper">
-              <Link to={`${process.env.PUBLIC_URL}/dashboard/default`}>
-                <img src={require("../../../assets/images/logo/logo.png")} alt="" />
+              <Link to={`${process.env.PUBLIC_URL}/`}>
+                <img src={require("../../../assets/images/logo/logo1.png")} alt="" style={{ width: '50px', height: 'auto' }} />
               </Link>
             </div>
           </div>
@@ -270,18 +270,6 @@ const Header = (props) => {
                     <Link to={`${process.env.PUBLIC_URL}/users/user-profile`}>
                       <User />
                       Profile
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to={`${process.env.PUBLIC_URL}/appnew/email-app`}>
-                      <MessageSquare />
-                      Inbox
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to={`${process.env.PUBLIC_URL}/appnew/todo-app`}>
-                      <FileText />
-                      Taskboard
                     </Link>
                   </li>
                   <li>

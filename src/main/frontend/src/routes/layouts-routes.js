@@ -151,6 +151,9 @@ import Supportticket from "../pages/supportticket";
 import Searchwebsite from "../pages/search/searchwebsite";
 // Leaflet Map 삭제
 
+// 메인페이지 컴포넌트 import
+import MainPage from "../component/common/main/mainpage";
+
 export const routes = [
   {
     path: `${process.env.PUBLIC_URL}/dashboard/default`,
@@ -444,5 +447,9 @@ export const routes = [
   {
     path: `${process.env.PUBLIC_URL}/pages/search`,
     Component: <Searchwebsite />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/`,
+    Component: <MainPage />,
   },
 ];
