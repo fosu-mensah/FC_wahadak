@@ -15,7 +15,11 @@ src/main/frontend/build/static/js/main.aaa022fe.js.map
 src/main/frontend/build/static/js/main.e1b0d147.js
 src/main/frontend/build/static/js/main.e1b0d147.js.LICENSE.txt
 src/main/frontend/build/static/js/main.e1b0d147.js.map
-
+logs/application.log.2024-06-11.0.gz
+src/main/frontend/build/asset-manifest.json
+src/main/frontend/build/static/js/main.e5ce668a.js
+src/main/frontend/build/static/js/main.e5ce668a.js.LICENSE.txt
+src/main/frontend/build/static/js/main.e5ce668a.js.map
 
 # Compiled class file
 *.class
