@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/FC_wahadak/static/css/main.873cc114.css",
-    "main.js": "/FC_wahadak/static/js/main.aaa022fe.js",
+    "main.css": "/FC_wahadak/static/css/main.f5cce5a9.css",
+    "main.js": "/FC_wahadak/static/js/main.e5ce668a.js",
     "static/media/icofont.svg?v=1.0.0-beta": "/FC_wahadak/static/media/icofont.4f7f7bf78dfd2979cbba.svg",
     "static/media/auth-bg.mp4": "/FC_wahadak/static/media/auth-bg.aa8635d8c1d045ce0510.mp4",
     "static/media/coming-soon-bg.jpg": "/FC_wahadak/static/media/coming-soon-bg.3c2bbaefebfc67192660.jpg",
@@ -22,6 +22,7 @@
     "static/media/ionicons.eot?v=2.0.0": "/FC_wahadak/static/media/ionicons.68e3a4f9a8d8c679b4ae.eot",
     "static/media/3.png": "/FC_wahadak/static/media/3.e55a92a7d92116371027.png",
     "static/media/fontawesome-webfont.woff?v=4.7.0": "/FC_wahadak/static/media/fontawesome-webfont.f691f37e57f04c152e23.woff",
+    "static/media/logo1.png": "/FC_wahadak/static/media/logo1.0ddc42289d7b766bdb35.png",
     "static/media/bg.jpg": "/FC_wahadak/static/media/bg.1a6a2dc384e761a24c57.jpg",
     "static/media/themify.eot": "/FC_wahadak/static/media/themify.9bad94440d49256265a5.eot",
     "static/media/themify.ttf?-fvbane": "/FC_wahadak/static/media/themify.eda8b94308c6f538f04a.ttf",
@@ -72,11 +73,11 @@
     "static/media/slick.ttf": "/FC_wahadak/static/media/slick.c94f7671dcc99dce43e2.ttf",
     "static/media/slick.woff": "/FC_wahadak/static/media/slick.295183786cd8a1389865.woff",
     "index.html": "/FC_wahadak/index.html",
-    "main.873cc114.css.map": "/FC_wahadak/static/css/main.873cc114.css.map",
-    "main.aaa022fe.js.map": "/FC_wahadak/static/js/main.aaa022fe.js.map"
+    "main.f5cce5a9.css.map": "/FC_wahadak/static/css/main.f5cce5a9.css.map",
+    "main.e5ce668a.js.map": "/FC_wahadak/static/js/main.e5ce668a.js.map"
   },
   "entrypoints": [
-    "static/css/main.873cc114.css",
-    "static/js/main.aaa022fe.js"
+    "static/css/main.f5cce5a9.css",
+    "static/js/main.e5ce668a.js"
   ]
 }

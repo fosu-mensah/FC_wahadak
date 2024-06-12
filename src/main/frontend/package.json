@@ -17,6 +17,7 @@
     "@types/markerclustererplus": "^2.1.33",
     "@types/react": "^18.0.29",
     "apexcharts": "^3.37.2",
+    "axios": "^1.7.2",
     "body-scroll-lock": "^3.1.5",
     "bootstrap": "^5.2.3",
     "bootstrap-scss": "^5.2.3",

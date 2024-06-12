@@ -54,7 +54,8 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
                                 .requestMatchers("/", "/error", "/api/members/login", "/api/members/insert", "/players/search/**").permitAll()
-                                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/api-test-swagger").permitAll()
+                                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/api-test-swagger").permitAll() // Swaager
+                                .requestMatchers("/api/news/**").permitAll() // 뉴스 관련 End Point
                                 .requestMatchers("/api/members/userinfo").authenticated()
                                 .anyRequest().authenticated()
                 )
