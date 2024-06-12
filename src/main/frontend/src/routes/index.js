@@ -47,7 +47,6 @@ const MainRoutes = () => {
 
                 <Route path={`${process.env.PUBLIC_URL}/pages/comingsoon`} element={<Comingsoon />} />
                 <Route path={`${process.env.PUBLIC_URL}/pages/comingsoon-bg-image`} element={<ComingsoonImg />} />
-                <Route path={`${process.env.PUBLIC_URL}/pages/comingsoon-bg-video`} element={<ComingsoonVideo />} />
           </Routes>
       );
 }

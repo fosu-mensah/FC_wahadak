@@ -178,9 +178,9 @@ const Header = (props) => {
             <div className="main-header-right">
                 <div className="main-header-left text-center">
                     <div className="logo-wrapper">
-                        <Link to={`${process.env.PUBLIC_URL}/dashboard/default`}>
+                        <Link to={`${process.env.PUBLIC_URL}/`}>
                             <img
-                                src={require("../../../assets/images/logo/logo.png")}
+                                src={require("../../../assets/images/logo/logo1.png")}
                                 alt="FC Wahadak Logo"
                                 style={{width: '100px', height: '95px'}}
                             />

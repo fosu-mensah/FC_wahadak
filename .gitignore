@@ -2,8 +2,6 @@
 node_modules/
 .gradle/
 
-
-
 # Ignore build files
 src/main/frontend/build/static/css/main.dbcfb4af.css
 src/main/frontend/build/static/js/main.257e86e6.js
@@ -95,5 +93,5 @@ bin/
 # Ignore static directory
 src/main/resources/static/
 
-# build.gradle 파일 빼고 올리기!
+# Ignore build.gradle file
 build.gradle
