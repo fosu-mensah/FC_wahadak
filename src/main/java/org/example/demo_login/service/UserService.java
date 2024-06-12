@@ -33,6 +33,8 @@ public class UserService {
     public String getUserTradeRecords(String accountId) {
         return userApiClient.getUserTradeRecords(accountId);
     }
+    public String getPlayerImageUrl(String pid) {return userApiClient.getPlayerImageUrl(pid);};
+
     public byte[] getPlayerImage(String pid) {
         return userApiClient.getPlayerImage(pid);
     }

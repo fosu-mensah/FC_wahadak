@@ -17,6 +17,7 @@ import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+@CrossOrigin(origins = {"http://localhost:3000"})
 @RestController
 @RequestMapping("/players")
 public class PlayerController {
@@ -30,12 +31,34 @@ public class PlayerController {
         this.userApiClient = userApiClient;
     }
 
+    // 메인 페이지에서 실시간 검색 (POST 요청)
+    @PostMapping("/search/main")
+    public ResponseEntity<List<PlayerInfo>> searchPlayerMainPage(@RequestBody PlayerSearchRequest request) {
+        String pname = request.getPname();
+
+        System.out.println("Received main page search request - pname: " + pname);
+
+        List<PlayerInfo> playerInfoList;
+        if (pname != null && !pname.isEmpty()) {
+            playerInfoList = playerDetailsService.getPlayerInfoMainPage(pname);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        if (playerInfoList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(playerInfoList, HttpStatus.OK);
+    }
+
     // 선수 이름과 시즌, 강화 단계를 통한 검색 (GET 요청)
     @GetMapping("/search")
     public ResponseEntity<List<PlayerInfo>> searchPlayer(@RequestParam(value = "Pname", required = false) String pname,
                                                          @RequestParam(value = "season", required = false) String season,
                                                          @RequestParam(value = "sortOrder", defaultValue = "desc") String sortOrder,
                                                          @RequestParam(value = "enhancementLevel", defaultValue = "1") int enhancementLevel) {
+        System.out.println("Search parameters - Pname: " + pname + ", season: " + season);
+
         List<PlayerInfo> playerInfoList;
         if (pname != null && !pname.isEmpty() && season != null && !season.isEmpty()) {
             // 이름과 시즌으로 검색
@@ -63,6 +86,8 @@ public class PlayerController {
         String season = request.getSeason();
         String sortOrder = request.getSortOrder() != null ? request.getSortOrder() : "desc";
         int enhancementLevel = request.getEnhancementLevel() != null ? request.getEnhancementLevel() : 1;
+
+        System.out.println("Received search request - pname: " + pname + ", season: " + season + ", sortOrder: " + sortOrder + ", enhancementLevel: " + enhancementLevel);
 
         List<PlayerInfo> playerInfoList;
         if (pname != null && !pname.isEmpty() && season != null && !season.isEmpty()) {
@@ -120,7 +145,6 @@ public class PlayerController {
         }
     }
 
-    // 선수 비교 (GET 요청)
     // 선수 비교 (GET 요청)
     @GetMapping("/compare")
     public ResponseEntity<?> comparePlayers(@RequestParam String pname1, @RequestParam String season1,

@@ -31,11 +31,7 @@ public class SquadPlayerService {
         for (SquadPlayer squadPlayer : squadPlayers) {
             String playerId = String.valueOf(squadPlayer.getPlayerId());
             System.out.println(playerId);
-            byte[] imageBytes = userApiClient.getPlayerImage(playerId);
-            String imageUrl = "/players/image/" + playerId;
-            if (imageBytes == null) {
-                imageUrl = "/players/image/fallback/" + playerId; // 폴백 이미지 URL 설정
-            }
+            String imageUrl = userApiClient.getPlayerImageUrl(playerId);
             squadPlayer.getPlayerInfo().setImageUrl(imageUrl);
 
             // 시즌 정보 설정

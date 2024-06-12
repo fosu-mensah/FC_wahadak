@@ -3,6 +3,7 @@ package org.example.demo_login.service;
 import org.example.demo_login.Mapper.PlayerInfoRepository;
 import org.example.demo_login.Mapper.PlayerStatsRepository;
 import org.example.demo_login.Mapper.TeamColorRepository;
+import org.example.demo_login.api.UserApiClient;
 import org.example.demo_login.domain.PlayerInfo;
 import org.example.demo_login.domain.PlayerStat;
 import org.example.demo_login.domain.TeamColor;
@@ -20,33 +21,56 @@ public class PlayerDetailsService {
     private final PlayerInfoRepository playerInfoRepository;
     private final PlayerStatsRepository playerStatRepository;
     private final TeamColorRepository teamColorRepository;
+    private final UserApiClient userApiClient;
 
     @Autowired
-    public PlayerDetailsService(PlayerInfoRepository playerInfoRepository, PlayerStatsRepository playerStatRepository, TeamColorRepository teamColorRepository) {
+    public PlayerDetailsService(PlayerInfoRepository playerInfoRepository, PlayerStatsRepository playerStatRepository, TeamColorRepository teamColorRepository, UserApiClient userApiClient) {
         this.playerInfoRepository = playerInfoRepository;
         this.playerStatRepository = playerStatRepository;
         this.teamColorRepository = teamColorRepository;
+        this.userApiClient = userApiClient; //userApiClient 주입하고 초기화.
     }
 
+    //실시간으로 메인 페이지에서 선수 이름을 검색하는 메서드
+    // getPlayerInfoMainPage 메서드 수정
+    public List<PlayerInfo> getPlayerInfoMainPage(String pname) {
+        List<PlayerInfo> playerInfos = playerInfoRepository.findPlayerMainPage(pname);
+
+        // 포지션 스탯을 내림차순으로 정렬
+        playerInfos = playerInfos.stream()
+                .sorted(Comparator.comparingInt((PlayerInfo info) ->
+                                info.getPositionstat().values().stream().mapToInt(Integer::intValue).max().orElse(0))
+                        .reversed())
+                .collect(Collectors.toList());
+        // 각 선수에 대해 이미지 URL을 설정하고 시즌 정보를 추가
+        for (PlayerInfo info: playerInfos) {
+            String playerId = String.valueOf(info.getPid());
+            String imageUrl = userApiClient.getPlayerImageUrl(playerId);
+            info.setImageUrl(imageUrl); // 이미지 URL 설정
+        }
+        return playerInfos;
+    }
+
+
+    //선수 이름으로 검색하는 메소드
     public List<PlayerInfo> getPlayerInfoByName(String pname, String sortOrder, int enhancementLevel) {
         List<PlayerInfo> playerInfos = playerInfoRepository.findPlayerInfoByName(pname);
         if (playerInfos.isEmpty()) {
             return List.of();
         }
 
-        playerInfos.forEach(info -> {
-            String imageUrl = "/players/image/" + info.getPid();
+        for (PlayerInfo info: playerInfos) {
+            String playerId = String.valueOf(info.getPid());
+            String imageUrl = userApiClient.getPlayerImageUrl(playerId);
             info.setImageUrl(imageUrl); // 이미지 URL 설정
             info.filterStatsBasedOnPosition(); // 포지션에 따라 스탯 필터링
-
             // 팀 컬러 이름 설정
             List<String> teamColorNames = teamColorRepository.selectAllTeamColors().stream()
                     .filter(tc -> tc.getPlayers().contains(info.getPname()))
                     .map(TeamColor::getTeamColorName)
                     .collect(Collectors.toList());
             info.setTeamColorNames(teamColorNames);
-        });
-
+        }
         return enhanceAndSortPlayerInfos(playerInfos, sortOrder, enhancementLevel);
     }
 

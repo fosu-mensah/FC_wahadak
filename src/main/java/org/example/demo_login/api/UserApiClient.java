@@ -23,6 +23,7 @@ public class UserApiClient {
     private HttpHeaders createHeaders() {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + apiKey.getKey());
+        headers.setContentType(MediaType.APPLICATION_JSON); // 필요시 설정
         return headers;
     }
 
@@ -65,8 +66,8 @@ public class UserApiClient {
         ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
         return response.getBody();
     }
-
-    public byte[] getPlayerImage(String pid) {
+    //플레이어의 고유 식별자(PID)를 입력받아 해당 플레이어의 이미지 URL을 반환
+    public String getPlayerImageUrl(String pid) {
         // 9자리 PID로 이미지 조회 시도
         String url9Digit = "https://fco.dn.nexoncdn.co.kr/live/externalAssets/common/playersAction/p" + pid + ".png";
         HttpHeaders headers = createHeaders();
@@ -75,7 +76,7 @@ public class UserApiClient {
         try {
             ResponseEntity<byte[]> response = restTemplate.exchange(url9Digit, HttpMethod.GET, entity, byte[].class);
             if (response.getStatusCode().is2xxSuccessful()) {
-                return response.getBody();
+                return url9Digit;
             }
         } catch (Exception e) {
             // 9자리 PID로 실패하면 6자리 PID로 폴백
@@ -85,11 +86,22 @@ public class UserApiClient {
             try {
                 ResponseEntity<byte[]> response = restTemplate.exchange(url6Digit, HttpMethod.GET, entity, byte[].class);
                 if (response.getStatusCode().is2xxSuccessful()) {
-                    return response.getBody();
+                    return url6Digit;
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
+        }
+        return null;
+    }
+    //이 메소드는 getPlayerImageUrl 메소드를 사용하여 이미지의 URL을 먼저 얻고, 그 URL을 이용하여 실제 이미지 데이터(바이트 배열)를 다운로드
+    public byte[] getPlayerImage(String pid) {
+        String imageUrl = getPlayerImageUrl(pid);
+        if (imageUrl != null) {
+            HttpHeaders headers = createHeaders();
+            HttpEntity<String> entity = new HttpEntity<>(headers);
+            ResponseEntity<byte[]> response = restTemplate.exchange(imageUrl, HttpMethod.GET, entity, byte[].class);
+            return response.getBody();
         }
         return null;
     }

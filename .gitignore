@@ -2,6 +2,21 @@
 node_modules/
 .gradle/
 
+
+
+# Ignore build files
+src/main/frontend/build/static/css/main.dbcfb4af.css
+src/main/frontend/build/static/js/main.257e86e6.js
+src/main/frontend/build/static/js/main.257e86e6.js.LICENSE.txt
+src/main/frontend/build/static/js/main.257e86e6.js.map
+src/main/frontend/build/static/js/main.aaa022fe.js
+src/main/frontend/build/static/js/main.aaa022fe.js.LICENSE.txt
+src/main/frontend/build/static/js/main.aaa022fe.js.map
+src/main/frontend/build/static/js/main.e1b0d147.js
+src/main/frontend/build/static/js/main.e1b0d147.js.LICENSE.txt
+src/main/frontend/build/static/js/main.e1b0d147.js.map
+
+
 # Compiled class file
 *.class
 

@@ -17,7 +17,6 @@ import Register from "../pages/authentication/register";
 import Forgetpwd from "../pages/authentication/forgetpwd";
 
 import Comingsoon from "../pages/comingSoon/comingsoon";
-import ComingsoonVideo from "../pages/comingSoon/comingsoonVideo";
 import ComingsoonImg from "../pages/comingSoon/comingsoonImg";
 
 import { routes } from "./layouts-routes";
@@ -51,6 +50,6 @@ const MainRoutes = () => {
                 <Route path={`${process.env.PUBLIC_URL}/pages/comingsoon-bg-video`} element={<ComingsoonVideo />} />
           </Routes>
       );
-};
+}
 
 export default MainRoutes;

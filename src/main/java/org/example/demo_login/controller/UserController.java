@@ -2,6 +2,10 @@ package org.example.demo_login.controller;
 
 import org.example.demo_login.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,8 +46,20 @@ public class UserController {
     }
     ///players/{spid}/image 엔드포인트를 통해 선수 고유 식별자(spid)로 선수 이미지 액션샷을 조회
     //요청이 들어오면 UserService를 통해 UserApiClient의 메서드를 호출하여 이미지를 반환
-    @GetMapping("/players/{spid}/image")
-    public byte[] getPlayerImage(@PathVariable String spid) {
-        return userService.getPlayerImage(spid);
+    // 선수 이미지 조회 (GET 요청)
+    // 선수 이미지 조회 (GET 요청)
+    @GetMapping("/players/{pid}/image")
+    public ResponseEntity<byte[]> getPlayerImage(@PathVariable String pid) {
+        return createImageResponse(userService.getPlayerImage(pid));
+    }
+
+    private ResponseEntity<byte[]> createImageResponse(byte[] image) {
+        if (image != null) {
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.IMAGE_PNG);
+            return new ResponseEntity<>(image, headers, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }
