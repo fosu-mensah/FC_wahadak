@@ -91,7 +91,7 @@ export const MENUITEMS = [
     children: [
       { title: "뉴스", type: "sub" },
       {
-        title: "국내 실축 뉴스",
+        title: "FourFourTwo 독점 뉴스",
         type: "link",
         path: `${process.env.PUBLIC_URL}/news/442exclusive`,
       },
@@ -101,7 +101,7 @@ export const MENUITEMS = [
         path: `${process.env.PUBLIC_URL}/news/international`,
       },
       {
-        title: "국내 축구 뉴스",
+        title: "국내 실축 뉴스",
         type: "link",
         path: `${process.env.PUBLIC_URL}/news/domestic`,
       },

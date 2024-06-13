@@ -47,4 +47,9 @@ public class NewsService {
         response.put("totalCount", totalCount);
         return response;
     }
+
+    // 특정 뉴스 조회
+    public News getNewsById(int newsId) {
+        return newsRepository.findNewsById(newsId);
+    }
 }
