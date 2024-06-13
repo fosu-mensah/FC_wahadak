@@ -36,4 +36,8 @@ public interface NewsRepository {
     // 페이징 처리된 뉴스 조회
     @Select("SELECT * FROM news WHERE news_category_id = #{categoryId} LIMIT #{limit} OFFSET #{offset}")
     List<News> findNewsByCategory(@Param("categoryId") int categoryId, @Param("limit") int limit, @Param("offset") int offset);
+
+    // 특정 뉴스 조회
+    @Select("SELECT * FROM news WHERE news_id = #{newsId}")
+    News findNewsById(@Param("newsId") int newsId);
 }

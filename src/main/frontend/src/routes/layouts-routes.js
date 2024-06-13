@@ -162,6 +162,7 @@ import MainPage from "../component/common/main/mainpage";
 import DomesticNews from "../component/news/DomesticNews";
 import ExclusiveNews from "../component/news/ExclusiveNews";
 import InternationalNews from "../component/news/InternationalNews";
+import NewsDetail from "../component/news/NewsDetail";
 
 export const routes = [
   {
@@ -472,6 +473,18 @@ export const routes = [
   {
     path: `${process.env.PUBLIC_URL}/news/442exclusive`,
     Component: <ExclusiveNews />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/news/domestic/:newsId`,
+    Component: <NewsDetail />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/news/international/:newsId`,
+    Component: <NewsDetail />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/news/442exclusive/:newsId`,
+    Component: <NewsDetail />,
   },
   {
     path: `${process.env.PUBLIC_URL}/basicCards`,
