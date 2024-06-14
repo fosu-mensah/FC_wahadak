@@ -3,7 +3,7 @@ import React from "react";
 export const MENUITEMS = [
   {
     title: "선수 검색",
-    icon: <img src={`${process.env.PUBLIC_URL}/assets/images/son.png`} alt="선수 검색"
+    icon: <img src={`${process.env.PUBLIC_URL}/assets/images/seasons/son.png`} alt="선수 검색"
                style={{width: '60px', height: '60px'}}/>,
     type: "sub",
     path: ``,

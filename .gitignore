@@ -90,6 +90,3 @@ bin/
 
 # Ignore static directory
 src/main/resources/static/
-
-# build.gradle 파일 빼고 올리기!
-build.gradle

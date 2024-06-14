@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import apiClient from "../../../api/apiClient";
 import SeasonImageSelector from "./SeasonImageSelector";
 import "../../../../src/assets/scss/seasonsearch/seasonsearch.scss";
-import "../../../../src/assets/scss/statColor/statColor.scss"
+import "../../../../src/assets/scss/statColor/statColor.scss";
 
 
 const PlayerSearch = () => {
@@ -23,10 +23,11 @@ const PlayerSearch = () => {
             const response = await apiClient.get("/players/search", {
                 params: { pname, season, enhancementLevel },
             });
+            console.log(response);
             if (response.status === 200) {
                 const players = response.data.map(player => ({
                     ...player,
-                    "시즌 URL": player["시즌 URL"].replace(`/Users/leeeunhak/Desktop/images/`, `asset/images/seasons/`)
+                    "시즌 URL": player["시즌 URL"].replace('/Users/leeeunhak/Desktop/images/', 'assets/images/seasons/')
                 }));
                 setSearchResult(players);
             } else {
@@ -101,7 +102,7 @@ const PlayerSearch = () => {
                         <div key={index} className="player-card" onClick={() => handlePlayerClick(player.pid)}>
                             <div className="player-header">
                                 <img
-                                    src={`${process.env.PUBLIC_URL}/${player["시즌 URL"]}`}
+                                    src={`${player["시즌 URL"]}`}
                                     alt={`시즌 ${player["시즌"]}`}
                                     className="season-image"
                                 /><h3>{player["선수이름"]}</h3>

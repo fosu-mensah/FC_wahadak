@@ -72,7 +72,7 @@ const Header = (props) => {
                 if (response.status === 200) {
                     const players = response.data.map(player => ({
                         ...player,
-                        "시즌 URL": player["시즌 URL"].replace('/Users/leeeunhak/Desktop/images/', 'assets/images/season/')
+                        "시즌 URL": player["시즌 URL"].replace('/Users/leeeunhak/Desktop/images/', 'assets/images/seasons/')
                     }));
                     setSearchResult(players); // 검색 결과 저장
                 } else {
