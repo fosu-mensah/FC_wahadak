@@ -1,0 +1,112 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.2.2'
+    id 'io.spring.dependency-management' version '1.1.4'
+}
+
+group = 'org.example'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    sourceCompatibility = '17'
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-web-services'
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'
+    implementation 'javax.servlet:javax.servlet-api:4.0.1'
+    implementation 'org.projectlombok:lombok:1.18.26'
+    testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    annotationProcessor 'org.projectlombok:lombok'
+    compileOnly 'org.projectlombok:lombok'
+    runtimeOnly 'com.mysql:mysql-connector-j'
+
+    // jwt
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
+    implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+
+    // Swagger
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
+
+    // Spring Security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    // Google OAuth2
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+}
+
+
+// test 작업을 위한 JUnit 플랫폼 설정
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+
+//// Frontend 디렉토리 경로 설정
+//def frontendDir = "$projectDir/src/main/frontend"
+//
+//
+//// 메인 소스 세트의 리소스 디렉토리를 지정
+//sourceSets {
+//    main {
+//        resources { srcDirs = ["$projectDir/src/main/resources"]
+//        }
+//    }
+//}
+//
+//
+//// processResources 작업이 copyReactBuildFiles 작업에 의존하도록 설정
+//// 이는 리소스 처리 전에 React 빌드 파일이 복사되어야 함을 의미한다
+//processResources { dependsOn "copyReactBuildFiles" }
+//
+//
+//// React 프로젝트의 의존성을 설치
+//tasks.register('installReact', Exec) {
+//    workingDir "$frontendDir"
+//    inputs.dir "$frontendDir"
+//    group = BasePlugin.BUILD_GROUP
+//    if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
+//        commandLine "npm.cmd", "audit", "fix"
+//        commandLine 'npm.cmd', 'install'
+//    } else {
+//        commandLine "npm", "audit", "fix" commandLine 'npm', 'install'
+//    }
+//}
+//
+//
+//// React 애플리케이션을 빌드한다. installReact 작업이 성공적으로 완료된 후 실행된다.
+//tasks.register('buildReact', Exec) {
+//    dependsOn "installReact"
+//    workingDir "$frontendDir"
+//    inputs.dir "$frontendDir"
+//    group = BasePlugin.BUILD_GROUP
+//    if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
+//        commandLine "npm.cmd", "run-script", "build"
+//    } else {
+//        commandLine "npm", "run-script", "build"
+//    }
+//}
+//
+//
+//// 빌드된 React 파일을 Java 애플리케이션의 정적 리소스 디렉토리로 복사
+//tasks.register('copyReactBuildFiles', Copy) {
+//    dependsOn "buildReact"
+//    from "$frontendDir/build"
+//    into "$projectDir/src/main/resources/static"
+//}

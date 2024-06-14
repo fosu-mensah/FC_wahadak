@@ -1,5 +1,7 @@
 package org.example.demo_login.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.example.demo_login.domain.Post;
 import org.example.demo_login.service.FileStorageService;
 import org.example.demo_login.service.PostService;
@@ -22,75 +24,64 @@ public class PostController {
     private final FileStorageService fileStorageService;
 
     @Autowired
-    public PostController(PostService postService, JwtUtil jwtUtil,FileStorageService fileStorageService) {
+    public PostController(PostService postService, JwtUtil jwtUtil, FileStorageService fileStorageService) {
         this.postService = postService;
         this.fileStorageService = fileStorageService;
-
     }
-    //최신순, 좋아요 순으로 정렬하는 클라이언트로 보내는 엔드포인트
+
     @GetMapping
     public ResponseEntity<List<Post>> getPosts(
             @RequestParam(required = false) String sortBy,
             @RequestParam(required = false) String order) {
-
         List<Post> posts = postService.selectPostsSorted(sortBy, order);
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 
-    //인기글을 보여주는 메서드(좋아요가 10개 이상이면)
     @GetMapping("/popular")
-    public ResponseEntity<List<Post>> getPopularPosts(){
+    public ResponseEntity<List<Post>> getPopularPosts() {
         List<Post> popularPosts = postService.selectPopularPosts();
-        return new ResponseEntity<>(popularPosts,HttpStatus.OK);
+        return new ResponseEntity<>(popularPosts, HttpStatus.OK);
     }
 
-    // multipart/form-data로 설정이 되었기 때문에 이 경우에서는 @RequsetBody를 사용하여
-    //요청을 처리할 수 없음.
-    @PostMapping("/write")
+    @Operation(
+            summary = "Create a new post with image upload",
+            description = "Create a new post with image upload",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Post created successfully"),
+                    @ApiResponse(responseCode = "413", description = "Payload too large"),
+                    @ApiResponse(responseCode = "500", description = "Internal server error")
+            }
+    )
+    @PostMapping(value = "/write", consumes = "multipart/form-data")
     public ResponseEntity<String> writePost(
             @RequestParam("memberNickname") String memberNickname,
             @RequestParam("category") String category,
             @RequestParam("title") String title,
             @RequestParam("content") String content,
             @RequestParam("image") MultipartFile image) {
-        System.out.println(memberNickname);
-        System.out.println(category);
-        System.out.println(title);
-        System.out.println(content);
-        System.out.println(image);
-
-        try{
-            // 현재시간을 생성 시간으로 설정
+        try {
             LocalDateTime createdAt = LocalDateTime.now();
-
-            // 좋아요 수 초깃값 설정
             int likeCount = 0;
 
-            //파일을 저장하고 저장된 파일의 URL을 가져옴
             String imageUrl = fileStorageService.storeFile(image);
-            System.out.println(imageUrl);
-
-            // 게시글 서비스를 사용하여 새로운 게시글 작성
             postService.writePost(memberNickname, category, title, content, imageUrl, createdAt, likeCount);
 
             return ResponseEntity.ok("게시글이 성공적으로 작성되었습니다.");
-        } catch(Exception e){
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("게시글 작성 중 오류.");
         }
     }
-    //검색 기능을 위한 엔드포인트
+
     @GetMapping("/search")
     public ResponseEntity<List<Post>> searchPosts(@RequestParam String category, @RequestParam String term) {
-        List<Post> posts = postService.searchPosts(category,term);
-        System.out.println(posts);
+        List<Post> posts = postService.searchPosts(category, term);
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 
     @GetMapping("/{postId}")
-    public ResponseEntity<Post> getPostDetails(@PathVariable int postId, @RequestParam(required = false) String nickname){
-        // 사용자가 로그인한 상태가 아니면 nickname은 null
+    public ResponseEntity<Post> getPostDetails(@PathVariable int postId, @RequestParam(required = false) String nickname) {
         Post post = postService.getPostDetails(postId);
         return new ResponseEntity<>(post, HttpStatus.OK);
     }
-
 }

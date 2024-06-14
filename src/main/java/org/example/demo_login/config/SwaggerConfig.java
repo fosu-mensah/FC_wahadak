@@ -28,10 +28,9 @@ public class SwaggerConfig {
 
         // OpenAPI 객체를 반환. 이 객체는 API 문서의 전반적인 구성을 정의한다.
         return new OpenAPI()
-                .components(new Components())  // 빈 Components 객체를 추가.
+                .components(components)  // 구성 요소(보안 스키마 등)를 추가.
                 .info(apiInfo())  // API 정보(제목, 설명, 버전)를 설정.
-                .addSecurityItem(securityRequirement)  // 보안 요구 사항을 추가.
-                .components(components);  // 구성 요소(보안 스키마 등)를 추가.
+                .addSecurityItem(securityRequirement);  // 보안 요구 사항을 추가.
     }
 
     private Info apiInfo() {
