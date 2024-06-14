@@ -1,11 +1,7 @@
 package org.example.demo_login.domain;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
-@Setter
-@Getter
 @Data
 public class Member {
 

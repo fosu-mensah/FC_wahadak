@@ -84,7 +84,6 @@ import Typeahead from "../component/forms/form-widget/typeaheadComponent/typeahe
 // Tables 기능 삭제
 
 // Cards
-// Cards 기능 삭제
 import BasicCards from "../component/cards/basicCards";
 import TabCard from "../component/cards/tabCard";
 import ThemeCards from "../component/cards/themeCards";
@@ -163,6 +162,10 @@ import DomesticNews from "../component/news/DomesticNews";
 import ExclusiveNews from "../component/news/ExclusiveNews";
 import InternationalNews from "../component/news/InternationalNews";
 import NewsDetail from "../component/news/NewsDetail";
+
+// Event
+import FCWahadakEvent from "../component/event/FCWahadakEvent";
+import FCOnlineEvent from "../component/event/FCOnlineEvent";
 
 export const routes = [
   {
@@ -485,6 +488,14 @@ export const routes = [
   {
     path: `${process.env.PUBLIC_URL}/news/442exclusive/:newsId`,
     Component: <NewsDetail />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/event/FCWahadakEvent`,
+    Component: <FCWahadakEvent />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/event/FCOnlineEvnet`,
+    Component: <FCOnlineEvent />,
   },
   {
     path: `${process.env.PUBLIC_URL}/basicCards`,

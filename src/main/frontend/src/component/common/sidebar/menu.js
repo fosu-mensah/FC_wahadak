@@ -118,12 +118,12 @@ export const MENUITEMS = [
       {
         title: "FC wahadak 이벤트",
         type: "link",
-        path: ``,
+        path: `${process.env.PUBLIC_URL}/event/FCWahadakEvent`,
       },
       {
         title: "FC Online 이벤트",
         type: "link",
-        path: ``,
+        path: `${process.env.PUBLIC_URL}/event/FCOnlineEvnet`,
       },
     ],
   },
