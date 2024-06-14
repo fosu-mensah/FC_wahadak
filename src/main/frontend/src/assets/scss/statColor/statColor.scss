@@ -1,0 +1,20 @@
+// Define stat colors
+$stat-colors: (
+        "stat-color-0-59": #9DA4AA,
+        "stat-color-60-69": #5C6F73,
+        "stat-color-70-79": #4A6483,
+        "stat-color-80-89": #3778C2,
+        "stat-color-90-99": #002D72,
+        "stat-color-100-109": #c25ecd,
+        "stat-color-110-119": #8B00FF,
+        "stat-color-120-129": #FF00FF,
+        "stat-color-130-139": #FF0000,
+        "stat-color-140-149": #FFD700,
+);
+
+// Generate classes for stat colors
+@each $name, $color in $stat-colors {
+  .#{$name} {
+    color: $color;
+  }
+}

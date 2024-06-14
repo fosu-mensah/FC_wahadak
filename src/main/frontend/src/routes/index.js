@@ -19,6 +19,9 @@ import Forgetpwd from "../pages/authentication/forgetpwd";
 import Comingsoon from "../pages/comingSoon/comingsoon";
 import ComingsoonImg from "../pages/comingSoon/comingsoonImg";
 
+import PlayerSearch from "../component/common/SearchPlayer/PlayerSearch";
+import PlayerDetail from "../component/common/SearchPlayer/Enhancement";
+
 import { routes } from "./layouts-routes";
 // import app from '../data/base';
 

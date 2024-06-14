@@ -92,6 +92,3 @@ bin/
 
 # Ignore static directory
 src/main/resources/static/
-
-# Ignore build.gradle file
-build.gradle

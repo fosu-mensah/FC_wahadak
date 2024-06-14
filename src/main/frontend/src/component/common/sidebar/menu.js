@@ -3,13 +3,8 @@ import React from "react";
 export const MENUITEMS = [
   {
     title: "선수 검색",
-    icon: (
-        <img
-            src={`${process.env.PUBLIC_URL}/assets/images/son.png`}
-            alt="선수 검색"
-            style={{ width: '60px', height: '60px' }}
-        />
-    ),
+    icon: <img src={`${process.env.PUBLIC_URL}/assets/images/seasons/son.png`} alt="선수 검색"
+               style={{width: '60px', height: '60px'}}/>,
     type: "sub",
     path: ``,
     active: true,
@@ -18,22 +13,17 @@ export const MENUITEMS = [
       {
         title: "선수 검색",
         type: "link",
-        path: ``,
-      },
-      {
-        title: "선수 비교",
-        type: "link",
-        path: ``,
+        path: `${process.env.PUBLIC_URL}/search`,
       },
       {
         title: "팀컬러 목록",
         type: "link",
-        path: ``,
+        path: `${process.env.PUBLIC_URL}/team-color-list`,
       },
       {
         title: "🔥 갱신 시간 목록",
         type: "link",
-        path: ``,
+        path: `${process.env.PUBLIC_URL}/refresh-time-list`,
       },
     ],
   },

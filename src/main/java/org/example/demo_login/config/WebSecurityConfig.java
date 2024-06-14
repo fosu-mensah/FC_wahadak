@@ -52,10 +52,8 @@ public class WebSecurityConfig {
                 .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/api-test-swagger").permitAll() // Swagger 관련 End Point
-                                .requestMatchers("/api/news/**").permitAll() // 뉴스 관련 End Point
-                                .requestMatchers("/api/events/**").permitAll() // 이벤트 관련 End Point
-                                .requestMatchers("/", "/error", "/api/members/login", "/api/members/insert", "/players/search/**", "/players/stats/**").permitAll()
+                                .requestMatchers("/", "/error", "/api/members/login", "/api/members/insert", "/players/search/**","/players/stats/**").permitAll()
+                                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/api-test-swagger").permitAll()
                                 .requestMatchers("/api/members/userinfo").authenticated()
                                 .anyRequest().authenticated()
                 )

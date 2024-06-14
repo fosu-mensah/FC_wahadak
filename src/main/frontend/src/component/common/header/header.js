@@ -5,7 +5,6 @@ import { AlignCenter, FileText, User, Settings, LogOut, Search, MoreHorizontal }
 import { Row, Col, Form } from "reactstrap";
 import { MENUITEMS } from "../sidebar/menu";
 import { Link, useNavigate } from "react-router-dom";
-import _ from 'lodash'; // Lodash 라이브러리를 사용하여 디바운싱 구현
 import apiClient from "../../../api/apiClient"; // apiClient를 import
 
 const Header = (props) => {
@@ -60,8 +59,8 @@ const Header = (props) => {
         };
     }, [escFunction, width]);
 
-    // 디바운싱을 적용한 검색 함수
-    const fetchPlayers = useCallback(_.debounce(async (keyword) => {
+    // 순차적으로 API를 호출하는 함수
+    const fetchPlayers = async (keyword) => {
         if (keyword && keyword.length > 0) {
             setspinner(true);
 
@@ -73,7 +72,7 @@ const Header = (props) => {
                 if (response.status === 200) {
                     const players = response.data.map(player => ({
                         ...player,
-                        "시즌 URL": player["시즌 URL"].replace('/Users/leeeunhak/Desktop/images/', 'assets/images/')
+                        "시즌 URL": player["시즌 URL"].replace('/Users/leeeunhak/Desktop/images/', 'assets/images/seasons/')
                     }));
                     setSearchResult(players); // 검색 결과 저장
                 } else {
@@ -85,8 +84,10 @@ const Header = (props) => {
                 setSearchResult([]); // 검색 결과가 없을 경우
                 setspinner(false);
             }
+        } else {
+            setSearchResult([]); // 검색어가 없으면 검색결과 지움
         }
-    }, 300), []); // 300ms 지연 후 검색
+    };
 
     const handleSearchKeyword = (keyword) => {
         setsearchValue(keyword);
@@ -178,7 +179,7 @@ const Header = (props) => {
             <div className="main-header-right">
                 <div className="main-header-left text-center">
                     <div className="logo-wrapper">
-                        <Link to={`${process.env.PUBLIC_URL}/`}>
+                        <Link to={`${process.env.PUBLIC_URL}`}>
                             <img
                                 src={require("../../../assets/images/logo/logo1.png")}
                                 alt="FC Wahadak Logo"

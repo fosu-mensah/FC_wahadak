@@ -1,0 +1,98 @@
+/* src/assets/css/PlayerCard.css */
+
+.search-result {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* 중앙 정렬 */
+  gap: 10px; /* 카드 사이의 간격 조정 */
+}
+
+.player-card {
+  width: 300px; /* 카드의 너비 조정 */
+  border: 1px solid #ccc; /* 카드의 테두리 설정 */
+  border-radius: 10px; /* 카드의 모서리를 둥글게 설정 */
+  overflow: hidden; /* 카드 내에서 이미지가 넘치지 않도록 설정 */
+  text-align: center; /* 텍스트 중앙 정렬 */
+  margin: 10px; /* 카드 간격 조정 */
+  padding: 10px; /* 내부 여백 추가 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+}
+
+.player-header {
+  display: flex; /* 이미지와 텍스트를 한 줄로 배치 */
+  align-items: center; /* 이미지와 텍스트를 세로축 중앙 정렬 */
+  justify-content: center; /* 이미지와 텍스트를 가로축 중앙 정렬 */
+  gap: 3px; /* 이미지와 텍스트 사이의 간격 조정 */
+}
+
+.player-card h3 {
+  font-size: 1.2em; /* 제목 폰트 크기 조정 */
+  margin-bottom: 10px; /* 제목과 이미지 간격 조정 */
+}
+
+.player-card .season-image {
+  width: 30px; /* 시즌 이미지 너비 조정 */
+  height: auto; /* 시즌 이미지 높이를 비율에 맞게 조정 */
+  margin-bottom: 10px;
+}
+
+.player-card .player-profile-image {
+  width: 100px; /* 프로필 이미지 너비 조정 */
+  height: 100px; /* 프로필 이미지 높이 조정 */
+  border-radius: 50%; /* 프로필 이미지 둥글게 */
+  object-fit: cover; /* 프로필 이미지 커버 모드 적용 */
+  margin-bottom: 5px; /* 프로필 이미지와 텍스트 간격 조정 */
+}
+
+.player-card .ProfileCard-description {
+  font-size: 0.9em; /* 설명 텍스트 크기 조정 */
+  margin-bottom: 5px; /* 설명 텍스트와 다른 요소 간격 조정 */
+}
+
+.player-card img {
+  width: 100%; /* 이미지 너비를 카드 너비에 맞춤 */
+  height: auto; /* 이미지 높이를 비율에 맞게 조정 */
+  object-fit: cover; /* 이미지가 카드에 맞게 자름 */
+}
+
+.player-card .enhancement-image {
+  width: 50px; /* 강화 이미지 너비 조정 */
+  height: auto; /* 강화 이미지 높이를 비율에 맞게 조정 */
+  margin-top: 10px; /* 강화 이미지와 텍스트 간격 조정 */
+}
+
+.player-card .player-info p {
+  margin: 1.5px; /* 플레이어 정보 간격 조정 */
+}
+
+.player-card .player-stats {
+  display: flex; /* 스탯들을 가로로 나열 */
+  justify-content: space-around; /* 스탯들 사이에 공간 배분 */
+  margin-top: 10px; /* 스탯 섹션과 다른 요소 간격 조정 */
+  flex-wrap: wrap; /* 카드 너비를 넘으면 줄바꿈 */
+}
+
+.player-card .goalkeeper-stats,
+.player-card .field-player-stats {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.player-card .stat {
+  display: flex; /* 각 스탯을 세로로 나열 */
+  flex-direction: column; /* 각 스탯 항목을 세로로 정렬 */
+  align-items: center; /* 각 스탯 항목 중앙 정렬 */
+  font-size: 0.9em; /* 스탯 텍스트 크기 조정 */
+  margin: 5px; /* 각 스탯 간격 조정 */
+}
+
+.player-card .stat strong {
+  font-size: 0.8em; /* 스탯 제목 폰트 크기 조정 */
+  color: #777; /* 스탯 제목 색상 설정 */
+}
+
+.player-card .stat span {
+  font-size: 1.2em; /* 스탯 값 폰트 크기 조정 */
+  font-weight: bold; /* 스탯 값 굵게 설정 */
+}

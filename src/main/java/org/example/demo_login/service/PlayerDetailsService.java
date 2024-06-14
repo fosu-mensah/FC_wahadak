@@ -90,8 +90,6 @@ public class PlayerDetailsService {
         return null; // 이 경우는 실제로 발생하지 않을 것입니다.
     }
 
-
-
     //선수 이름으로 검색하는 메소드
     public List<PlayerInfo> getPlayerInfoByName(String pname, String sortOrder, int enhancementLevel) {
         List<PlayerInfo> playerInfos = playerInfoRepository.findPlayerInfoByName(pname);

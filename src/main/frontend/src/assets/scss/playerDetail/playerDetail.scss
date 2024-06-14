@@ -1,0 +1,68 @@
+.player-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+
+  .player-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+
+    .season-image {
+      width: 50px;
+      height: 50px;
+      margin-right: 10px;
+    }
+
+    h3 {
+      font-size: 24px;
+      font-weight: bold;
+    }
+  }
+
+  .player-card {
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    text-align: center;
+    padding: 10px;
+    background: #f9f9f9;
+
+    .player-image {
+      width: 100%;
+      height: auto;
+    }
+
+    .player-info {
+      margin-top: 10px;
+      font-size: 16px;
+
+      p {
+        margin: 5px 0;
+      }
+    }
+  }
+
+  .stat-section {
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+
+    .stat-list {
+      width: 48%;
+      list-style: none;
+      padding: 0;
+
+      li {
+        margin-bottom: 5px;
+      }
+    }
+  }
+}
