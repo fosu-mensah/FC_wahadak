@@ -26,7 +26,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.security.web.firewall.HttpFirewall;
 import org.springframework.security.web.firewall.StrictHttpFirewall;
 
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -53,7 +52,7 @@ public class WebSecurityConfig {
                 .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers("/", "/error", "/api/members/login", "/api/members/insert", "/players/search/**").permitAll()
+                                .requestMatchers("/", "/error", "/api/members/login", "/api/members/insert", "/players/search/**", "/players/stats/**").permitAll()
                                 .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/api-test-swagger").permitAll()
                                 .requestMatchers("/api/members/userinfo").authenticated()
                                 .anyRequest().authenticated()
@@ -71,6 +70,7 @@ public class WebSecurityConfig {
 
         return http.build();
     }
+
     public void configure(WebSecurity web) throws Exception {
         web.httpFirewall(allowUrlEncodedPercentHttpFirewall());
     }
