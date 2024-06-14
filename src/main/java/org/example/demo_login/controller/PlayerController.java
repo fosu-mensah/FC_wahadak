@@ -53,11 +53,11 @@ public class PlayerController {
 
     // 선수 이름과 시즌, 강화 단계를 통한 검색 (GET 요청)
     @GetMapping("/search")
-    public ResponseEntity<List<PlayerInfo>> searchPlayer(@RequestParam(value = "Pname", required = false) String pname,
+    public ResponseEntity<List<PlayerInfo>> searchPlayer(@RequestParam(value = "pname", required = false) String pname,
                                                          @RequestParam(value = "season", required = false) String season,
                                                          @RequestParam(value = "sortOrder", defaultValue = "desc") String sortOrder,
                                                          @RequestParam(value = "enhancementLevel", defaultValue = "1") int enhancementLevel) {
-        System.out.println("Search parameters - Pname: " + pname + ", season: " + season);
+        System.out.println("Search parameters - pname: " + pname + ", season: " + season);
 
         List<PlayerInfo> playerInfoList;
         if (pname != null && !pname.isEmpty() && season != null && !season.isEmpty()) {

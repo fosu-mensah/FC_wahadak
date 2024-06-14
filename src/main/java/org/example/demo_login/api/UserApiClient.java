@@ -5,8 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.Arrays;
 
 @Component
 public class UserApiClient {
@@ -22,7 +23,7 @@ public class UserApiClient {
 
     private HttpHeaders createHeaders() {
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "Bearer " + apiKey.getKey());
+        headers.set("x-nxopen-api-key",apiKey.getKey());
         headers.setContentType(MediaType.APPLICATION_JSON); // 필요시 설정
         return headers;
     }
@@ -78,11 +79,10 @@ public class UserApiClient {
             if (response.getStatusCode().is2xxSuccessful()) {
                 return url9Digit;
             }
-        } catch (Exception e) {
+        } catch (HttpClientErrorException e) {
             // 9자리 PID로 실패하면 6자리 PID로 폴백
             String playerId6Digit = pid.substring(pid.length() - 6).replaceFirst("^0+(?!$)", "");
             String url6Digit = "https://fco.dn.nexoncdn.co.kr/live/externalAssets/common/players/p" + playerId6Digit + ".png";
-
             try {
                 ResponseEntity<byte[]> response = restTemplate.exchange(url6Digit, HttpMethod.GET, entity, byte[].class);
                 if (response.getStatusCode().is2xxSuccessful()) {
@@ -103,6 +103,7 @@ public class UserApiClient {
             ResponseEntity<byte[]> response = restTemplate.exchange(imageUrl, HttpMethod.GET, entity, byte[].class);
             return response.getBody();
         }
+
         return null;
     }
 }

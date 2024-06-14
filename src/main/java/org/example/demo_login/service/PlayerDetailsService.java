@@ -8,12 +8,19 @@ import org.example.demo_login.domain.PlayerInfo;
 import org.example.demo_login.domain.PlayerStat;
 import org.example.demo_login.domain.TeamColor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.sql.SQLOutput;
+import java.util.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+
+
 
 @Service
 public class PlayerDetailsService {
@@ -22,6 +29,9 @@ public class PlayerDetailsService {
     private final PlayerStatsRepository playerStatRepository;
     private final TeamColorRepository teamColorRepository;
     private final UserApiClient userApiClient;
+
+    @Value("${api.request.delay:500}") //기본 지연 시간 0.5초
+    private int requestDelay;
 
     @Autowired
     public PlayerDetailsService(PlayerInfoRepository playerInfoRepository, PlayerStatsRepository playerStatRepository, TeamColorRepository teamColorRepository, UserApiClient userApiClient) {
@@ -45,11 +55,41 @@ public class PlayerDetailsService {
         // 각 선수에 대해 이미지 URL을 설정하고 시즌 정보를 추가
         for (PlayerInfo info: playerInfos) {
             String playerId = String.valueOf(info.getPid());
-            String imageUrl = userApiClient.getPlayerImageUrl(playerId);
+            String imageUrl = fetchPlayerImageUrlWithRetry(playerId,3); //재시도 로직
             info.setImageUrl(imageUrl); // 이미지 URL 설정
+            //지연 추가
+            try{
+                TimeUnit.MICROSECONDS.sleep(requestDelay);
+            }catch (InterruptedException e){
+                Thread.currentThread().interrupt();
+                throw new RuntimeException(e);
+            }
         }
         return playerInfos;
     }
+
+    // 재시도 로직 추가
+    private String fetchPlayerImageUrlWithRetry(String playerId, int maxRetries) {
+        int attempt = 0;
+        while (attempt < maxRetries) {
+            try {
+                return userApiClient.getPlayerImageUrl(playerId);
+            } catch (HttpClientErrorException.Forbidden e) {
+                attempt++;
+                if (attempt >= maxRetries) {
+                    throw e;
+                }
+                try {
+                    TimeUnit.SECONDS.sleep((long) Math.pow(2, attempt)); // 지수 백오프
+                } catch (InterruptedException ie) {
+                    Thread.currentThread().interrupt();
+                    throw new RuntimeException(ie);
+                }
+            }
+        }
+        return null; // 이 경우는 실제로 발생하지 않을 것입니다.
+    }
+
 
 
     //선수 이름으로 검색하는 메소드
@@ -73,29 +113,66 @@ public class PlayerDetailsService {
         }
         return enhanceAndSortPlayerInfos(playerInfos, sortOrder, enhancementLevel);
     }
-
+    //시즌으로 검색하는 메소드
     public List<PlayerInfo> getPlayerInfoBySeason(String season, String sortOrder, int enhancementLevel) {
         List<PlayerStat> playerStats = playerStatRepository.findPlayerStatsBySeason(season);
         if (playerStats.isEmpty()) {
             return List.of();
         }
 
-        List<PlayerInfo> playerInfos = playerStats.stream()
-                .map(stat -> {
+        List<CompletableFuture<PlayerInfo>> futures = playerStats.stream()
+                .map(stat -> CompletableFuture.supplyAsync(() -> {
                     PlayerInfo info = playerInfoRepository.findPlayerInfoByPid(stat.getPid());
-                    return updatePlayerInfoWithStat(info, stat, enhancementLevel);
+                    if (info != null) {
+                        info = updatePlayerInfoWithStat(info, stat, enhancementLevel);
+                        // 이미지 URL 설정
+                        String playerId = String.valueOf(info.getPid());
+                        String imageUrl = fetchPlayerImageUrlWithRetry(playerId, 3); // 재시도 로직
+                        info.setImageUrl(imageUrl);
+                    }
+                    return info;
+                }))
+                .collect(Collectors.toList());
+
+        // Collect the results of all futures
+        List<PlayerInfo> playerInfos = futures.stream()
+                .map(future -> {
+                    try {
+                        return future.get();
+                    } catch (InterruptedException | ExecutionException e) {
+                        throw new RuntimeException(e);
+                    }
                 })
+                .filter(Objects::nonNull)
                 .collect(Collectors.toList());
 
         return enhanceAndSortPlayerInfos(playerInfos, sortOrder, enhancementLevel);
     }
 
+    //선수 이름과 시즌으로 검색하는 메소드
     public List<PlayerInfo> getPlayerInfoByNameAndSeason(String pname, String season, String sortOrder, int enhancementLevel) {
+        System.out.println("getPlayerInfoByNameAndSeason called with parameters: pname=" + pname + ", season=" + season + ", sortOrder=" + sortOrder + ", enhancementLevel=" + enhancementLevel);
         List<PlayerStat> playerStats = playerStatRepository.findPlayerStatsByNameAndSeason(pname, season);
         List<PlayerInfo> playerInfos = playerStats.stream()
-                .map(stat -> playerInfoRepository.findPlayerInfoByPid(stat.getPid()))
+                .map(stat -> {
+                    PlayerInfo info = playerInfoRepository.findPlayerInfoByPid(stat.getPid());
+                    if (info != null) {
+                        if (info.getPositionstat() == null) {
+                            info.setPositionstat(new HashMap<>());
+                        }
+                        setImageUrlForPlayerInfo(info); // 이미지 URL 설정
+                    }
+                    return info;
+                })
                 .collect(Collectors.toList());
         return enhanceAndSortPlayerInfos(playerInfos, sortOrder, enhancementLevel);
+    }
+    private void setImageUrlForPlayerInfo(PlayerInfo info) {
+        if (info != null) {
+            String playerId = String.valueOf(info.getPid());
+            String imageUrl = userApiClient.getPlayerImageUrl(playerId);
+            info.setImageUrl(imageUrl);
+        }
     }
 
     private PlayerInfo updatePlayerInfoWithStat(PlayerInfo info, PlayerStat stat, int enhancementLevel) {
@@ -148,7 +225,7 @@ public class PlayerDetailsService {
                         PlayerStat stat = stats.get(0).applyEnhancement(enhancementLevel);
                         info.setSeason(stat.getSeason());
                         info.setSeasonUrl(stat.getSeasonUrl());
-                        info.setPositionstat(stat.getPositionstat());
+                        info.setPositionstat(stat.getPositionstat() != null ? stat.getPositionstat() : new HashMap<>()); // null 체크 후 빈 맵 설정
                         info.setPay(stat.getPay());
                     }
                     return info;
@@ -163,12 +240,15 @@ public class PlayerDetailsService {
         return sortedPlayerInfos;
     }
 
+    // 선수 스탯을 보여주는 메서드
     public List<PlayerStat> getPlayerStatsByPid(int pid, int enhancementLevel) {
         List<PlayerStat> playerStats = playerStatRepository.findPlayerStatsByPid(pid);
         playerStats.forEach(stat -> {
-            String imageUrl = "/players/image/" + stat.getPid();
-            stat.setImageUrl(imageUrl); // 이미지 URL 설정
-
+            String playerId = String.valueOf(stat.getPid());
+            String imageUrl = fetchPlayerImageUrlWithRetry(playerId,3); //재시도 로직
+            System.out.println(playerId);
+            System.out.println(imageUrl);
+            stat.setImageUrl(imageUrl);
             PlayerInfo info = playerInfoRepository.findPlayerInfoByPid(stat.getPid());
             if (info != null) {
                 stat.setNation(info.getNation());

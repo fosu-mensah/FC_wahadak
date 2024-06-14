@@ -31,7 +31,6 @@ public interface PlayerInfoRepository {
     List<PlayerInfo> findPlayerMainPage(@Param("Pname") String Pname);
 
 
-
     //선수 ID로 PlayerInfo 검색
     @Select("SELECT Pid, Pname, nation, bestPosition, birth, height, weight, body, skill, foot, famous, career, " +
             "avg_speed AS avgSpeed, avg_shooting AS avgShooting, avg_passing AS avgPassing, avg_dribble AS avgDribble, " +

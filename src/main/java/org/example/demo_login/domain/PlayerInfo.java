@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
+
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,7 +35,7 @@ public class PlayerInfo {
     private String bestPosition;
 
     @JsonProperty("포지션 스탯")
-    private Map<String, Integer> positionstat;
+    private Map<String, Integer> positionstat = new HashMap<>();
 
     @JsonProperty("급여")
     private String pay;

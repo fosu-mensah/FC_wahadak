@@ -1,0 +1,6 @@
+.img-thumbnail {
+    width: 80%; /* 이미지 너비를 컨테이너에 맞춤 */
+    height: 400px; /* 고정 높이 */
+    object-fit: cover; /* 이미지 비율을 유지하면서 요소의 크기에 맞춤 */
+    border-radius: 10px; /* 이미지 모서리를 둥글게 처리 */
+}

@@ -84,7 +84,9 @@ import Typeahead from "../component/forms/form-widget/typeaheadComponent/typeahe
 // Tables 기능 삭제
 
 // Cards
-// Cards 기능 삭제
+import BasicCards from "../component/cards/basicCards";
+import TabCard from "../component/cards/tabCard";
+import ThemeCards from "../component/cards/themeCards";
 
 // Ecommerce
 import Product from "../component/application/ecommerce/product";
@@ -149,10 +151,21 @@ import Orderhistory from "../component/application/ecommerce/orderhistory";
 import Samplepage from "../pages/samplepage";
 import Supportticket from "../pages/supportticket";
 import Searchwebsite from "../pages/search/searchwebsite";
+
 // Leaflet Map 삭제
 
-// 메인페이지 컴포넌트 import
+// 메인페이지
 import MainPage from "../component/common/main/mainpage";
+
+// News
+import DomesticNews from "../component/news/DomesticNews";
+import ExclusiveNews from "../component/news/ExclusiveNews";
+import InternationalNews from "../component/news/InternationalNews";
+import NewsDetail from "../component/news/NewsDetail";
+
+// Event
+import FCWahadakEvent from "../component/event/FCWahadakEvent";
+import FCOnlineEvent from "../component/event/FCOnlineEvent";
 
 export const routes = [
   {
@@ -451,5 +464,49 @@ export const routes = [
   {
     path: `${process.env.PUBLIC_URL}/`,
     Component: <MainPage />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/news/domestic`,
+    Component: <DomesticNews />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/news/international`,
+    Component: <InternationalNews />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/news/442exclusive`,
+    Component: <ExclusiveNews />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/news/domestic/:newsId`,
+    Component: <NewsDetail />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/news/international/:newsId`,
+    Component: <NewsDetail />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/news/442exclusive/:newsId`,
+    Component: <NewsDetail />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/event/FCWahadakEvent`,
+    Component: <FCWahadakEvent />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/event/FCOnlineEvnet`,
+    Component: <FCOnlineEvent />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/basicCards`,
+    Component: <BasicCards />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/tabCard`,
+    Component: <TabCard />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/themeCards`,
+    Component: <ThemeCards />,
   },
 ];
