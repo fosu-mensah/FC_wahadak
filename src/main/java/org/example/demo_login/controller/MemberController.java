@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.Map;
 
 
-@CrossOrigin(origins = {"http://localhost:3000", "http://ec2-3-139-91-37.us-east-2.compute.amazonaws.com"})
 @RestController
 @RequestMapping("/api/members")
 public class MemberController {

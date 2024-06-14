@@ -52,9 +52,14 @@ public class WebSecurityConfig {
                 .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers("/", "/error", "/api/members/login", "/api/members/insert", "/players/search/**","/players/stats/**").permitAll()
-                                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/api-test-swagger").permitAll()
-                                .requestMatchers("/api/members/userinfo").authenticated()
+                                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/api-test-swagger").permitAll() // Swaager 관련 End Point
+                                .requestMatchers("/api/news/**").permitAll() // 뉴스 관련 End Point
+                                .requestMatchers("/api/events/**").permitAll() // 이벤트 관련 End Point
+                                .requestMatchers("/api/posts/**").permitAll() // Post 관련 End Point
+                                .requestMatchers("/api/members/login", "/api/members/insert").permitAll() // Member 관련 End Point
+                                .requestMatchers("/api/members/userinfo").authenticated() // Member 관련 End Point
+                                .requestMatchers("/players/search/**").permitAll()
+                                .requestMatchers("/", "/error").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .logout(logout -> logout
