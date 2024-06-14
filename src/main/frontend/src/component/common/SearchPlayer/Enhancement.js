@@ -1,7 +1,7 @@
 import React from "react";
 
 const Enhancement = ({ enhancementLevel }) => {
-    const imageUrl = `${process.env.PUBLIC_URL}/assets/images/${enhancementLevel}.png`;
+    const imageUrl = `${process.env.PUBLIC_URL}/assets/images/enhancement/${enhancementLevel}.png`;
 
     return (
         <div className="player-detail">

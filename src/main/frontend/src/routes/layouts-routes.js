@@ -1,4 +1,7 @@
 import React from "react";
+
+import PlayerSearch from "../component/common/SearchPlayer/PlayerSearch";
+import PlayerDetail from "../component/common/SearchPlayer/Enhancement";
 // dashboard
 import Default from "../component/general/dashboard/default";
 import Crypto from "../component/general/dashboard/crypto";
@@ -153,6 +156,8 @@ import Searchwebsite from "../pages/search/searchwebsite";
 
 // 메인페이지 컴포넌트 import
 import MainPage from "../component/common/main/mainpage";
+import Enhancement from "../component/common/SearchPlayer/Enhancement";
+import PlayerDetails from "../component/common/SearchPlayer/PlayerDetails"
 
 export const routes = [
   {
@@ -163,6 +168,18 @@ export const routes = [
   {
     path: `${process.env.PUBLIC_URL}/dashboard/ecommerce`,
     Component: <Ecommerce />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/search`,
+    Component: <PlayerSearch />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/player/:pid`,
+    Component: < PlayerDetails />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/enhancement`,
+    Component: <Enhancement />,
   },
   {
     path: `${process.env.PUBLIC_URL}/dashboard/generalwidget`,
