@@ -172,6 +172,13 @@ import NewsDetail from "../component/news/NewsDetail";
 import FCWahadakEvent from "../component/event/FCWahadakEvent";
 import FCOnlineEvent from "../component/event/FCOnlineEvent";
 
+// Community
+import FreeBoard from "../component/community/FreeBoard";
+import PlayerPride from "../component/community/PlayerPride";
+import TeamQuestions from "../component/community/TeamQuestions";
+import PostForm from "../component/community/PostForm";
+import PostDetail from "../component/community/PostDetail";
+
 export const routes = [
   {
     path: `${process.env.PUBLIC_URL}/dashboard/default`,
@@ -513,6 +520,26 @@ export const routes = [
   {
     path: `${process.env.PUBLIC_URL}/event/FCOnlineEvnet`,
     Component: <FCOnlineEvent />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/community/FreeBoard`,
+    Component: <FreeBoard />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/community/PlayerPride`,
+    Component: <PlayerPride />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/community/TeamQuestions`,
+    Component: <TeamQuestions />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/community/create-post`,
+    Component: <PostForm />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/community/post/:postId`,
+    Component: <PostDetail />,
   },
   {
     path: `${process.env.PUBLIC_URL}/basicCards`,

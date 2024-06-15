@@ -57,40 +57,35 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
-
-tasks.named('test') {
-    useJUnitPlatform()
-}
-
-def frontendDir = "/Users/leeeunhak/Desktop/SW-Project/src/main/frontend"
-
-tasks.register('installReact', Exec) {
-    workingDir frontendDir
-    inputs.dir frontendDir
-    group = BasePlugin.BUILD_GROUP
-    if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
-        commandLine "npm.cmd", "audit", "fix"
-        commandLine "npm.cmd", "install"
-    } else {
-        commandLine "npm", "audit", "fix"
-        commandLine "npm", "install"
-    }
-}
-
-tasks.register('buildReact', Exec) {
-    dependsOn "installReact"
-    workingDir frontendDir
-    inputs.dir frontendDir
-    group = BasePlugin.BUILD_GROUP
-    if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
-        commandLine "npm.cmd", "run-script", "build"
-    } else {
-        commandLine "npm", "run-script", "build"
-    }
-}
-
-tasks.register('copyReactBuildFiles', Copy) {
-    dependsOn "buildReact"
-    from frontendDir + "/build"
-    into "$projectDir/src/main/resources/static"
-}
+//def frontendDir = "/Users/leeeunhak/Desktop/SW-Project/src/main/frontend"
+//
+//tasks.register('installReact', Exec) {
+//    workingDir frontendDir
+//    inputs.dir frontendDir
+//    group = BasePlugin.BUILD_GROUP
+//    if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
+//        commandLine "npm.cmd", "audit", "fix"
+//        commandLine "npm.cmd", "install"
+//    } else {
+//        commandLine "npm", "audit", "fix"
+//        commandLine "npm", "install"
+//    }
+//}
+//
+//tasks.register('buildReact', Exec) {
+//    dependsOn "installReact"
+//    workingDir frontendDir
+//    inputs.dir frontendDir
+//    group = BasePlugin.BUILD_GROUP
+//    if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
+//        commandLine "npm.cmd", "run-script", "build"
+//    } else {
+//        commandLine "npm", "run-script", "build"
+//    }
+//}
+//
+//tasks.register('copyReactBuildFiles', Copy) {
+//    dependsOn "buildReact"
+//    from frontendDir + "/build"
+//    into "$projectDir/src/main/resources/static"
+//}

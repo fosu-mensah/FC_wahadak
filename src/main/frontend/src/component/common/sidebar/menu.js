@@ -21,7 +21,7 @@ export const MENUITEMS = [
         path: `${process.env.PUBLIC_URL}/team-color-list`,
       },
       {
-        title: "🔥 갱신 시간 목록",
+        title: "🔥 갱신 시간 목록 🔥",
         type: "link",
         path: `${process.env.PUBLIC_URL}/refresh-time-list`,
       },
@@ -61,14 +61,19 @@ export const MENUITEMS = [
     children: [
       { title: "커뮤니티", type: "sub" },
       {
-        title: "공지사항",
+        title: "자유게시판",
         type: "link",
-        path: ``,
+        path: `${process.env.PUBLIC_URL}/community/FreeBoard`,
       },
       {
-        title: "자유 게시판",
+        title: "선수 자랑",
         type: "link",
-        path: ``,
+        path: `${process.env.PUBLIC_URL}/community/PlayerPride`,
+      },
+      {
+        title: "팀 질문",
+        type: "link",
+        path: `${process.env.PUBLIC_URL}/community/TeamQuestions`,
       },
     ],
   },
