@@ -26,12 +26,16 @@ public class CommentService {
         comment.setMemberNickname(memberNickname);
         comment.setContent(content);
         mapper.addComment(comment);
-        return mapper.findCommentById(comment.getId());
+        return mapper.findCommentById(comment.getId(), memberNickname);
     }
 
     // 특정 게시물의 모든 댓글을 조회하는 메소드
-    public List<Comment> getCommentsByPostId(int postId) {
-        return mapper.selectCommentsByPostId(postId);
+    public List<Comment> getCommentsByPostId(int postId, String nickname) {
+        List<Comment> comments = mapper.selectCommentsByPostId(postId);
+        for (Comment comment : comments) {
+            comment.setLiked(mapper.isCommentLikedByUser(comment.getId(), nickname));
+        }
+        return comments;
     }
 
     // 댓글을 수정하는 메소드

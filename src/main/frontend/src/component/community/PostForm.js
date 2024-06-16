@@ -1,16 +1,32 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { createPost } from '../../services/communityService';
+import { createPost, getPostDetails, editPost } from '../../services/communityService';
 import Breadcrumb from "../common/breadcrumb/breadcrumb";
+import { Container, Row, Col, Form, FormGroup, Label, Input, Button, Card, CardBody, CardHeader } from 'reactstrap';
 
 const PostForm = () => {
     const navigate = useNavigate();
     const location = useLocation();
+    const isEdit = location.state && location.state.postId;
     const category = location.state?.category || 'default category';
-    const [memberNickname, setMemberNickname] = useState("");
+    const [postId, setPostId] = useState(location.state?.postId || null);
+    const [memberNickname, setMemberNickname] = useState("heeggung");
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [image, setImage] = useState(null);
+
+    useEffect(() => {
+        if (isEdit) {
+            const loadPostDetails = async () => {
+                const postDetails = await getPostDetails(postId);
+                setTitle(postDetails.title);
+                setContent(postDetails.content);
+                // category는 수정하지 않으므로 설정하지 않음
+            };
+
+            loadPostDetails();
+        }
+    }, [isEdit, postId]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -25,36 +41,79 @@ const PostForm = () => {
         }
 
         try {
-            await createPost(formData);
-            alert('Post created successfully');
+            if (isEdit) {
+                await editPost(postId, formData);
+                alert('Post updated successfully');
+            } else {
+                await createPost(formData);
+                alert('Post created successfully');
+            }
             navigate(-1);  // Navigate back to the previous page
         } catch (error) {
-            alert('Failed to create post');
+            alert('Failed to save post');
         }
     };
 
     return (
         <Fragment>
-            <Breadcrumb parent="Community / create-post" title="게시글 작성" />
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Member Nickname:</label>
-                    <input type="text" value={memberNickname} onChange={(e) => setMemberNickname(e.target.value)} />
-                </div>
-                <div>
-                    <label>Title:</label>
-                    <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
-                </div>
-                <div>
-                    <label>Content:</label>
-                    <textarea value={content} onChange={(e) => setContent(e.target.value)}></textarea>
-                </div>
-                <div>
-                    <label>Image:</label>
-                    <input type="file" onChange={(e) => setImage(e.target.files[0])} />
-                </div>
-                <button type="submit">Submit</button>
-            </form>
+            <Breadcrumb parent={`Community / ${isEdit ? 'Edit Post' : 'Create Post'}`} title={isEdit ? '게시글 수정' : '게시글 작성'} />
+            <Container fluid={true}>
+                <Row className="justify-content-center">
+                    <Col sm="12" md="8" lg="6">
+                        <Card>
+                            <CardHeader className="bg-primary text-white">
+                                <h5>{isEdit ? '게시글 수정' : '게시글 작성'}</h5>
+                            </CardHeader>
+                            <CardBody>
+                                <Form onSubmit={handleSubmit}>
+                                    <FormGroup>
+                                        <Label for="memberNickname">Member Nickname</Label>
+                                        <Input
+                                            type="text"
+                                            name="memberNickname"
+                                            id="memberNickname"
+                                            value={memberNickname}
+                                            onChange={(e) => setMemberNickname(e.target.value)}
+                                            readOnly
+                                        />
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <Label for="title">Title</Label>
+                                        <Input
+                                            type="text"
+                                            name="title"
+                                            id="title"
+                                            value={title}
+                                            onChange={(e) => setTitle(e.target.value)}
+                                        />
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <Label for="content">Content</Label>
+                                        <Input
+                                            type="textarea"
+                                            name="content"
+                                            id="content"
+                                            value={content}
+                                            onChange={(e) => setContent(e.target.value)}
+                                            rows="5"
+                                        />
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <Label for="image">Image</Label>
+                                        <Input
+                                            type="file"
+                                            name="image"
+                                            id="image"
+                                            onChange={(e) => setImage(e.target.files[0])}
+                                        />
+                                    </FormGroup>
+                                    <Button type="submit" color="primary" block>{isEdit ? 'Update' : 'Submit'}</Button>
+                                </Form>
+                            </CardBody>
+                        </Card>
+                    </Col>
+                </Row>
+            </Container>
         </Fragment>
     );
 };

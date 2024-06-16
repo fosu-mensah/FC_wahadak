@@ -99,4 +99,20 @@ public interface PostRepository {
     // 특정 게시물의 좋아요 개수를 업데이트하는 쿼리
     @Update("UPDATE post SET like_count = (SELECT COUNT(*) FROM likes WHERE post_id = #{postId}) WHERE id = #{postId}")
     void updateLikeCount(@Param("postId") int postId);
+
+    // 특정 게시물의 댓글을 삭제하는 쿼리
+    @Delete("DELETE FROM comment WHERE post_id = #{postId}")
+    void deleteCommentsByPostId(@Param("postId") int postId);
+
+    // 게시물 삭제 쿼리
+    @Delete("DELETE FROM post WHERE id = #{postId}")
+    void deletePost(@Param("postId") int postId);
+
+    // 게시물 수정 쿼리
+    @Update("UPDATE post SET category = #{category}, title = #{title}, content = #{content}, image_url = #{image_url} WHERE id = #{id} AND member_nickname = #{memberNickname}")
+    void updatePost(Post post);
+
+    // 특정 게시물에 사용자가 좋아요를 눌렀는지 확인하는 쿼리
+    @Select("SELECT COUNT(*) > 0 FROM post_likes WHERE post_id = #{postId} AND member_nickname = #{nickname}")
+    boolean isPostLikedByUser(@Param("postId") int postId, @Param("nickname") String nickname);
 }

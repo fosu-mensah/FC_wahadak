@@ -1,7 +1,5 @@
 package org.example.demo_login.controller;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.example.demo_login.domain.Post;
 import org.example.demo_login.service.FileStorageService;
 import org.example.demo_login.service.PostService;
@@ -46,15 +44,6 @@ public class PostController {
     }
 
     // 새로운 게시물을 작성하는 엔드포인트
-    @Operation(
-            summary = "Create a new post with image upload",
-            description = "Create a new post with image upload",
-            responses = {
-                    @ApiResponse(responseCode = "200", description = "Post created successfully"),
-                    @ApiResponse(responseCode = "413", description = "Payload too large"),
-                    @ApiResponse(responseCode = "500", description = "Internal server error")
-            }
-    )
     @PostMapping(value = "/write", consumes = "multipart/form-data")
     public ResponseEntity<String> writePost(
             @RequestParam("memberNickname") String memberNickname,
@@ -113,5 +102,47 @@ public class PostController {
     public ResponseEntity<Integer> getLikeCountByPostId(@PathVariable int postId) {
         int likeCount = postService.getLikeCountByPostId(postId);
         return ResponseEntity.ok(likeCount);
+    }
+
+    // 게시물 삭제 엔드포인트
+    @DeleteMapping("/{postId}/delete")
+    public ResponseEntity<String> deletePost(@PathVariable int postId, @RequestParam String memberNickname) {
+        try {
+            postService.deletePost(postId, memberNickname);
+            return ResponseEntity.ok("게시글이 성공적으로 삭제되었습니다.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("게시글 삭제 중 오류.");
+        }
+    }
+
+    // 게시물 수정 엔드포인트
+    @PutMapping("/{postId}/edit")
+    public ResponseEntity<String> editPost(
+            @PathVariable int postId,
+            @RequestParam("memberNickname") String memberNickname,
+            @RequestParam("category") String category,
+            @RequestParam("title") String title,
+            @RequestParam("content") String content,
+            @RequestParam(value = "image", required = false) MultipartFile image) {
+        try {
+            String imageUrl = null;
+            if (image != null && !image.isEmpty()) {
+                imageUrl = fileStorageService.storeFile(image);
+            }
+
+            postService.updatePost(postId, memberNickname, category, title, content, imageUrl);
+            return ResponseEntity.ok("게시글이 성공적으로 수정되었습니다.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("게시글 수정 중 오류.");
+        }
+    }
+
+    // 특정 게시물에 사용자가 좋아요를 눌렀는지 확인하는 엔드포인트
+    @GetMapping("/{postId}/liked-by-user")
+    public ResponseEntity<Boolean> isPostLikedByUser(@PathVariable int postId, @RequestParam String nickname) {
+        boolean isLiked = postService.isPostLikedByUser(postId, nickname);
+        return ResponseEntity.ok(isLiked);
     }
 }

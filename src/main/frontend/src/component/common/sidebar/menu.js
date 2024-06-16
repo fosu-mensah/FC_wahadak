@@ -63,17 +63,17 @@ export const MENUITEMS = [
       {
         title: "자유게시판",
         type: "link",
-        path: `${process.env.PUBLIC_URL}/community/FreeBoard`,
+        path: `${process.env.PUBLIC_URL}/community/자유게시판`,
       },
       {
         title: "선수 자랑",
         type: "link",
-        path: `${process.env.PUBLIC_URL}/community/PlayerPride`,
+        path: `${process.env.PUBLIC_URL}/community/선수 자랑`,
       },
       {
         title: "팀 질문",
         type: "link",
-        path: `${process.env.PUBLIC_URL}/community/TeamQuestions`,
+        path: `${process.env.PUBLIC_URL}/community/팀 질문`,
       },
     ],
   },

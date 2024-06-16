@@ -27,6 +27,11 @@ const FreeBoard = () => {
         loadPosts();
     }, []);
 
+    const handlePostClick = (post) => {
+        navigate(`${process.env.PUBLIC_URL}/community/post/${post.id}`, { state: { category: '자유게시판' } });
+    };
+
+
     return (
         <Fragment>
             <Breadcrumb parent="Community / FreeBoard" title="자유 게시판" />
@@ -44,7 +49,7 @@ const FreeBoard = () => {
                 </Row>
                 <Row>
                     {posts.map(post => (
-                        <Col sm="12" xl="6" key={post.id} onClick={() => navigate(`${process.env.PUBLIC_URL}/community/post/${post.id}`)}>
+                        <Col sm="12" xl="6" key={post.id} onClick={() => handlePostClick(post)}>
                             <Card>
                                 <CardHeader className="bg-primary">
                                     <h5>{post.title}</h5>

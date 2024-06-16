@@ -33,8 +33,8 @@ public class CommentController {
 
     // 특정 게시물의 모든 댓글을 조회하는 엔드포인트
     @GetMapping("/posts/{postId}")
-    public ResponseEntity<List<Comment>> getCommentsByPostId(@PathVariable int postId) {
-        List<Comment> comments = commentService.getCommentsByPostId(postId);
+    public ResponseEntity<List<Comment>> getCommentsByPostId(@PathVariable int postId, @RequestParam String nickname) {
+        List<Comment> comments = commentService.getCommentsByPostId(postId, nickname);
         return ResponseEntity.ok(comments);
     }
 

@@ -1,0 +1,22 @@
+.comment-bubble {
+    position: relative;
+    background-color: #FFB6C1;
+    border-radius: 15px;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.comment-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 20px;
+    width: 0;
+    height: 0;
+    border: 15px solid transparent;
+    border-top-color: #FFB6C1;
+    border-bottom: 0;
+    border-left: 0;
+    margin-left: -7.5px;
+    margin-bottom: -15px;
+}

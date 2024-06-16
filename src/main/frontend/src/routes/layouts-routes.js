@@ -522,15 +522,15 @@ export const routes = [
     Component: <FCOnlineEvent />,
   },
   {
-    path: `${process.env.PUBLIC_URL}/community/FreeBoard`,
+    path: `${process.env.PUBLIC_URL}/community/자유게시판`,
     Component: <FreeBoard />,
   },
   {
-    path: `${process.env.PUBLIC_URL}/community/PlayerPride`,
+    path: `${process.env.PUBLIC_URL}/community/선수 자랑`,
     Component: <PlayerPride />,
   },
   {
-    path: `${process.env.PUBLIC_URL}/community/TeamQuestions`,
+    path: `${process.env.PUBLIC_URL}/community/팀 질문`,
     Component: <TeamQuestions />,
   },
   {
@@ -538,7 +538,7 @@ export const routes = [
     Component: <PostForm />,
   },
   {
-    path: `${process.env.PUBLIC_URL}/community/post/:postId`,
+    path: `${process.env.PUBLIC_URL}/community/:category/:postId`,
     Component: <PostDetail />,
   },
   {

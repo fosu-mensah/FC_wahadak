@@ -27,6 +27,10 @@ const TeamQuestions = () => {
         loadPosts();
     }, []);
 
+    const handlePostClick = (post) => {
+        navigate(`${process.env.PUBLIC_URL}/community/post/${post.id}`, { state: { category: '팀 질문' } });
+    };
+
     return (
         <Fragment>
             <Breadcrumb parent="Community / TeamQuestions" title="팀 질문" />
@@ -44,7 +48,7 @@ const TeamQuestions = () => {
                 </Row>
                 <Row>
                     {posts.map(post => (
-                        <Col sm="12" xl="6" key={post.id} onClick={() => navigate(`${process.env.PUBLIC_URL}/community/post/${post.id}`)}>
+                        <Col sm="12" xl="6" key={post.id} onClick={() => handlePostClick(post)}>
                             <Card>
                                 <CardHeader className="bg-primary">
                                     <h5>{post.title}</h5>

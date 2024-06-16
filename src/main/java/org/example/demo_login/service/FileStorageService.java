@@ -33,12 +33,12 @@ public class FileStorageService {
             String fileName = UUID.randomUUID().toString() + fileExtension;
 
             // 파일을 저장할 경로
-            Path filePath = Paths.get(uploadDir + fileName);
+            Path filePath = Paths.get(uploadDir + File.separator + fileName);
             // 파일을 저장
             Files.write(filePath, file.getBytes());
 
             // 파일이 저장된 경로를 반환
-            return "/uploads/" + fileName;
+            return fileName;
         } catch (IOException e) {
             e.printStackTrace();
             // 파일 저장 중 오류가 발생하면 null 반환
