@@ -1,6 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { createPost, getPostDetails, editPost } from '../../services/communityService';
+import { getUserInfo } from '../../services/authService';
 import Breadcrumb from "../common/breadcrumb/breadcrumb";
 import { Container, Row, Col, Form, FormGroup, Label, Input, Button, Card, CardBody, CardHeader } from 'reactstrap';
 
@@ -10,18 +11,37 @@ const PostForm = () => {
     const isEdit = location.state && location.state.postId;
     const category = location.state?.category || 'default category';
     const [postId, setPostId] = useState(location.state?.postId || null);
-    const [memberNickname, setMemberNickname] = useState("heeggung");
+    const [memberNickname, setMemberNickname] = useState("");
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [image, setImage] = useState(null);
 
     useEffect(() => {
+        const loadUserInfo = async () => {
+            try {
+                const userInfo = await getUserInfo();
+                if (userInfo && userInfo.nickname) {
+                    setMemberNickname(userInfo.nickname);
+                } else {
+                    console.error("Failed to load user nickname");
+                }
+            } catch (error) {
+                console.error("Failed to load user info:", error);
+            }
+        };
+
+        loadUserInfo();
+
         if (isEdit) {
             const loadPostDetails = async () => {
-                const postDetails = await getPostDetails(postId);
-                setTitle(postDetails.title);
-                setContent(postDetails.content);
-                // category는 수정하지 않으므로 설정하지 않음
+                try {
+                    const postDetails = await getPostDetails(postId);
+                    setTitle(postDetails.title);
+                    setContent(postDetails.content);
+                    // category는 수정하지 않으므로 설정하지 않음
+                } catch (error) {
+                    console.error("Failed to load post details:", error);
+                }
             };
 
             loadPostDetails();
@@ -73,7 +93,6 @@ const PostForm = () => {
                                             name="memberNickname"
                                             id="memberNickname"
                                             value={memberNickname}
-                                            onChange={(e) => setMemberNickname(e.target.value)}
                                             readOnly
                                         />
                                     </FormGroup>

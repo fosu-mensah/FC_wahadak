@@ -17,10 +17,10 @@ public class CustomUserDetailsService implements UserDetailsService {
     private MemberRepository memberRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Member member = memberRepository.findByEmail(email); // 이메일로 사용자 검색
+    public UserDetails loadUserByUsername(String nickname) throws UsernameNotFoundException {
+        Member member = memberRepository.findByUsername(nickname); // 닉네임으로 사용자 검색
         if (member == null) {
-            throw new UsernameNotFoundException("User not found with email: " + email);
+            throw new UsernameNotFoundException("User not found with nickname: " + nickname);
         }
         return new org.springframework.security.core.userdetails.User(member.getEmail(), member.getUserPw(), new ArrayList<>());
     }

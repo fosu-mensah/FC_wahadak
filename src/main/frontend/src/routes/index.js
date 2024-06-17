@@ -24,7 +24,7 @@ const MainRoutes = () => {
                     <Route path={path} element={Component} key={i} />
                 ))}
             </Route>
-            <Route path={`${process.env.PUBLIC_URL}/login`} element={<Signin />} />
+            <Route path={`${process.env.PUBLIC_URL}/signin`} element={<Signin />} />
             <Route path={`${process.env.PUBLIC_URL}/pages/error-400`} element={<Error400 />} />
             <Route path={`${process.env.PUBLIC_URL}/pages/error-404`} element={<Error404 />} />
             <Route path={`${process.env.PUBLIC_URL}/pages/error-500`} element={<Error500 />} />
