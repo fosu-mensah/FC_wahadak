@@ -113,6 +113,6 @@ public interface PostRepository {
     void updatePost(Post post);
 
     // 특정 게시물에 사용자가 좋아요를 눌렀는지 확인하는 쿼리
-    @Select("SELECT COUNT(*) > 0 FROM post_likes WHERE post_id = #{postId} AND member_nickname = #{nickname}")
+    @Select("SELECT COUNT(*) > 0 FROM likes WHERE post_id = #{postId} AND member_nickname = #{nickname}")
     boolean isPostLikedByUser(@Param("postId") int postId, @Param("nickname") String nickname);
 }

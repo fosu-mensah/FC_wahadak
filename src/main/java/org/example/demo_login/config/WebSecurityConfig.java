@@ -61,7 +61,7 @@ public class WebSecurityConfig {
                                 .requestMatchers("/api/members/userinfo").authenticated() // Member 관련 End Point
                                 .requestMatchers("/players/search/**","/players/stats/**","/api/events/**","/formation/**","api/squad/**").permitAll()
                                 .requestMatchers("/", "/error").permitAll()
-                                .requestMatchers("/uploads/**").permitAll() // 이미지 파일 접근 허용
+                                .requestMatchers("/uploads/**").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .logout(logout -> logout
@@ -85,17 +85,17 @@ public class WebSecurityConfig {
     @Bean
     public HttpFirewall allowUrlEncodedPercentHttpFirewall() {
         StrictHttpFirewall firewall = new StrictHttpFirewall();
-        firewall.setAllowUrlEncodedPercent(true); // URL에 % 문자를 허용
-        firewall.setAllowUrlEncodedSlash(true); // URL에 / 문자를 허용
-        firewall.setAllowSemicolon(true); // URL에 세미콜론(;) 문자를 허용
-        firewall.setAllowUrlEncodedDoubleSlash(true); // URL에 이중 슬래시(//) 허용
-        firewall.setAllowBackSlash(true); // URL에 백슬래시(\) 허용
-        firewall.setAllowUrlEncodedPeriod(true); // URL에 마침표(.) 허용
-        firewall.setAllowNull(true); // URL에 null 문자 허용
-        firewall.setAllowUrlEncodedCarriageReturn(true); // URL에 캐리지 리턴 허용
-        firewall.setAllowUrlEncodedLineFeed(true); // URL에 줄 바꿈 문자 허용
-        firewall.setAllowUrlEncodedParagraphSeparator(true); // URL에 문단 구분자 허용
-        firewall.setAllowUrlEncodedLineSeparator(true); // URL에 줄 구분자 허용
+        firewall.setAllowUrlEncodedPercent(true);
+        firewall.setAllowUrlEncodedSlash(true);
+        firewall.setAllowSemicolon(true);
+        firewall.setAllowUrlEncodedDoubleSlash(true);
+        firewall.setAllowBackSlash(true);
+        firewall.setAllowUrlEncodedPeriod(true);
+        firewall.setAllowNull(true);
+        firewall.setAllowUrlEncodedCarriageReturn(true);
+        firewall.setAllowUrlEncodedLineFeed(true);
+        firewall.setAllowUrlEncodedParagraphSeparator(true);
+        firewall.setAllowUrlEncodedLineSeparator(true);
         return firewall;
     }
 
@@ -104,7 +104,7 @@ public class WebSecurityConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.addAllowedOrigin("http://localhost:3000"); // 허용할 도메인 설정
+        config.addAllowedOrigin("http://localhost:3000");
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
         source.registerCorsConfiguration("/**", config);

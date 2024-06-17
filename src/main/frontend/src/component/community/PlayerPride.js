@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { fetchPosts } from '../../services/communityService';
+import { getUserInfo } from '../../services/authService';
 import Breadcrumb from "../common/breadcrumb/breadcrumb";
 import {
     Container,
@@ -15,21 +16,50 @@ import { useNavigate } from 'react-router-dom';
 
 const PlayerPride = () => {
     const [posts, setPosts] = useState([]);
+    const [currentUser, setCurrentUser] = useState(null);
+    const [loading, setLoading] = useState(true); // 추가
     const navigate = useNavigate();
 
     useEffect(() => {
-        const loadPosts = async () => {
-            const data = await fetchPosts('선수 자랑');
-            console.log('Loaded posts:', data);
-            setPosts(data);
+        const loadUserInfo = async () => {
+            try {
+                const userInfo = await getUserInfo();
+                setCurrentUser(userInfo);
+            } catch (error) {
+                console.error("Failed to load user info:", error);
+                alert("로그인이 필요합니다.");
+                navigate(`${process.env.PUBLIC_URL}/signin`);
+            } finally {
+                setLoading(false); // 로딩 상태를 false로 설정
+            }
         };
 
-        loadPosts();
-    }, []);
+        loadUserInfo();
+    }, [navigate]);
+
+    useEffect(() => {
+        if (currentUser) {
+            const loadPosts = async () => {
+                const data = await fetchPosts('선수 자랑');
+                console.log('Loaded posts:', data);
+                setPosts(data);
+            };
+
+            loadPosts();
+        }
+    }, [currentUser]);
 
     const handlePostClick = (post) => {
         navigate(`${process.env.PUBLIC_URL}/community/post/${post.id}`, { state: { category: '선수 자랑' } });
     };
+
+    if (loading) {
+        return <div>Loading...</div>; // 로딩 중일 때 표시
+    }
+
+    if (!currentUser) {
+        return null; // currentUser가 없을 때는 아무것도 렌더링하지 않음
+    }
 
     return (
         <Fragment>

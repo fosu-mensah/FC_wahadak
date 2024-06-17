@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { getPostDetails, getCommentsByPostId, addComment, likePost, unlikePost, deletePost, isPostLikedByUser, likeComment, unlikeComment, updateComment, deleteComment } from '../../services/communityService';
+import { getUserInfo } from '../../services/authService'; // 추가
 import Breadcrumb from "../common/breadcrumb/breadcrumb";
 import {
     Container,
@@ -25,23 +26,29 @@ const PostDetail = () => {
     const [newComment, setNewComment] = useState('');
     const [editingCommentId, setEditingCommentId] = useState(null);
     const [editingCommentContent, setEditingCommentContent] = useState('');
-    const currentUserNickname = 'heeggung'; // 임시로 하드코딩된 사용자 닉네임
+    const [currentUser, setCurrentUser] = useState(null); // 추가
 
     useEffect(() => {
         const loadPostDetails = async () => {
             const postDetails = await getPostDetails(postId);
-            const likedByUser = await isPostLikedByUser(postId, currentUserNickname);
+            const likedByUser = await isPostLikedByUser(postId, currentUser?.nickname); // 수정
             setPost({ ...postDetails, liked: likedByUser });
         };
 
         const loadComments = async () => {
-            const commentsData = await getCommentsByPostId(postId, currentUserNickname);
+            const commentsData = await getCommentsByPostId(postId, currentUser?.nickname); // 수정
             setComments(commentsData);
         };
 
+        const loadUserInfo = async () => {
+            const userInfo = await getUserInfo();
+            setCurrentUser(userInfo);
+        };
+
+        loadUserInfo();
         loadPostDetails();
         loadComments();
-    }, [postId]);
+    }, [postId, currentUser]);
 
     const handleAddComment = async (e) => {
         e.preventDefault();
@@ -49,7 +56,7 @@ const PostDetail = () => {
 
         const commentData = {
             postId: postId,
-            memberNickname: currentUserNickname, // 나중에 로그인된 사용자 정보로 변경
+            memberNickname: currentUser.nickname, // 로그인된 사용자 정보 사용
             content: newComment
         };
 
@@ -64,8 +71,8 @@ const PostDetail = () => {
 
     const handleEditComment = async (commentId) => {
         try {
-            await updateComment(commentId, { memberNickname: currentUserNickname, content: editingCommentContent });
-            const updatedComments = await getCommentsByPostId(postId, currentUserNickname);
+            await updateComment(commentId, { memberNickname: currentUser.nickname, content: editingCommentContent }); // 로그인된 사용자 정보 사용
+            const updatedComments = await getCommentsByPostId(postId, currentUser.nickname); // 로그인된 사용자 정보 사용
             setComments(updatedComments);
             setEditingCommentId(null);
             setEditingCommentContent('');
@@ -76,8 +83,8 @@ const PostDetail = () => {
 
     const handleDeleteComment = async (commentId) => {
         try {
-            await deleteComment(commentId, currentUserNickname);
-            const updatedComments = await getCommentsByPostId(postId, currentUserNickname);
+            await deleteComment(commentId, currentUser.nickname); // 로그인된 사용자 정보 사용
+            const updatedComments = await getCommentsByPostId(postId, currentUser.nickname); // 로그인된 사용자 정보 사용
             setComments(updatedComments);
         } catch (error) {
             console.error('Failed to delete comment:', error);
@@ -87,10 +94,10 @@ const PostDetail = () => {
     const handleLikePost = async () => {
         try {
             if (post.liked) {
-                await unlikePost(postId, currentUserNickname);
+                await unlikePost(postId, currentUser.nickname); // 로그인된 사용자 정보 사용
                 setPost(prevPost => ({ ...prevPost, liked: false, like_count: prevPost.like_count - 1 }));
             } else {
-                await likePost(postId, currentUserNickname);
+                await likePost(postId, currentUser.nickname); // 로그인된 사용자 정보 사용
                 setPost(prevPost => ({ ...prevPost, liked: true, like_count: prevPost.like_count + 1 }));
             }
         } catch (error) {
@@ -101,11 +108,11 @@ const PostDetail = () => {
     const handleLikeComment = async (commentId, liked) => {
         try {
             if (liked) {
-                await unlikeComment(commentId, currentUserNickname); // 임시로 'heeggung' 사용
+                await unlikeComment(commentId, currentUser.nickname); // 로그인된 사용자 정보 사용
             } else {
-                await likeComment(commentId, currentUserNickname); // 임시로 'heeggung' 사용
+                await likeComment(commentId, currentUser.nickname); // 로그인된 사용자 정보 사용
             }
-            const updatedComments = await getCommentsByPostId(postId, currentUserNickname);
+            const updatedComments = await getCommentsByPostId(postId, currentUser.nickname); // 로그인된 사용자 정보 사용
             setComments(updatedComments);
         } catch (error) {
             console.error('Failed to like/unlike comment:', error);
@@ -118,14 +125,14 @@ const PostDetail = () => {
 
     const handleDeletePost = async () => {
         try {
-            await deletePost(postId, currentUserNickname);
+            await deletePost(postId, currentUser.nickname); // 로그인된 사용자 정보 사용
             navigate(`${process.env.PUBLIC_URL}/community/${category}`); // 삭제 후 카테고리 게시판 목록 페이지로 이동
         } catch (error) {
             console.error('Failed to delete post:', error);
         }
     };
 
-    if (!post) {
+    if (!post || !currentUser) {
         return <div>Loading...</div>;
     }
 
@@ -138,7 +145,7 @@ const PostDetail = () => {
                         <Card style={{ borderColor: '#6c63ff' }}>
                             <CardHeader className="bg-primary text-white">
                                 <h5>{post.title}</h5>
-                                {post.memberNickname === currentUserNickname && (
+                                {post.memberNickname === currentUser.nickname && (
                                     <div>
                                         <Button color="warning" onClick={handleEditPost}>수정</Button>
                                         <Button color="danger" onClick={handleDeletePost}>삭제</Button>
@@ -212,7 +219,7 @@ const PostDetail = () => {
                                                         </span> {comment.likeCount}
                                                         <span style={{ marginLeft: '10px' }}>작성일: {new Date(comment.createdAt).toLocaleString()}</span>
                                                     </span>
-                                                    {comment.memberNickname === currentUserNickname && (
+                                                    {comment.memberNickname === currentUser.nickname && (
                                                         <div>
                                                             {editingCommentId === comment.id ? (
                                                                 <>
