@@ -59,7 +59,7 @@ public class WebSecurityConfig {
                                 .requestMatchers("/api/comments/**").permitAll() // Comment 관련 End Point
                                 .requestMatchers("/api/members/login", "/api/members/insert").permitAll() // Member 관련 End Point
                                 .requestMatchers("/api/members/userinfo").authenticated() // Member 관련 End Point
-                                .requestMatchers("/players/search/**").permitAll()
+                                .requestMatchers("/players/search/**","/players/stats/**","/api/events/**","/formation/**","api/squad/**").permitAll()
                                 .requestMatchers("/", "/error").permitAll()
                                 .requestMatchers("/uploads/**").permitAll() // 이미지 파일 접근 허용
                                 .anyRequest().authenticated()

@@ -59,7 +59,8 @@ const PlayerSearch = () => {
         if (value <= 119) return 'stat-color-110-119';
         if (value <= 129) return 'stat-color-120-129';
         if (value <= 139) return 'stat-color-130-139';
-        return 'stat-color-140-149';
+        if (value <= 149) return 'stat-color-140-149';
+        return "stat-color-150-159"
     };
 
     return (
