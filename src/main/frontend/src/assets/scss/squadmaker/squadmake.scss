@@ -1,0 +1,106 @@
+.make-squad {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .form-container {
+    display: flex;
+    width: 80%;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .squad-form {
+    width: 100%;
+    max-width: 800px; /* 최대 너비 설정 */
+    margin-right: 1rem;
+
+    .form-group {
+      margin-bottom: 1rem;
+
+      label {
+        display: block;
+        margin-bottom: 0.5rem;
+      }
+
+      input,
+      select {
+        width: 100%;
+        padding: 0.5rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+    }
+
+    .soccer-field-container {
+      position: relative;
+      width: 100%;
+      max-width: 800px; /* 필요에 따라 조정 */
+      margin: 1rem 0;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+
+      .soccer-field {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+      }
+
+      .player-position {
+        position: absolute;
+        width: 3.5vw; /* 화면 크기에 따라 비율 조정 */
+        height: 3.5vw; /* 화면 크기에 따라 비율 조정 */
+        color: black;
+        text-align: center;
+        border-radius: 50%;
+        line-height: 3.5vw; /* 화면 크기에 따라 비율 조정 */
+        font-weight: bold;
+
+        &.attacker {
+          background-color: #f54c4c;
+        }
+
+        &.midfielder {
+          background-color: #2ada2a;
+        }
+
+        &.defender {
+          background-color: #5959f3;
+        }
+
+        &.goalkeeper {
+          background-color: yellow;
+        }
+      }
+    }
+
+    button {
+      padding: 0.5rem 1rem;
+      border: none;
+      background-color: #4CAF50;
+      color: white;
+      border-radius: 4px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #45a049;
+      }
+    }
+  }
+
+  .formation-details {
+    width: 100%;
+    max-width: 800px; /* 최대 너비 설정 */
+    height: 15rem;
+    margin-top: 1rem;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+
+    h2 {
+      margin-top: 0;
+    }
+  }
+}

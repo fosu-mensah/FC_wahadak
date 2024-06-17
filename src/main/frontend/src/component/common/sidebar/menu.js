@@ -7,7 +7,7 @@ export const MENUITEMS = [
                style={{width: '60px', height: '60px'}}/>,
     type: "sub",
     path: ``,
-    active: true,
+    active: false,
     children: [
       { title: "선수 검색", type: "sub" },
       {
@@ -36,14 +36,19 @@ export const MENUITEMS = [
     children: [
       { title: "스쿼드 메이커", type: "sub" },
       {
-        title: "스쿼드 만들기",
+        title: "나만의 포메이션 만들기",
         type: "link",
-        path: ``,
+        path: `${process.env.PUBLIC_URL}/squad-maker`,
       },
       {
         title: "스쿼드 목록",
+        type: `link`,
+        path: `${process.env.PUBLIC_URL}/squad-list`,
+      },
+      {
+        title: "팀 구성하기!",
         type: "link",
-        path: ``,
+        path: `${process.env.PUBLIC_URL}/make-team`,
       },
       {
         title: "프로 Pick!",

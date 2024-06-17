@@ -9,12 +9,14 @@ $stat-colors: (
         "stat-color-110-119": #8B00FF,
         "stat-color-120-129": #FF00FF,
         "stat-color-130-139": #FF0000,
-        "stat-color-140-149": #FFD700,
+        "stat-color-140-149": #d5a601,
+        "stat-color-150-159": #fac002
 );
 
 // Generate classes for stat colors
 @each $name, $color in $stat-colors {
   .#{$name} {
+    font-weight: bold;
     color: $color;
   }
 }

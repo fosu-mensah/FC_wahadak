@@ -161,7 +161,12 @@ import Searchwebsite from "../pages/search/searchwebsite";
 import MainPage from "../component/common/main/mainpage";
 import Enhancement from "../component/common/SearchPlayer/Enhancement";
 import PlayerDetails from "../component/common/SearchPlayer/PlayerDetails"
+import MakeSquad from "../component/common/SquadMaker/MakeSquad"
+import MakeTeam from "../component/common/SquadMaker/MakeTeam"
+import SquadList from "../component/common/SquadMaker/SquadList"
 
+//Warning
+import Warning from "../component/common/warning/Warning";
 // News
 import DomesticNews from "../component/news/DomesticNews";
 import ExclusiveNews from "../component/news/ExclusiveNews";
@@ -191,8 +196,24 @@ export const routes = [
     Component: < PlayerDetails />,
   },
   {
+    path: `${process.env.PUBLIC_URL}/squad-maker`,
+    Component: < MakeSquad />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/make-team`,
+    Component: < MakeTeam />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/squad-list`,
+    Component: < SquadList />,
+  },
+  {
     path: `${process.env.PUBLIC_URL}/enhancement`,
     Component: <Enhancement />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/warning`,
+    Component: <Warning/>,
   },
   {
     path: `${process.env.PUBLIC_URL}/dashboard/generalwidget`,
