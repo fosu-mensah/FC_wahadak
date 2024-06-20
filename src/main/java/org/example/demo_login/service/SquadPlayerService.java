@@ -1,12 +1,15 @@
 package org.example.demo_login.service;
 
+import org.example.demo_login.Mapper.PlayerInfoRepository;
 import org.example.demo_login.Mapper.PlayerStatsRepository;
 import org.example.demo_login.Mapper.SquadPlayerRepository;
+import org.example.demo_login.Mapper.SquadRepository;
 import org.example.demo_login.api.UserApiClient;
-import org.example.demo_login.domain.PlayerStat;
-import org.example.demo_login.domain.SquadPlayer;
+import org.example.demo_login.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 @Service
@@ -23,6 +26,15 @@ public class SquadPlayerService {
 
     @Autowired
     private SquadService squadService;
+
+    @Autowired
+    private SquadRepository squadRepository; // SquadRepository 추가
+
+    @Autowired
+    private FormationService formationService; //FormationService 추가
+
+    @Autowired
+    private PlayerInfoRepository playerInfoRepository;
 
     public List<SquadPlayer> getSquadPlayersBySquadId(int squadId) {
         List<SquadPlayer> squadPlayers = squadPlayerRepository.selectSquadPlayersBySquadId(squadId);
@@ -49,16 +61,26 @@ public class SquadPlayerService {
         return squadPlayers;
     }
 
+
     public void addSquadPlayer(SquadPlayer squadPlayer) {
         squadPlayerRepository.insertSquadPlayer(squadPlayer);
         squadService.calculateAndUpdateTotalPay(squadPlayer.getSquadId());
     }
 
-    //removeSquadPlayer 메서드에서 특정 선수를 삭제하려면 그
-    // 선수의 id를 알아야 하기 때문에 selectSquadPlayerById 메서드를 사용
-    public void removeSquadPlayer(int id) {
-        SquadPlayer squadPlayer = squadPlayerRepository.selectSquadPlayerById(id);
-        squadPlayerRepository.deleteSquadPlayer(id);
-        squadService.calculateAndUpdateTotalPay(squadPlayer.getSquadId());
+    @Transactional
+    public void saveSquad(int squadId, List<SquadPlayer> players) {
+        squadPlayerRepository.deleteBySquadId(squadId); // 기존 스쿼드 삭제
+        for (SquadPlayer player : players) {
+            player.setSquadId(squadId); // 각 선수의 스쿼드 ID 설정
+            squadPlayerRepository.insertSquadPlayer(player); // 선수 저장
+        }
     }
+
+
+
+    public void removeAllSquadPlayers(int squadId) {
+        squadPlayerRepository.deleteAllSquadPlayersBySquadId(squadId);
+        squadService.calculateAndUpdateTotalPay(squadId);
+    }
+
 }

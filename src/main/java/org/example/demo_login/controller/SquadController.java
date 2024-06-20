@@ -33,6 +33,7 @@ public class SquadController {
     @GetMapping("/{id}")
     public ResponseEntity<Squad> getSquadById(@PathVariable int id) {
         Squad squad = squadService.getSquadById(id);
+        System.out.println(squad);
         if (squad == null) {
             return ResponseEntity.notFound().build();
         }

@@ -8,6 +8,7 @@ import org.example.demo_login.domain.SquadPlayer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,6 +31,13 @@ public class SquadService {
         Squad squad = squadRepository.selectSquadById(squadId);
         if (squad != null) {
             formatTotalPay(squad);
+            // 포메이션 정보 가져오기 및 설정
+            Formation formation = formationService.getFormationById(squad.getFormationId());
+            if (formation != null) {
+                squad.setFormationName(formation.getFormationName());
+                List<String> positions = formationService.getPositionsByFormationId(formation.getFormationId());
+                squad.setPositions(positions);
+            }
         }
         return squad;
     }
@@ -42,6 +50,7 @@ public class SquadService {
         }
         return squads;
     }
+
 
     public List<Squad> getAllSquads() {
         List<Squad> squads = squadRepository.selectAllSquads();

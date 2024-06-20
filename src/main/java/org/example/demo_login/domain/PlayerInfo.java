@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class PlayerInfo {

@@ -5,4 +5,5 @@ import lombok.Data;
 public class PlayerRequest {
     private int playerId;
     private String position;
+    private PlayerInfo playerInfo;
 }

@@ -7,13 +7,17 @@ import java.util.List;
 @Mapper
 public interface SquadRepository {
 
-    @Select("SELECT * FROM squad WHERE squad_id = #{squadId}")
+    @Select("SELECT s.*, f.* " +
+            "FROM squad s " +
+            "JOIN formation f ON s.formation_id = f.formation_id " +
+            "WHERE s.squad_id = #{squadId}")
     @Results({
             @Result(column="squad_id", property="squadId"),
             @Result(column="user_nickname", property="userNickname"),
             @Result(column="formation_id", property="formationId"),
             @Result(column="squad_name", property="squadName"),
-            @Result(column="total_pay", property="totalPay")
+            @Result(column="total_pay", property="totalPay"),
+            @Result(column="formation_name", property="formationName"),
     })
     Squad selectSquadById(int squadId);
 

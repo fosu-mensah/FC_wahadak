@@ -19,4 +19,8 @@ public class FormationService {
     public List<Formation> getAllFormations() {
         return formationRepository.selectAllFormations();
     }
+
+    public List<String> getPositionsByFormationId(int formationId) {
+        return formationRepository.selectPositionsByFormationId(formationId);
+    }
 }

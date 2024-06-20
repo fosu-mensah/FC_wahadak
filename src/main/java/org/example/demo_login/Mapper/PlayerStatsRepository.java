@@ -31,7 +31,7 @@ public interface PlayerStatsRepository {
             "pi.gk_kick AS gkKick, pi.gk_reaction AS gkReaction, pi.gk_speed AS gkSpeed, pi.gk_location AS gkLocation " +
             "FROM playerStat ps " +
             "JOIN playerInfo pi ON ps.pid = pi.pid " +
-            "WHERE ps.pname = #{pname} AND ps.season = #{season}")
+            "WHERE ps.pname LIKE CONCAT('%', #{pname}, '%') AND ps.season = #{season}")
     @Results({
             @Result(property = "positionstat", column = "positionstat", javaType = Map.class, typeHandler = JsonTypeHandler.class)
     })

@@ -92,4 +92,12 @@ public interface SquadPlayerRepository {
     // 유저가 스쿼드안에 있는 선수를 삭제할때.
     @Delete("DELETE FROM squad_player WHERE id = #{id}")
     void deleteSquadPlayer(int id);
+
+    //특정 스쿼드안에 있는 모든 선수를 삭제할때
+    @Delete("DELETE FROM squad_player WHERE squad_id = #{squadId}")
+    void deleteAllSquadPlayersBySquadId(int squadId);
+
+    // 스쿼드 안에 있는 모든 선수 삭제
+    @Delete("DELETE FROM squad_player WHERE squad_id = #{squadId}")
+    void deleteBySquadId(int squadId);
 }
