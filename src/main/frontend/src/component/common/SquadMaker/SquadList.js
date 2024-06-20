@@ -24,6 +24,10 @@ const SquadList = () => {
         navigate(`${process.env.PUBLIC_URL}/squad-maker`);
     };
 
+    const handleSquadClick = (squadId, squadData) => {
+        navigate(`${process.env.PUBLIC_URL}/squad-maker/${squadId}`, { state: squadData });
+    };
+
     return (
         <div className="squad-list">
             <h1>팀 목록</h1>
@@ -35,11 +39,11 @@ const SquadList = () => {
             ) : (
                 <ul className="squad-items">
                     {squads.map(squad => (
-                        <li key={squad.squadId} className="squad-item">
-                            <h2>{squad.squadName}</h2>
-                            <p>유저: {squad.userNickname}</p>
-                            <p>포메이션: {squad.formationName}</p>
-                            <p>총 급여: {squad.formattedTotalPay}</p>
+                        <li key={squad.squadId} className="squad-item" onClick={() => handleSquadClick(squad.squadId, squad)}>
+                            <div style={{fontSize:'2rem', fontWeight:'bold'}}>{squad.squadName}</div>
+                            <div>유저: {squad.userNickname}</div>
+                            <div>포메이션: {squad.formationName}</div>
+                            <div>총 급여: {squad.formattedTotalPay}</div>
                         </li>
                     ))}
                 </ul>

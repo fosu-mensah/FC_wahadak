@@ -1,3 +1,5 @@
+@import '../../Nexon_font/fonts.scss';
+
 .squad-list {
   padding: 20px;
 
@@ -45,8 +47,9 @@
         margin: 0 0 10px 0;
       }
 
-      p {
+      div {
         margin: 5px 0;
+        font-size: 1rem;
       }
 
       &:hover {

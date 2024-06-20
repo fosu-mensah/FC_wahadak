@@ -4,6 +4,69 @@ import apiClient from '../../../api/apiClient';
 import '../../../assets/scss/playerDetail/playerDetail.scss';
 import '../../../../src/assets/scss/statColor/statColor.scss';
 
+const nation = {
+    '알바니아': 'Albania.png',
+    '알제리': 'Algeria.png',
+    '아르헨티나': 'Argentina.png',
+    '아르메니아': 'Armenia.png',
+    '호주': 'Australia.png',
+    '오스트리아': 'Austria.png',
+    '아제르바이잔': 'Azerbaijan.png',
+    '바레인': 'Bahrain.png',
+    '방글라데시': 'Bangladesh.png',
+    '벨기에': 'Belgium.png',
+    '볼리비아': 'Bolivia.png',
+    '보스니아 & 헤르체고비나': 'Bosnia & Herzegovina.png',
+    '브라질': 'Brazil.png',
+    '불가리아': 'Bulgaria.png',
+    '카메룬': 'Cameroon.png',
+    '캐나다': 'Canada.png',
+    '칠레': 'Chile.png',
+    '중국': 'China.png',
+    '콜롬비아': 'Colombia.png',
+    '콩고-브라자빌': 'Congo-Brazzaville.png',
+    '프랑스': 'france.png',
+    '크로아티아': 'Croatia.png',
+    '덴마크': 'Denmark.png',
+    '에콰도르': 'Ecuador.png',
+    '이집트': 'Egypt.png',
+    '잉글랜드': 'England.png',
+    '핀란드': 'Finland.png',
+    '가봉': 'Gabon.png',
+    '조지아': 'Georgia.png',
+    '독일': 'Germany.png',
+    '가나': 'Ghana.png',
+    '그리스': 'Greece.png',
+    '헝가리': 'Hungary.png',
+    '아이슬란드': 'Iceland.png',
+    '이란': 'Iran.png',
+    '이라크': 'Iraq.png',
+    '아일랜드': 'Ireland.png',
+    '이탈리아': 'Italy.png',
+    '자메이카': 'Jamaica.png',
+    '일본': 'Japan.png',
+    '대한민국': 'Korea.png',
+    '루마니아': 'Romania.png',
+    '러시아': 'Russia.png',
+    '스코틀랜드': 'Scotland.png',
+    '세네갈': 'Senegal.png',
+    '세르비아': 'Serbia.png',
+    '슬로바키아': 'Slovakia.png',
+    '슬로베니아': 'Slovenia.png',
+    '스페인': 'Spain.png',
+    '스웨덴': 'Sweden.png',
+    '스위스': 'Switzerland.png',
+    '터키': 'Turkey.png',
+    '우크라이나': 'Ukraine.png',
+    '우루과이': 'Uruguay.png',
+    '미국': 'USA.png',
+    '우즈베키스탄': 'Uzbekistan.png',
+    '베네수엘라': 'Venezuela.png',
+    '웨일스': 'Wales.png',
+    '포르투갈' : 'Portugal.png',
+    '폴란드' : 'Poland.png'
+}
+
 const PlayerDetails = () => {
     const { pid } = useParams();
     const [player, setPlayer] = useState(null);
@@ -91,7 +154,7 @@ const PlayerDetails = () => {
 
     return (
         <div className="player-details">
-            <h2>선수 검색 결과</h2>
+            <div style={{fontSize:'3rem',marginBottom:'1rem'}}>선수 검색 결과</div>
             <div className="player-info-wrapper">
                 <div className="player-card">
                     <div className="player-header">
@@ -125,25 +188,43 @@ const PlayerDetails = () => {
                             </ul>
                         </div>
                     </div>
-                    {isDropdownOpen && ( <div className="custom-select-wrapper"> <div className="custom-select open"> <ul className="custom-options open"> {[...Array(10)].map((_, i) => ( <li key={i + 1} onClick={() => handleEnhancementChange(i + 1)}> <img src={`/FC_wahadak/assets/images/enhancement/${i + 1}.png`} alt={`${i + 1}강`} className="enhancement-image" /> </li> ))} </ul> </div> </div> )}
-                    <div className="player-info">
-                        <p><strong>국적:</strong> {player["국적"]}</p>
+                    <div className="player-info" style={{marginTop:'1rem'}}>
+                        <p>
+                            <strong>국적:</strong>
+                            {nation[player["국적"]] && (
+                                <img
+                                    src={`/FC_wahadak/assets/images/nation/${nation[player["국적"]]}`}
+                                    alt={player["국적"]}
+                                    className="nationality-image"
+                                    style={{width: '40px', height: '30px', marginLeft: '5px', marginBottom: '3px'}}
+                                />
+                            )}
+                            {player["국적"]}{" "}
+                        </p>
                         <p><strong>포지션:</strong> {player["포지션"]}</p>
                         <p><strong>키:</strong> {player["키"]} cm</p>
                         <p><strong>몸무게:</strong> {player["몸무게"]} kg</p>
                         <p><strong>OVR:</strong> {applyLevelBonus(player["maxPositionStat"])}</p>
                     </div>
+                    {isDropdownOpen && (<div className="custom-select-wrapper">
+                        <div className="custom-select open">
+                            <ul className="custom-options open"> {[...Array(10)].map((_, i) => (
+                                <li key={i + 1} onClick={() => handleEnhancementChange(i + 1)}><img
+                                    src={`/FC_wahadak/assets/images/enhancement/${i + 1}.png`} alt={`${i + 1}강`}
+                                    className="enhancement-image"/></li>))} </ul>
+                        </div>
+                    </div>)}
                 </div>
                 <div className="ProfileCard-description">
                     <div>
-                    <strong>급여:</strong> {player["급여"]} - {player["포지션 스탯"] ?
-                    Object.entries(player["포지션 스탯"]).map(([key, value], index) => (
-                        <span key={key}>
-            <strong>{key}:</strong> {value}
-                            {index < Object.entries(player["포지션 스탯"]).length - 1 ? ' ' : ''}
-        </span>
-                    ))
-                    : null}
+                        <strong>급여:</strong> {player["급여"]} - {player["포지션 스탯"] ?
+                        Object.entries(player["포지션 스탯"]).map(([key, value], index) => (
+                            <span key={key}>
+                                <strong>{key}:</strong> {value}
+                                {index < Object.entries(player["포지션 스탯"]).length - 1 ? ' ' : ''}
+                            </span>
+                        ))
+                        : null}
                     </div>
                     <div>
                         <strong>생년 월일:</strong> {player["생년 월일"]}
@@ -164,13 +245,13 @@ const PlayerDetails = () => {
                         <strong>유명도:</strong> {player["유명도"]}
                     </div>
                     <div>
-                        <strong>1카 평균 거래 BP:</strong> {player["1카 평균 거래 BP"]}
+                        <strong>1카 평균 거래 BP:</strong> {player["1카 평균 거래 BP"]} BP
                     </div>
                     <div>
-                        <strong>클럽 경력:</strong>
+                        <strong style={{marginTop:'0.8rem',marginBottom:'0.8rem', marginLeft:'6rem'}}>클럽 경력</strong>
                         <ul>
                             {player["클럽 경력"].map((club, index) => (
-                                <li key={index}>{club["club"]} - {club["year"]}</li>
+                                <li key={index}>● {club["club"]} - {club["year"]}</li>
                             ))}
                         </ul>
                     </div>
@@ -214,7 +295,7 @@ const PlayerDetails = () => {
                     </div>
                 )}
             </div>
-            <div className="stat-section">
+            <div className="stat-section" style={{fontSize:'1rem'}}>
                 <div className="stat-list">
                     <ul>
                         {detailedStats.slice(0, Math.ceil(detailedStats.length / 3)).map(([key, value]) => (

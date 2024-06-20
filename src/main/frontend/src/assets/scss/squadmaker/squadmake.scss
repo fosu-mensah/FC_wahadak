@@ -26,9 +26,18 @@
       input,
       select {
         width: 100%;
-        padding: 0.5rem;
-        border: 1px solid #ccc;
-        border-radius: 4px;
+        padding: 10px;
+        border: 1px solid #55a2f8;
+        border-radius: 5px;
+        font-size: 1rem;
+        font-weight: normal;
+        transition: border-color 0.3s, box-shadow 0.3s;
+
+        &:focus {
+          border-color: #0056b3;
+          box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+          outline: none;
+        }
       }
     }
 
@@ -36,10 +45,10 @@
       position: relative;
       width: 100%;
       max-width: 800px; /* 필요에 따라 조정 */
-      margin: 1rem 0;
-      overflow: hidden;
+      margin-top: 1rem;
       display: flex;
       justify-content: center;
+      margin-left: 2.5rem;
 
       .soccer-field {
         width: 100%;
@@ -92,7 +101,7 @@
   .formation-details {
     width: 100%;
     max-width: 800px; /* 최대 너비 설정 */
-    height: 15rem;
+    height: 10rem;
     margin-top: 1rem;
     padding: 1rem;
     border: 1px solid #ccc;

@@ -111,7 +111,7 @@ const formationCoordinates = {
         "ST": { "top": 20, "left": 50, "class": "attacker" }
     },
     "4-4-2": {
-        "GK": {"top": 85, "left": 46.9, "class": "goalkeeper"},
+        "GK": {"top": 87, "left": 46.9, "class": "goalkeeper"},
         "LB": { "top": 68, "left": 19, "class": "defender" },
         "CB": {"top": 72, "left": 36, "class": "defender"},
         "CB2": { "top": 71.5, "left": 55, "class": "defender" },
@@ -137,17 +137,17 @@ const formationCoordinates = {
         "ST2": { "top": 20, "left": 50, "class": "attacker" }
     },
     "4-4-1-1": {
-        "GK": { "top": 85, "left": 50, "class": "goalkeeper" },
-        "LB": { "top": 70, "left": 30, "class": "defender" },
-        "CB": { "top": 70, "left": 50, "class": "defender" },
-        "CB2": { "top": 70, "left": 50, "class": "defender" },
-        "RB": { "top": 70, "left": 70, "class": "defender" },
-        "LM": { "top": 50, "left": 30, "class": "midfielder" },
-        "CM": { "top": 50, "left": 50, "class": "midfielder" },
-        "CM2": { "top": 50, "left": 50, "class": "midfielder" },
-        "RM": { "top": 50, "left": 70, "class": "midfielder" },
-        "CF": { "top": 30, "left": 50, "class": "attacker" },
-        "ST": { "top": 20, "left": 50, "class": "attacker" }
+        "GK": {"top": 87, "left": 46.9, "class": "goalkeeper"},
+        "LB": { "top": 68, "left": 19, "class": "defender" },
+        "CB": {"top": 72, "left": 36, "class": "defender"},
+        "CB2": { "top": 71.5, "left": 55, "class": "defender" },
+        "RB": { "top": 69.5, "left": 74, "class": "defender" },
+        "LM": {"top": 39.5, "left": 17, "class": "midfielder"},
+        "CM": {"top": 43, "left": 35, "class": "midfielder"},
+        "CM2": {"top": 42.5, "left": 54, "class": "midfielder"},
+        "RM": {"top": 40.8, "left": 73, "class": "midfielder"},
+        "CF": { "top": 25, "left": 43, "class": "attacker" },
+        "ST": { "top": 11, "left": 42.5, "class": "attacker" }
     },
     "4-3-3": {
         "GK": {"top": 85, "left": 46.9, "class": "goalkeeper"},
@@ -532,7 +532,7 @@ const MakeSquad = () => {
     const handleModalConfirm = () => {
         setShowModal(false);
         if (modalMessage.includes('포메이션 생성이 되었습니다')) {
-            navigate('/squad-list'); // 팀 목록 페이지로 이동
+            navigate('/FC_wahadak/squad-list'); // 팀 목록 페이지로 이동
         }
     };
 
@@ -598,8 +598,8 @@ const MakeSquad = () => {
                 </form>
                 {selectedFormation && (
                     <div className="formation-details">
-                        <h2>{selectedFormation.formationName}</h2>
-                        <p>{selectedFormation.description}</p>
+                        <div style={{fontSize:'2.5rem', marginBottom:'1rem'}}>{selectedFormation.formationName}</div>
+                        <div style={{fontSize:'1rem'}}>{selectedFormation.description}</div>
                     </div>
                 )}
             </div>

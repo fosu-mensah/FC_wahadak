@@ -1,0 +1,58 @@
+.player-search {
+  .search-form-container {
+    margin-left: 2rem;
+    width: 100%;
+  }
+  .search-players{
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #007bff;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: normal;
+    transition: border-color 0.3s, box-shadow 0.3s;
+
+    &:focus {
+      border-color: #0056b3;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+      outline: none;
+    }
+  }
+  .search-result-container {
+    width: 100%;
+    ul {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center; /* 중앙 정렬 */
+      gap: 10px; /* 카드 사이의 간격 조정 */
+    }
+    .player-card {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 16px;
+      width: 300px; // 카드의 너비를 설정합니다.
+      box-sizing: border-box;
+      transition: transform 0.3s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .player-card:hover {
+      transform: scale(1.05);
+    }
+
+    .player-header, .player-info, .player-stats {
+      width: 100%;
+      text-align: center;
+    }
+
+    .player-buttons {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+}

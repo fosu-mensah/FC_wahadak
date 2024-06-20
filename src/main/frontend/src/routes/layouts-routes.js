@@ -164,6 +164,7 @@ import PlayerDetails from "../component/common/SearchPlayer/PlayerDetails"
 import MakeSquad from "../component/common/SquadMaker/MakeSquad"
 import MakeTeam from "../component/common/SquadMaker/MakeTeam"
 import SquadList from "../component/common/SquadMaker/SquadList"
+import SearchTeamColor from "../component/common/SearchTeamColor/SearchTeamColor"
 
 //Warning
 import Warning from "../component/common/warning/Warning";
@@ -207,7 +208,7 @@ export const routes = [
     Component: < MakeSquad />,
   },
   {
-    path: `${process.env.PUBLIC_URL}/make-team`,
+    path: `${process.env.PUBLIC_URL}/squad-maker/:squadId`,
     Component: < MakeTeam />,
   },
   {
@@ -217,6 +218,10 @@ export const routes = [
   {
     path: `${process.env.PUBLIC_URL}/enhancement`,
     Component: <Enhancement />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/team-color-list`,
+    Component:<SearchTeamColor/>,
   },
   {
     path: `${process.env.PUBLIC_URL}/warning`,

@@ -25,7 +25,8 @@
   }
 
   &.selected {
-    border-color: purple;
-    transform: scale(1.2);
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    border: 3px solid #007bff;
   }
 }
