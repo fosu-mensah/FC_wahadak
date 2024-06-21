@@ -145,4 +145,11 @@ public class PostController {
         boolean isLiked = postService.isPostLikedByUser(postId, nickname);
         return ResponseEntity.ok(isLiked);
     }
+
+    // 좋아요 순으로 상위 6개의 게시물을 조회하는 엔드포인트
+    @GetMapping("/top-liked")
+    public ResponseEntity<List<Post>> getTop6PostsByLikes() {
+        List<Post> topPosts = postService.getTop6PostsByLikes();
+        return new ResponseEntity<>(topPosts, HttpStatus.OK);
+    }
 }

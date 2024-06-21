@@ -27,13 +27,14 @@ public class JwtUtil {
     }
 
     // 토큰을 생성하는 메서드
-    public String generateToken(String subject) {
-        System.out.println("Generating token for subject: " + subject);
+    public String generateToken(String email, String nickname) {
+        System.out.println("Generating token for email: " + email);
         Date now = new Date();
         Date expiration = new Date(now.getTime() + EXPIRATION_TIME);
 
         String token = Jwts.builder()
-                .setSubject(subject)
+                .setSubject(email)
+                .claim("nickname", nickname)
                 .setIssuedAt(now)
                 .setExpiration(expiration)
                 .signWith(this.key)
@@ -42,17 +43,24 @@ public class JwtUtil {
         return token;
     }
 
-    // 토큰 파싱
-    public String getUsernameFromToken(String token) {
-        if (token.startsWith("Bearer ")) {
-            token = token.substring(7); // "Bearer " 접두어 제거
-        }
+    // 이메일을 토큰에서 추출하는 메서드
+    public String getEmailFromToken(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(this.key)
                 .build()
                 .parseClaimsJws(token)
                 .getBody()
                 .getSubject();
+    }
+
+    // 닉네임을 토큰에서 추출하는 메서드
+    public String getNicknameFromToken(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(this.key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .get("nickname", String.class);
     }
 
     // 토큰 검증

@@ -58,6 +58,12 @@ public interface PostRepository {
             "WHERE p.like_count >= 10")
     List<Post> selectPopularPosts();
 
+    // 좋아요 순으로 상위 6개의 게시물을 조회하는 쿼리
+    @Select("SELECT p.id, p.category, p.title, p.content, p.created_at, p.like_count, m.nickname AS memberNickname " +
+            "FROM post p INNER JOIN member m ON p.member_nickname = m.nickname " +
+            "ORDER BY p.like_count DESC LIMIT 10")
+    List<Post> selectTop6PostsByLikes();
+
     // 게시물을 검색하는 쿼리
     @Select("<script>" +
             "SELECT p.id, p.category, p.title, p.content, p.created_at, p.like_count, m.nickname AS memberNickname " +

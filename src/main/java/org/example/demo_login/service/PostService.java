@@ -115,4 +115,9 @@ public class PostService {
     public boolean isPostLikedByUser(int postId, String nickname) {
         return postRepository.isPostLikedByUser(postId, nickname);
     }
+
+    // 좋아요 순으로 상위 6개의 게시물을 조회하는 메서드
+    public List<Post> getTop6PostsByLikes() {
+        return postRepository.selectTop6PostsByLikes();
+    }
 }

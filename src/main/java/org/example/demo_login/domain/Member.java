@@ -12,9 +12,12 @@ public class Member {
     private String nickname;
     private String phone;
     private int age;
-    private Role role = Role.USER; // 디폴트 역할 값이 USER 로 지정.
+    private Role role = Role.USER;
+    private String provider;
+    private String providerId;
 
     public enum Role {
         ADMIN, USER
     }
+
 }

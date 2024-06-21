@@ -12,8 +12,8 @@ public interface MemberRepository {
     List<Member> selectAll();
 
     // Member 테이블에 회원 데이터 삽입
-    @Insert("INSERT INTO member(name, email, userPw, nickname, age, phone) " +
-            "VALUES(#{name}, #{email}, #{userPw}, #{nickname}, #{age}, #{phone})")
+    @Insert("INSERT INTO member(name, email, userPw, nickname, age, phone, provider, providerId) " +
+            "VALUES(#{name}, #{email}, #{userPw}, #{nickname}, #{age}, #{phone}, #{provider}, #{providerId})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     void insert(Member member);
 
@@ -24,6 +24,9 @@ public interface MemberRepository {
     // 닉네임으로 회원 조회
     @Select("SELECT * FROM member WHERE nickname = #{name}")
     Member findByUsername(@Param("name") String name);
+
+    @Select("SELECT * FROM member WHERE nickname = #{nickname}")
+    Member findByNickname(@Param("nickname") String nickname);
 
     // 이메일로 회원 조회
     @Select("SELECT * FROM member WHERE email = #{email}")
@@ -36,4 +39,8 @@ public interface MemberRepository {
     // 역할 업데이트
     @Update("UPDATE member SET role = #{role} WHERE id = #{id}")
     void updateRole(@Param("id") int id, @Param("role") String role);
+
+    // Provider ID로 회원 조회
+    @Select("SELECT * FROM member WHERE provider = #{provider} AND providerId = #{providerId}")
+    Member findByProviderId(@Param("provider") String provider, @Param("providerId") String providerId);
 }

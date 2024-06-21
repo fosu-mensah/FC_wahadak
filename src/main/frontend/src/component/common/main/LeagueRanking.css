@@ -1,0 +1,118 @@
+.league-ranking {
+    width: 100%;
+    position: relative;
+}
+
+.fixed-title {
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 10;
+    padding: 10px 0;
+    font-size: 24px;
+}
+
+.fixed-tabs {
+    position: sticky;
+    top: 40px; /* fixed-title의 높이 만큼 아래로 설정 */
+    background: white;
+    z-index: 10;
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 10px;
+    border-bottom: none;
+}
+
+.league-tabs button {
+    background: none;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.league-tabs button.active {
+    font-weight: bold;
+    border-bottom: 2px solid #000;
+}
+
+.table-container {
+    overflow-y: auto;
+    height: calc(100vh - 120px); /* 화면 높이에 맞춰서 조정 */
+}
+
+.league-ranking table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.league-ranking th, .league-ranking td {
+    padding: 8px;
+    border-left: none;
+    border-right: none;
+}
+
+.league-ranking th {
+    background-color: #f9f9f9;
+    font-weight: bold;
+    text-align: center; /* 텍스트 중앙 정렬 */
+}
+
+.league-ranking td {
+    text-align: center; /* 텍스트 중앙 정렬 */
+}
+
+.team-cell {
+    text-align: left; /* 팀명 왼쪽 정렬 */
+    width: 200px;
+}
+
+.team-info {
+    display: flex;
+    align-items: center;
+}
+
+.team-logo {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+.league-ranking tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.league-ranking tr:hover {
+    background-color: #ddd;
+}
+
+.league-ranking th:nth-child(1),
+.league-ranking td:nth-child(1) {
+    width: 50px; /* 순위 */
+}
+
+.league-ranking th:nth-child(2),
+.league-ranking td:nth-child(2) {
+    text-align: left; /* 팀명 왼쪽 정렬 */
+    width: 200px; /* 팀명 */
+}
+
+.league-ranking th:nth-child(3),
+.league-ranking td:nth-child(3),
+.league-ranking th:nth-child(4),
+.league-ranking td:nth-child(4),
+.league-ranking th:nth-child(5),
+.league-ranking td:nth-child(5),
+.league-ranking th:nth-child(6),
+.league-ranking td:nth-child(6),
+.league-ranking th:nth-child(7),
+.league-ranking td:nth-child(7),
+.league-ranking th:nth-child(8),
+.league-ranking td:nth-child(8),
+.league-ranking th:nth-child(9),
+.league-ranking td:nth-child(9),
+.league-ranking th:nth-child(10),
+.league-ranking td:nth-child(10) {
+    width: 50px; /* 나머지 컬럼 */
+}

@@ -1,13 +1,12 @@
-import React, { useState } from "react"; // React와 훅 사용
-import { Container, Row, Col, CardBody, Form, FormGroup, Input, Label, Button } from "reactstrap"; // Reactstrap 사용
-import { ToastContainer, toast } from "react-toastify"; // 토스트 알림 사용
-import "react-toastify/dist/ReactToastify.css"; // 토스트 알림 스타일
-import { useNavigate } from "react-router-dom"; // 라우팅을 위한 훅
-import { Link } from "react-router-dom"; // 링크를 위한 컴포넌트
-import { handleLogin, handleSignup } from "../services/authService"; // 로그인, 회원가입 함수 가져오기
+import React, { useState, useEffect } from "react";
+import { Container, Row, Col, CardBody, Form, FormGroup, Input, Label, Button } from "reactstrap";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { handleLogin, handleSignup, getUserInfo, redirectToGoogleLogin } from "../services/authService";
 
 const Signin = () => {
-  // 상태 변수 선언
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -16,10 +15,8 @@ const Signin = () => {
   const [userPw, setUserPw] = useState("");
   const [phone, setPhone] = useState("");
   const [age, setAge] = useState("");
-  const history = useNavigate(); // 페이지 이동을 위한 훅
+  const history = useNavigate();
 
-
-  // 로그인 처리 함수
   const loginAuth = async (event) => {
     event.preventDefault();
     setLoading(true);
@@ -34,7 +31,6 @@ const Signin = () => {
     }
   };
 
-  // 회원가입 처리 함수
   const signupAuth = async (event) => {
     event.preventDefault();
     if (name && email && userPw && nickname && phone && age) {
@@ -57,20 +53,43 @@ const Signin = () => {
     }
   };
 
-  // 로그인/회원가입 폼 전환 함수
   const toggleForm = () => {
     document.querySelector(".cont").classList.toggle("s--signup");
   };
 
-  // 구글 로그인 처리 함수 (구현 예정)
-  const googleAuth = async () => {
-    history(`${process.env.PUBLIC_URL}/dashboard/default`);
-  };
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      const token = sessionStorage.getItem("token");
+
+      if (token) {
+        try {
+          const userInfo = await getUserInfo();
+          console.log("User info:", userInfo);
+        } catch (error) {
+          console.error("Failed to fetch user info:", error);
+        }
+      }
+    };
+
+    // 구글 로그인 후 URL에 포함된 토큰을 추출하여 세션 스토리지에 저장
+    const handleToken = () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const token = urlParams.get("token");
+      const email = urlParams.get("email");
+      if (token) {
+        sessionStorage.setItem("token", token);
+        sessionStorage.setItem("username", email);
+        history.replace(`${process.env.PUBLIC_URL}`);
+        fetchUserInfo();
+      }
+    };
+
+    handleToken();
+  }, [history]);
 
   return (
       <div className="page-wrapper">
         <Container fluid={true} className="p-0">
-          {/* 로그인 페이지 시작 */}
           <div className="authentication-main m-0 only-login">
             <Row>
               <Col md="12">
@@ -120,7 +139,7 @@ const Signin = () => {
                             </FormGroup>
                             <div className="login-divider"></div>
                             <div className="social mt-3">
-                              <Button color="social-btn btn-google" onClick={googleAuth}>
+                              <Button color="social-btn btn-google" onClick={redirectToGoogleLogin}>
                                 Google +{" "}
                               </Button>
                             </div>

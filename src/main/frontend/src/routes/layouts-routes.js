@@ -159,6 +159,10 @@ import Searchwebsite from "../pages/search/searchwebsite";
 
 // 메인페이지
 import MainPage from "../component/common/main/mainpage";
+import PostList from "../component/common/main/PostList";
+import LeagueRanking from '../component/common/main/LeagueRanking';
+
+// Squad
 import Enhancement from "../component/common/SearchPlayer/Enhancement";
 import PlayerDetails from "../component/common/SearchPlayer/PlayerDetails"
 import MakeSquad from "../component/common/SquadMaker/MakeSquad"
@@ -166,8 +170,9 @@ import MakeTeam from "../component/common/SquadMaker/MakeTeam"
 import SquadList from "../component/common/SquadMaker/SquadList"
 import SearchTeamColor from "../component/common/SearchTeamColor/SearchTeamColor"
 
-//Warning
+// Warning
 import Warning from "../component/common/warning/Warning";
+
 // News
 import DomesticNews from "../component/news/DomesticNews";
 import ExclusiveNews from "../component/news/ExclusiveNews";
@@ -514,6 +519,14 @@ export const routes = [
   {
     path: `${process.env.PUBLIC_URL}/`,
     Component: <MainPage />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/PostListByLikeCounts`,
+    Component: <PostList />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/LeagueRanking`,
+    Component: <LeagueRanking />,
   },
   {
     path: `${process.env.PUBLIC_URL}/news/domestic`,

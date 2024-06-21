@@ -7,7 +7,7 @@ export const MENUITEMS = [
                style={{width: '60px', height: '60px'}}/>,
     type: "sub",
     path: ``,
-    active: false,
+    active: true,
     children: [
       { title: "선수 검색", type: "sub" },
       {

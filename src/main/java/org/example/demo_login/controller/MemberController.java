@@ -15,7 +15,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 @RestController
 @RequestMapping("/api/members")
 public class MemberController {
@@ -23,7 +22,7 @@ public class MemberController {
     private final MemberService memberService;
 
     @Autowired
-    public MemberController(MemberService memberService,JwtUtil jwtUtil){
+    public MemberController(MemberService memberService, JwtUtil jwtUtil) {
         this.memberService = memberService;
         this.jwtUtil = jwtUtil;
     }
@@ -34,83 +33,91 @@ public class MemberController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-
-    // 회원 가입
     @PostMapping("/insert")
     public ResponseEntity<String> insertDemoVo(@RequestBody Member member) {
-        // 요청 바디에서 role 필드가 누락되었을 때 기본값 설정
         if (member.getRole() == null) {
             member.setRole(Member.Role.USER);
         }
-
-        // 전화번호 중복 체크
         Member existingMember = memberService.findByPhone(member.getPhone());
         if (existingMember != null) {
             return new ResponseEntity<>("Phone number already exists", HttpStatus.BAD_REQUEST);
         }
-
         memberService.insert(member);
         return new ResponseEntity<>("Data inserted successfully", HttpStatus.OK);
     }
 
-
-    // 로그인 엔드 포인트 추가
+    // 기존의 일반 로그인 메서드
     @PostMapping("/login")
-    public ResponseEntity<Map<String, Object>> login(@RequestBody Map<String,String> loginRequset) {
-        String email = loginRequset.get("email");
-        String password = loginRequset.get("password");
+    public ResponseEntity<Map<String, Object>> login(@RequestBody Map<String, String> loginRequest) {
+        String email = loginRequest.get("email");
+        String password = loginRequest.get("password");
 
-
-        Member loggedInMember = memberService.login(email,password);
+        Member loggedInMember = memberService.login(email, password);
         if (loggedInMember != null) {
-            //로그인 성공 시 JWT 생성
-            String token = jwtUtil.generateToken(loggedInMember.getNickname());
-            //System.out.println(token);
-            //응답 데이터에 Token 추가
+            String token = jwtUtil.generateToken(loggedInMember.getEmail(), loggedInMember.getNickname());
             Map<String, Object> responseData = new HashMap<>();
-            responseData.put("nickname",loggedInMember.getNickname());
+            responseData.put("nickname", loggedInMember.getNickname());
             responseData.put("member", loggedInMember);
-            //토큰은 서버에서 사용자를 인증하고 사용자의 권한을 확인하는 데 사용
-            responseData.put("token",token);
-            //세션에 "loggedInMember" 속성 추가
-
+            responseData.put("token", token);
             return new ResponseEntity<>(responseData, HttpStatus.OK);
         } else {
-            // 로그인 실패
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+    }
+
+    @PostMapping("/login/google")
+    public ResponseEntity<Map<String, Object>> googleLogin(@RequestBody Map<String, String> loginRequest) {
+        String email = loginRequest.get("email");
+        String nickname = loginRequest.get("nickname");
+
+        Member loggedInMember = memberService.findByEmail(email);
+        if (loggedInMember != null) {
+            String token = jwtUtil.generateToken(loggedInMember.getEmail(), loggedInMember.getNickname());
+            Map<String, Object> responseData = new HashMap<>();
+            responseData.put("nickname", loggedInMember.getNickname());
+            responseData.put("member", loggedInMember);
+            responseData.put("token", token);
+            return new ResponseEntity<>(responseData, HttpStatus.OK);
+        } else {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }
 
 
     @PostMapping("/logout")
-    public ResponseEntity<Map<String,String>> logout(HttpServletRequest request) {
-        // 로그 아웃시에는 클라이언트에서 JWT를 삭제
-        // 클라이언트에서 JWT를 삭제하는 방법은 -> 로컬 스토리지나 쿠키가 있음.
-        Map<String ,String>response = new HashMap<>();
-        response.put("message","로그아웃 성공!");
+    public ResponseEntity<Map<String, String>> logout(HttpServletRequest request) {
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "로그아웃 성공!");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-
-    // 사용자 정보를 가져오는것이 때문에 get 매핑을 쓴다.
     @GetMapping("/userinfo")
-    public ResponseEntity<Member> getUserInfo(@RequestHeader ("Authorization") String token) {
-        // 토큰이 유효한지 확인
-        if (jwtUtil.validateToken((token))) {
-            // 유효한 경우 토큰에서 사용자의 이름을 추출해서 사용자를 인증
-            String username = jwtUtil.getUsernameFromToken(token);
-            //System.out.println(username);
-            Member loggedInMember = memberService.findByUserName(username); //닉네임을 가지고함
-            if(loggedInMember != null) {
-                return new ResponseEntity<>(loggedInMember,HttpStatus.OK);
+    public ResponseEntity<Member> getUserInfo(@RequestHeader("Authorization") String token) {
+        try {
+            if (token.startsWith("Bearer ")) {
+                token = token.substring(7);
             }
+            if (jwtUtil.validateToken(token)) {
+                String email = jwtUtil.getEmailFromToken(token); // 이메일을 추출
+                System.out.println("Extracted email: " + email); // 로그 추가
+                Member loggedInMember = memberService.findByEmail(email); // 이메일로 회원 조회
+                System.out.println("Found member: " + loggedInMember); // 로그 추가
+                if (loggedInMember != null) {
+                    return new ResponseEntity<>(loggedInMember, HttpStatus.OK);
+                } else {
+                    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                }
+            } else {
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();  // 서버 로그에 예외를 출력
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        // 토큰이 유효하지 않거나 사용자를 찾을 수 없는 경우 UNAUTHORIZED 반환
-        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
 
 
-    // 관리자 역할 설정
+    // 멤버 권한을 바꿔주는 컨트롤러.
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}/role/admin")
     public ResponseEntity<String> setAdminRole(@PathVariable int id) {
