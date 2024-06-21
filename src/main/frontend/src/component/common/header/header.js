@@ -19,6 +19,7 @@ const Header = (props) => {
     const escFunction = useCallback((event) => {
         if (event.keyCode === 27) {
             setsearchValue("");
+            setSearchResult([]); // esc 키를 누를 때 검색 결과 초기화
         }
     }, []);
 
@@ -64,7 +65,21 @@ const Header = (props) => {
 
     const handleSearchKeyword = (keyword) => {
         setsearchValue(keyword);
-        fetchPlayers(keyword);
+        if (keyword.length === 0) {
+            setSearchResult([]); // 입력 필드가 비어 있을 때 검색 결과 초기화
+        } else {
+            fetchPlayers(keyword);
+        }
+    };
+
+    const handlePlayerClick = () => {
+        setSearchResult([]); // 검색 결과 초기화하여 목록 창 닫기
+    };
+
+    const handleInputBlur = () => {
+        if (searchValue.length === 0) {
+            setSearchResult([]); // 입력 필드가 비어 있을 때 검색 결과 초기화
+        }
     };
 
     const logout = () => {
@@ -88,7 +103,13 @@ const Header = (props) => {
                             <img
                                 src={require("../../../assets/images/logo/logo1.png")}
                                 alt="FC Wahadak Logo"
-                                style={{ width: '100px', height: '95px' }}
+                                style={{
+                                    width: '100px',
+                                    height: '95px',
+                                    transition: 'transform 1s ease-in-out'
+                                }}
+                                onMouseEnter={e => e.currentTarget.style.transform = 'rotate(360deg)'}
+                                onMouseLeave={e => e.currentTarget.style.transform = 'rotate(0deg)'}
                             />
                         </Link>
                     </div>
@@ -108,7 +129,9 @@ const Header = (props) => {
                                         <div className="u-posRelative">
                                             <input className="Typeahead-input form-control-plaintext" id="demo-input" type="text"
                                                    placeholder="선수 검색 ..." value={searchValue}
-                                                   onChange={(e) => handleSearchKeyword(e.target.value)} autoComplete={"off"} />
+                                                   onChange={(e) => handleSearchKeyword(e.target.value)}
+                                                   onBlur={handleInputBlur} // 입력 필드 포커스가 벗어날 때 검색 결과 초기화
+                                                   autoComplete={"off"} />
                                             <div className={`spinner-border Typeahead-spinner ${spinner === true ? "show" : ""}`}
                                                  role="status">
                                                 <span className="sr-only">Loading...</span>
@@ -130,8 +153,9 @@ const Header = (props) => {
                                                     <div className="ProfileCard-details">
                                                         <div className="ProfileCard-realName">
                                                             <Link
-                                                                to={`/players/${data.pid}`}
+                                                                to={`${process.env.PUBLIC_URL}/player/${data.pid}`}
                                                                 className="realname"
+                                                                onClick={handlePlayerClick} // 클릭 시 검색 결과 초기화
                                                             >
                                                                 <img
                                                                     src={`${process.env.PUBLIC_URL}/${data["시즌 URL"]}`}

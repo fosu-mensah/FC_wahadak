@@ -64,7 +64,8 @@ const nation = {
     '베네수엘라': 'Venezuela.png',
     '웨일스': 'Wales.png',
     '포르투갈' : 'Portugal.png',
-    '폴란드' : 'Poland.png'
+    '폴란드' : 'Poland.png',
+    '코트디부아르' : 'Cotedle.png',
 }
 
 const PlayerDetails = () => {

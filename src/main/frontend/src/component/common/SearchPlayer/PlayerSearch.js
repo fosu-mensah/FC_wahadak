@@ -6,7 +6,7 @@ import SeasonImageSelector from "../../common/SearchPlayer/SeasonImageSelector";
 import "../../../../src/assets/scss/seasonsearch/seasonsearch.scss";
 import "../../../../src/assets/scss/statColor/statColor.scss";
 
-const nation = {
+const nation= {
     '알바니아': 'Albania.png',
     '알제리': 'Algeria.png',
     '아르헨티나': 'Argentina.png',
@@ -18,7 +18,7 @@ const nation = {
     '방글라데시': 'Bangladesh.png',
     '벨기에': 'Belgium.png',
     '볼리비아': 'Bolivia.png',
-    '보스니아 & 헤르체고비나': 'Bosnia & Herzegovina.png',
+    '보스니아 헤르체고비나': 'Bosnia & Herzegovina.png',
     '브라질': 'Brazil.png',
     '불가리아': 'Bulgaria.png',
     '카메룬': 'Cameroon.png',
