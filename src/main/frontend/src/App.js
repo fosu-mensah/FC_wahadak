@@ -26,11 +26,11 @@ const App = () => {
                 } catch (error) {
                     console.error('Failed to fetch user info', error);
                     setIsAuthenticated(false);
-                    navigate(`${process.env.PUBLIC_URL}`);
+                    // 비로그인 상태로 유지
                 }
             } else {
                 setIsAuthenticated(false);
-                navigate(`${process.env.PUBLIC_URL}`);
+                // 비로그인 상태로 유지
             }
             setLoading(false);
         };
@@ -61,7 +61,7 @@ const App = () => {
                                 unmountOnExit
                             >
                                 <div>
-                                    <Outlet />
+                                    <Outlet context={{ isAuthenticated }} />
                                 </div>
                             </CSSTransition>
                         </TransitionGroup>

@@ -159,7 +159,7 @@ const Header = (props) => {
                                     <div className="Typeahead Typeahead--twitterUsers">
                                         <div className="u-posRelative">
                                             <input className="Typeahead-input form-control-plaintext" id="demo-input" type="text"
-                                                   placeholder="선수 검색 ..." value={searchValue}
+                                                   placeholder="선수를 검색하세요..." value={searchValue}
                                                    onChange={(e) => handleSearchKeyword(e.target.value)}
                                                    onBlur={handleInputBlur} // 입력 필드 포커스가 벗어날 때 검색 결과 초기화
                                                    autoComplete={"off"} />

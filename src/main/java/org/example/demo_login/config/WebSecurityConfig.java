@@ -63,17 +63,17 @@ public class WebSecurityConfig {
                 .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/api-test-swagger").permitAll()
-                                .requestMatchers("/api/news/**").permitAll()
-                                .requestMatchers("/api/events/**").permitAll()
-                                .requestMatchers("/api/posts/**").permitAll()
-                                .requestMatchers("/api/comments/**").permitAll()
-                                .requestMatchers("/api/league-rankings/**").permitAll()
-                                .requestMatchers("/api/members/login", "/api/members/insert").permitAll()
-                                .requestMatchers("/api/members/userinfo").authenticated()
-                                .requestMatchers("/players/search/**","/players/stats/**","/formation/**","api/squad/**", "/api/squad/maker/**","/players/**", "/api/team-color/**").permitAll()
-                                .requestMatchers("/uploads/**").permitAll()
-                                .requestMatchers("/", "/error", "/login", "/login/oauth2/**", "/oauth2/**").permitAll()
+                                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/api-test-swagger").permitAll() // 스웨거
+                                .requestMatchers("/api/news/**").permitAll() // 뉴스
+                                .requestMatchers("/api/events/**").permitAll() // 이벤트
+                                .requestMatchers("/api/posts/**").permitAll() // 게시판
+                                .requestMatchers("/api/comments/**").permitAll() // 댓글
+                                .requestMatchers("/api/league-rankings/**").permitAll() // 리그 순위표
+                                .requestMatchers("/api/members/login", "/api/members/insert").permitAll() // 일반적 로그인
+                                .requestMatchers("/api/members/userinfo").authenticated() // 회원 정보
+                                .requestMatchers("/players/search/**","/players/stats/**","/formation/**","api/squad/**", "/api/squad/maker/**","/players/**", "/api/team-color/**").permitAll() // 스쿼드
+                                .requestMatchers("/uploads/**").permitAll() // 이미지 업로드
+                                .requestMatchers("/", "/error", "/login", "/login/oauth2/**", "/oauth2/**").permitAll() // 구글 OAuth2
                                 .anyRequest().authenticated()
                 )
                 .logout(logout -> logout

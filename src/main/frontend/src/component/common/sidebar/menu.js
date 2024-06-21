@@ -46,11 +46,6 @@ export const MENUITEMS = [
         path: `${process.env.PUBLIC_URL}/squad-list`,
       },
       {
-        title: "팀 구성하기!",
-        type: "link",
-        path: `${process.env.PUBLIC_URL}/make-team`,
-      },
-      {
         title: "프로 Pick!",
         type: "link",
         path: ``,
