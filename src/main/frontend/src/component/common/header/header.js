@@ -1,26 +1,57 @@
-import React, { useState, useCallback, useLayoutEffect } from "react";
+import React, { useState, useCallback, useLayoutEffect, useEffect } from "react";
 import { Row, Col, Form } from "reactstrap";
 import { MENUITEMS } from "../sidebar/menu";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import apiClient from "../../../api/apiClient";
-import { handleLogout } from "../../../services/authService";
-import { FaSignInAlt, FaSignOutAlt } from 'react-icons/fa'; // 아이콘 추가
+import { handleLogout, getUserInfo } from "../../../services/authService";
+import { FaSignInAlt, FaSignOutAlt, FaSmile } from 'react-icons/fa';
 
 const Header = (props) => {
     const history = useNavigate();
+    const location = useLocation();
     const [mainmenu, setMainMenu] = useState(MENUITEMS);
     const [searchValue, setsearchValue] = useState("");
     const [spinner, setspinner] = useState(false);
     const [searchResult, setSearchResult] = useState([]);
     const width = useWindowSize();
-    const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token"));
+    const [isLoggedIn, setIsLoggedIn] = useState(!!sessionStorage.getItem("token"));
     const [userData, setUserData] = useState(null);
 
     const escFunction = useCallback((event) => {
         if (event.keyCode === 27) {
             setsearchValue("");
+            setSearchResult([]);
         }
     }, []);
+
+    useEffect(() => {
+        const token = sessionStorage.getItem("token");
+        if (token) {
+            setIsLoggedIn(true);
+            const fetchUserInfo = async () => {
+                try {
+                    const userInfo = await getUserInfo();
+                    setUserData(userInfo);
+                } catch (error) {
+                    console.error("Failed to fetch user info:", error);
+                    setIsLoggedIn(false);
+                }
+            };
+            fetchUserInfo();
+        }
+    }, [location.search]);
+
+    useEffect(() => {
+        console.log("isLoggedIn 상태:", isLoggedIn);
+        console.log("userData 상태:", userData);
+    }, [isLoggedIn, userData]);
+
+    useEffect(() => {
+        window.addEventListener("keydown", escFunction);
+        return () => {
+            window.removeEventListener("keydown", escFunction);
+        };
+    }, [escFunction]);
 
     function useWindowSize() {
         const [size, setSize] = useState([0, 0]);
@@ -163,6 +194,13 @@ const Header = (props) => {
                                 </div>
                             </Form>
                         </li>
+                        {isLoggedIn && userData && (
+                            <li className="nav-item">
+                                <span className="nav-link">
+                                    {userData.nickname}님! 환영합니다! <FaSmile style={{ color: 'purple', fontSize: '24px' }} />
+                                </span>
+                            </li>
+                        )}
                         <li className="nav-item">
                             {isLoggedIn ? (
                                 <button className="btn btn-link" onClick={logout}>

@@ -14,7 +14,8 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedOrigins(
                         "http://ec2-3-139-91-37.us-east-2.compute.amazonaws.com",
-                        "http://localhost:3000" //개발환경 테스트를 위해 유지.
+                        "http://localhost:3000", //개발환경 테스트를 위해 유지.
+                        "/*"
                 )
                 .allowedMethods("GET","POST","PUT","DELETE")
                 .allowedHeaders("*")

@@ -1,0 +1,31 @@
+.main-page-container {
+    padding: 20px;
+}
+
+.banner-container {
+    text-align: center;
+    overflow: hidden;
+}
+
+.banner-image {
+    max-width: 100%;
+    height: auto;
+}
+
+.content-container {
+    display: flex;
+    height: 600px;
+    margin-top: 40px; /* 배너와 콘텐츠 사이의 여백 추가 */
+}
+
+.post-list-container {
+    flex: 4;
+    padding-right: 10px;
+    overflow-y: auto;
+}
+
+.league-ranking-container {
+    flex: 6;
+    padding-left: 10px;
+    overflow-y: auto;
+}

@@ -1,0 +1,32 @@
+.post-list {
+    max-height: 600px; /* 원하는 최대 높이 설정 */
+    overflow-y: auto;
+}
+
+.fixed-title {
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 1;
+}
+
+.post-list ul {
+    list-style: none;
+    padding: 0;
+}
+
+.post-list li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.post-list li h3 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.post-list li p {
+    margin: 5px 0 0;
+    font-size: 14px;
+    color: #666;
+}

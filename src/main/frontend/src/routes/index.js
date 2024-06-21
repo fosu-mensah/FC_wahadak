@@ -15,6 +15,7 @@ import Comingsoon from "../pages/comingSoon/comingsoon";
 import ComingsoonImg from "../pages/comingSoon/comingsoonImg";
 
 import { routes } from "./layouts-routes";
+import LoginSuccess from "../auth/LoginSuccess";
 
 const MainRoutes = () => {
     return (
@@ -34,6 +35,7 @@ const MainRoutes = () => {
             <Route path={`${process.env.PUBLIC_URL}/pages/forget-password`} element={<Forgetpwd />} />
             <Route path={`${process.env.PUBLIC_URL}/pages/comingsoon`} element={<Comingsoon />} />
             <Route path={`${process.env.PUBLIC_URL}/pages/comingsoon-bg-image`} element={<ComingsoonImg />} />
+            <Route path={`${process.env.PUBLIC_URL}/login/success`} element={<LoginSuccess />} />
         </Routes>
     );
 }
