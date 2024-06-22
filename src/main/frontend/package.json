@@ -121,5 +121,9 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "source-map-loader": "^5.0.0"
-  }
+  },
+  "main": "index.js",
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }
