@@ -34,7 +34,7 @@ class Invoice extends Component {
                               <Media left>
                                 <Media
                                   className="media-object img-60"
-                                  src={require("../../../assets/images/logo/logo.png")}
+                                  src={require("../../../assets/images/logo/logo1.png")}
                                   alt=""
                                 />
                               </Media>

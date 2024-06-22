@@ -1,0 +1,88 @@
+@import '../../Nexon_font/fonts.scss';
+
+.team-color-list {
+  padding: 20px;
+
+  h1 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .page-info{
+    color: #ee4b4b;
+  }
+
+  .team-color-items {
+    list-style: none;
+    padding: 0;
+
+    .team-color-item {
+      background-color: #f8f9fa;
+      padding: 20px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s, box-shadow 0.3s;
+
+      h2 {
+        margin: 0 0 10px 0;
+      }
+
+      div {
+        margin: 5px 0;
+        font-size: 1rem;
+      }
+
+      &:hover {
+        background-color: #e3f2fd; /* 연한 하늘색 */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
+      }
+
+      button {
+        width: 7rem;
+        height: 3rem;
+        padding: 0.5rem 1rem;
+        border: none;
+        background-color: #59cbd5;
+        color: white;
+        border-radius: 4px;
+        cursor: pointer;
+
+        &:hover {
+          background-color: #1cb1be;
+        }
+      }
+    }
+  }
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+
+    button {
+      margin: 0 5px;
+      padding: 10px 15px;
+      font-size: 1rem;
+      cursor: pointer;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+
+      &.active {
+        background-color: #0056b3;
+        font-weight: bold;
+      }
+
+      &:hover {
+        background-color: #0056b3;
+      }
+
+      &:disabled {
+        cursor: not-allowed;
+        background-color: #cccccc;
+      }
+    }
+  }
+}

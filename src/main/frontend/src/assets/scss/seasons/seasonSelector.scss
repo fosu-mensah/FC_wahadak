@@ -1,0 +1,32 @@
+.season-image-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(35px, 1fr));
+  gap: 10px; // 이미지 간의 간격 설정
+  justify-items: center;
+}
+
+.season-image-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.season-image {
+  width: 35px;
+  height: 30px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  border-radius: 3px;
+  margin-bottom: 5px;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  &.selected {
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    border: 3px solid #007bff;
+  }
+}

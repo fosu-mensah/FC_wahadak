@@ -23,7 +23,7 @@ const Forgetpwd = (props) => {
                 <div className="reset-password-box">
                   <div className="text-center">
                   <Link to={`${process.env.PUBLIC_URL}/dashboard/default`}>
-                    <img src={require("../../assets/images/logo/logo.png")} alt="" />
+                    <img src={require("../../assets/images/logo/logo1.png")} alt="" />
                   </Link>
                   </div>
                   <Card className="mt-4 mb-0">

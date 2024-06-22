@@ -1,0 +1,115 @@
+.make-squad {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .form-container {
+    display: flex;
+    width: 80%;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .squad-form {
+    width: 100%;
+    max-width: 800px; /* 최대 너비 설정 */
+    margin-right: 1rem;
+
+    .form-group {
+      margin-bottom: 1rem;
+
+      label {
+        display: block;
+        margin-bottom: 0.5rem;
+      }
+
+      input,
+      select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #55a2f8;
+        border-radius: 5px;
+        font-size: 1rem;
+        font-weight: normal;
+        transition: border-color 0.3s, box-shadow 0.3s;
+
+        &:focus {
+          border-color: #0056b3;
+          box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+          outline: none;
+        }
+      }
+    }
+
+    .soccer-field-container {
+      position: relative;
+      width: 100%;
+      max-width: 800px; /* 필요에 따라 조정 */
+      margin-top: 1rem;
+      display: flex;
+      justify-content: center;
+      margin-left: 2.5rem;
+
+      .soccer-field {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+      }
+
+      .player-position {
+        position: absolute;
+        width: 3.5vw; /* 화면 크기에 따라 비율 조정 */
+        height: 3.5vw; /* 화면 크기에 따라 비율 조정 */
+        color: black;
+        text-align: center;
+        border-radius: 50%;
+        line-height: 3.5vw; /* 화면 크기에 따라 비율 조정 */
+        font-weight: bold;
+
+        &.attacker {
+          background-color: #f54c4c;
+        }
+
+        &.midfielder {
+          background-color: #2ada2a;
+        }
+
+        &.defender {
+          background-color: #5959f3;
+        }
+
+        &.goalkeeper {
+          background-color: yellow;
+        }
+      }
+    }
+
+    button {
+      padding: 0.5rem 1rem;
+      border: none;
+      background-color: #4CAF50;
+      color: white;
+      border-radius: 4px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #45a049;
+      }
+    }
+  }
+
+  .formation-details {
+    width: 100%;
+    max-width: 800px; /* 최대 너비 설정 */
+    height: 10rem;
+    margin-top: 1rem;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+
+    h2 {
+      margin-top: 0;
+    }
+  }
+}

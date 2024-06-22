@@ -1,0 +1,24 @@
+@font-face {
+  font-family: 'NEXONFootballGothic';
+  src: url('../../fonts/Nexon/NEXONFootballGothicB.ttf') format('truetype');
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: 'NEXONFootballGothic';
+  src: url('../../fonts/Nexon/NEXONFootballGothicL.ttf') format('truetype');
+  font-weight: normal;
+}
+
+body {
+  font-family: 'NEXONFootballGothic', sans-serif;
+}
+
+button {
+  font-family: 'NEXONFootballGothic', sans-serif;
+  /* Add additional button styles here */
+}
+
+h1 {
+  font-family: 'NEXONFootballGothic', sans-serif;
+}

@@ -4,16 +4,15 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
-import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
+import java.util.Base64;
 import java.util.Date;
 
 @Component
 public class JwtUtil {
-
 
     private String secretKey;
 
@@ -21,29 +20,33 @@ public class JwtUtil {
 
     private Key key;
 
-    public JwtUtil(@Value("${myapp.secret}") String secretKey) {
+    public JwtUtil(@Value("${JWT_SECRET_KEY}") String secretKey) {
         this.secretKey = secretKey;
-        this.key = Keys.hmacShaKeyFor(this.secretKey.getBytes());
+        byte[] keyBytes = Base64.getUrlDecoder().decode(this.secretKey); // URL-safe Base64 디코딩
+        this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
-    //토큰을 생성하는 메서드
+    // 토큰을 생성하는 메서드
     public String generateToken(String subject) {
-        System.out.println(subject);
-        System.out.println(this.key);
+        System.out.println("Generating token for subject: " + subject);
         Date now = new Date();
         Date expiration = new Date(now.getTime() + EXPIRATION_TIME);
 
-        return Jwts.builder()
+        String token = Jwts.builder()
                 .setSubject(subject)
                 .setIssuedAt(now)
                 .setExpiration(expiration)
                 .signWith(this.key)
                 .compact();
+        System.out.println("Generated token: " + token);
+        return token;
     }
-
 
     // 토큰 파싱
     public String getUsernameFromToken(String token) {
+        if (token.startsWith("Bearer ")) {
+            token = token.substring(7); // "Bearer " 접두어 제거
+        }
         return Jwts.parserBuilder()
                 .setSigningKey(this.key)
                 .build()
@@ -52,26 +55,21 @@ public class JwtUtil {
                 .getSubject();
     }
 
-
     // 토큰 검증
     public boolean validateToken(String token) {
         try {
+            System.out.println("Validating token: " + token);
+            if (token.startsWith("Bearer ")) {
+                token = token.substring(7); // "Bearer " 접두어 제거
+            }
             Jws<Claims> claims = Jwts.parserBuilder()
                     .setSigningKey(this.key)
                     .build()
                     .parseClaimsJws(token);
             return !claims.getBody().getExpiration().before(new Date());
-        } catch (io.jsonwebtoken.ExpiredJwtException e) {
-            System.out.println("Expired JWT Token");
-        } catch (io.jsonwebtoken.UnsupportedJwtException e) {
-            System.out.println("Unsupported JWT Token");
-        } catch (io.jsonwebtoken.MalformedJwtException e) {
-            System.out.println("Malformed JWT Token");
-        } catch (io.jsonwebtoken.SignatureException e) {
-            System.out.println("Invalid JWT Signature");
-        } catch (IllegalArgumentException e) {
-            System.out.println("Illegal Argument Token");
+        } catch (io.jsonwebtoken.JwtException | IllegalArgumentException e) {
+            System.out.println("Invalid JWT token: " + e.getMessage());
+            return false;
         }
-        return false;
     }
 }

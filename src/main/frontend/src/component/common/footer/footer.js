@@ -6,11 +6,11 @@ const Footer = (props) => {
       <Container fluid={true}>
         <Row>
           <Col md="6" className="footer-copyright">
-            <p className="mb-0">Copyright © 2023 Poco. All rights reserved.</p>
+            <p className="mb-0">Copyright © 2024 FC wahadak. All rights reserved.</p>
           </Col>
           <Col md="6">
             <p className="pull-right mb-0">
-              Hand-crafted & made with<i className="fa fa-heart"></i>
+              heeggung & naldo<i className="fa fa-heart"></i>
             </p>
           </Col>
         </Row>

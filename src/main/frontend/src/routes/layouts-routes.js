@@ -1,4 +1,7 @@
 import React from "react";
+
+import PlayerSearch from "../component/common/SearchPlayer/PlayerSearch";
+import PlayerDetail from "../component/common/SearchPlayer/Enhancement";
 // dashboard
 import Default from "../component/general/dashboard/default";
 import Crypto from "../component/general/dashboard/crypto";
@@ -84,7 +87,9 @@ import Typeahead from "../component/forms/form-widget/typeaheadComponent/typeahe
 // Tables 기능 삭제
 
 // Cards
-// Cards 기능 삭제
+import BasicCards from "../component/cards/basicCards";
+import TabCard from "../component/cards/tabCard";
+import ThemeCards from "../component/cards/themeCards";
 
 // Ecommerce
 import Product from "../component/application/ecommerce/product";
@@ -149,7 +154,36 @@ import Orderhistory from "../component/application/ecommerce/orderhistory";
 import Samplepage from "../pages/samplepage";
 import Supportticket from "../pages/supportticket";
 import Searchwebsite from "../pages/search/searchwebsite";
+
 // Leaflet Map 삭제
+
+// 메인페이지
+import MainPage from "../component/common/main/mainpage";
+import Enhancement from "../component/common/SearchPlayer/Enhancement";
+import PlayerDetails from "../component/common/SearchPlayer/PlayerDetails"
+import MakeSquad from "../component/common/SquadMaker/MakeSquad"
+import MakeTeam from "../component/common/SquadMaker/MakeTeam"
+import SquadList from "../component/common/SquadMaker/SquadList"
+import SearchTeamColor from "../component/common/SearchTeamColor/SearchTeamColor"
+
+//Warning
+import Warning from "../component/common/warning/Warning";
+// News
+import DomesticNews from "../component/news/DomesticNews";
+import ExclusiveNews from "../component/news/ExclusiveNews";
+import InternationalNews from "../component/news/InternationalNews";
+import NewsDetail from "../component/news/NewsDetail";
+
+// Event
+import FCWahadakEvent from "../component/event/FCWahadakEvent";
+import FCOnlineEvent from "../component/event/FCOnlineEvent";
+
+// Community
+import FreeBoard from "../component/community/FreeBoard";
+import PlayerPride from "../component/community/PlayerPride";
+import TeamQuestions from "../component/community/TeamQuestions";
+import PostForm from "../component/community/PostForm";
+import PostDetail from "../component/community/PostDetail";
 
 export const routes = [
   {
@@ -160,6 +194,38 @@ export const routes = [
   {
     path: `${process.env.PUBLIC_URL}/dashboard/ecommerce`,
     Component: <Ecommerce />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/search`,
+    Component: <PlayerSearch />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/player/:pid`,
+    Component: < PlayerDetails />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/squad-maker`,
+    Component: < MakeSquad />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/squad-maker/:squadId`,
+    Component: < MakeTeam />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/squad-list`,
+    Component: < SquadList />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/enhancement`,
+    Component: <Enhancement />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/team-color-list`,
+    Component:<SearchTeamColor/>,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/warning`,
+    Component: <Warning/>,
   },
   {
     path: `${process.env.PUBLIC_URL}/dashboard/generalwidget`,
@@ -444,5 +510,73 @@ export const routes = [
   {
     path: `${process.env.PUBLIC_URL}/pages/search`,
     Component: <Searchwebsite />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/`,
+    Component: <MainPage />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/news/domestic`,
+    Component: <DomesticNews />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/news/international`,
+    Component: <InternationalNews />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/news/442exclusive`,
+    Component: <ExclusiveNews />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/news/domestic/:newsId`,
+    Component: <NewsDetail />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/news/international/:newsId`,
+    Component: <NewsDetail />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/news/442exclusive/:newsId`,
+    Component: <NewsDetail />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/event/FCWahadakEvent`,
+    Component: <FCWahadakEvent />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/event/FCOnlineEvnet`,
+    Component: <FCOnlineEvent />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/community/자유게시판`,
+    Component: <FreeBoard />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/community/선수 자랑`,
+    Component: <PlayerPride />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/community/팀 질문`,
+    Component: <TeamQuestions />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/community/create-post`,
+    Component: <PostForm />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/community/:category/:postId`,
+    Component: <PostDetail />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/basicCards`,
+    Component: <BasicCards />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/tabCard`,
+    Component: <TabCard />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/themeCards`,
+    Component: <ThemeCards />,
   },
 ];

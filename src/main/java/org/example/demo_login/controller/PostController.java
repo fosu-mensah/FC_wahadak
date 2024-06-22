@@ -13,7 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@CrossOrigin(origins = {"http://localhost:3000", "http://ec2-3-139-91-37.us-east-2.compute.amazonaws.com"})
 @RestController
 @RequestMapping("/api/posts")
 public class PostController {
@@ -22,75 +21,128 @@ public class PostController {
     private final FileStorageService fileStorageService;
 
     @Autowired
-    public PostController(PostService postService, JwtUtil jwtUtil,FileStorageService fileStorageService) {
+    public PostController(PostService postService, JwtUtil jwtUtil, FileStorageService fileStorageService) {
         this.postService = postService;
         this.fileStorageService = fileStorageService;
-
     }
-    //최신순, 좋아요 순으로 정렬하는 클라이언트로 보내는 엔드포인트
+
+    // 모든 게시물을 조회하는 엔드포인트
     @GetMapping
     public ResponseEntity<List<Post>> getPosts(
             @RequestParam(required = false) String sortBy,
-            @RequestParam(required = false) String order) {
-
-        List<Post> posts = postService.selectPostsSorted(sortBy, order);
+            @RequestParam(required = false) String order,
+            @RequestParam(required = false) String category) {
+        List<Post> posts = postService.selectPostsSorted(sortBy, order, category);
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 
-    //인기글을 보여주는 메서드(좋아요가 10개 이상이면)
+    // 좋아요가 많은 인기 게시물을 조회하는 엔드포인트
     @GetMapping("/popular")
-    public ResponseEntity<List<Post>> getPopularPosts(){
+    public ResponseEntity<List<Post>> getPopularPosts() {
         List<Post> popularPosts = postService.selectPopularPosts();
-        return new ResponseEntity<>(popularPosts,HttpStatus.OK);
+        return new ResponseEntity<>(popularPosts, HttpStatus.OK);
     }
 
-    // multipart/form-data로 설정이 되었기 때문에 이 경우에서는 @RequsetBody를 사용하여
-    //요청을 처리할 수 없음.
-    @PostMapping("/write")
+    // 새로운 게시물을 작성하는 엔드포인트
+    @PostMapping(value = "/write", consumes = "multipart/form-data")
     public ResponseEntity<String> writePost(
             @RequestParam("memberNickname") String memberNickname,
             @RequestParam("category") String category,
             @RequestParam("title") String title,
             @RequestParam("content") String content,
-            @RequestParam("image") MultipartFile image) {
-        System.out.println(memberNickname);
-        System.out.println(category);
-        System.out.println(title);
-        System.out.println(content);
-        System.out.println(image);
-
-        try{
-            // 현재시간을 생성 시간으로 설정
+            @RequestParam(value = "image", required = false) MultipartFile image) {
+        try {
             LocalDateTime createdAt = LocalDateTime.now();
-
-            // 좋아요 수 초깃값 설정
             int likeCount = 0;
 
-            //파일을 저장하고 저장된 파일의 URL을 가져옴
-            String imageUrl = fileStorageService.storeFile(image);
-            System.out.println(imageUrl);
+            String imageUrl = null;
+            if (image != null && !image.isEmpty()) {
+                imageUrl = fileStorageService.storeFile(image);
+            }
 
-            // 게시글 서비스를 사용하여 새로운 게시글 작성
             postService.writePost(memberNickname, category, title, content, imageUrl, createdAt, likeCount);
 
             return ResponseEntity.ok("게시글이 성공적으로 작성되었습니다.");
-        } catch(Exception e){
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("게시글 작성 중 오류.");
         }
     }
-    //검색 기능을 위한 엔드포인트
+
+    // 게시물을 검색하는 엔드포인트
     @GetMapping("/search")
     public ResponseEntity<List<Post>> searchPosts(@RequestParam String category, @RequestParam String term) {
-        List<Post> posts = postService.searchPosts(category,term);
-        System.out.println(posts);
+        List<Post> posts = postService.searchPosts(category, term);
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 
+    // 특정 게시물의 상세 정보를 조회하는 엔드포인트
     @GetMapping("/{postId}")
-    public ResponseEntity<Post> getPostDetails(@PathVariable int postId, @RequestParam(required = false) String nickname){
-        // 사용자가 로그인한 상태가 아니면 nickname은 null
+    public ResponseEntity<Post> getPostDetails(@PathVariable int postId, @RequestParam(required = false) String nickname) {
         Post post = postService.getPostDetails(postId);
         return new ResponseEntity<>(post, HttpStatus.OK);
     }
 
+    // 게시물에 좋아요를 추가하는 엔드포인트
+    @PostMapping("/{postId}/like")
+    public ResponseEntity<Void> likePost(@PathVariable int postId, @RequestParam String nickname) {
+        postService.likePost(postId, nickname);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    // 게시물에 좋아요를 삭제하는 엔드포인트
+    @DeleteMapping("/{postId}/like")
+    public ResponseEntity<Void> unlikePost(@PathVariable int postId, @RequestParam String nickname) {
+        postService.unlikePost(postId, nickname);
+        return ResponseEntity.ok().build();
+    }
+
+    // 특정 게시물의 좋아요 개수를 조회하는 엔드포인트
+    @GetMapping("/{postId}/likes")
+    public ResponseEntity<Integer> getLikeCountByPostId(@PathVariable int postId) {
+        int likeCount = postService.getLikeCountByPostId(postId);
+        return ResponseEntity.ok(likeCount);
+    }
+
+    // 게시물 삭제 엔드포인트
+    @DeleteMapping("/{postId}/delete")
+    public ResponseEntity<String> deletePost(@PathVariable int postId, @RequestParam String memberNickname) {
+        try {
+            postService.deletePost(postId, memberNickname);
+            return ResponseEntity.ok("게시글이 성공적으로 삭제되었습니다.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("게시글 삭제 중 오류.");
+        }
+    }
+
+    // 게시물 수정 엔드포인트
+    @PutMapping("/{postId}/edit")
+    public ResponseEntity<String> editPost(
+            @PathVariable int postId,
+            @RequestParam("memberNickname") String memberNickname,
+            @RequestParam("category") String category,
+            @RequestParam("title") String title,
+            @RequestParam("content") String content,
+            @RequestParam(value = "image", required = false) MultipartFile image) {
+        try {
+            String imageUrl = null;
+            if (image != null && !image.isEmpty()) {
+                imageUrl = fileStorageService.storeFile(image);
+            }
+
+            postService.updatePost(postId, memberNickname, category, title, content, imageUrl);
+            return ResponseEntity.ok("게시글이 성공적으로 수정되었습니다.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("게시글 수정 중 오류.");
+        }
+    }
+
+    // 특정 게시물에 사용자가 좋아요를 눌렀는지 확인하는 엔드포인트
+    @GetMapping("/{postId}/liked-by-user")
+    public ResponseEntity<Boolean> isPostLikedByUser(@PathVariable int postId, @RequestParam String nickname) {
+        boolean isLiked = postService.isPostLikedByUser(postId, nickname);
+        return ResponseEntity.ok(isLiked);
+    }
 }
