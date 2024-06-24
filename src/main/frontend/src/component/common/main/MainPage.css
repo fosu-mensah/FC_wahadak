@@ -10,6 +10,7 @@
 .banner-image {
     max-width: 100%;
     height: auto;
+    border-radius: 15px; /* 배너 이미지 모서리 둥글게 */
 }
 
 .content-container {

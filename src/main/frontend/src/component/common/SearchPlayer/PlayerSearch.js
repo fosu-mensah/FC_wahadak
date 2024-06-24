@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, {Fragment, useState} from "react";
 import { Form, FormGroup, Label, Input, Button } from "reactstrap";
 import { useNavigate } from "react-router-dom";
 import apiClient from "../../../api/apiClient";
 import SeasonImageSelector from "../../common/SearchPlayer/SeasonImageSelector";
 import "../../../../src/assets/scss/seasonsearch/seasonsearch.scss";
 import "../../../../src/assets/scss/statColor/statColor.scss";
+import Breadcrumb from "../../common/breadcrumb/breadcrumb";
 
 const nation= {
     '알바니아': 'Albania.png',
@@ -126,8 +127,9 @@ const PlayerSearch = () => {
     };
 
     return (
+        <Fragment>
+            <Breadcrumb parent="선수 검색" title="선수 검색" />
         <div className="player-search">
-            <div style={{textAlign:'center', fontSize:'3rem',marginBottom:'2rem'}}>선수 검색</div>
             <Form onSubmit={handleSearch}>
                 <FormGroup>
                     <Label for="pname" style={{fontSize:'1.5rem'}}>선수 이름</Label>
@@ -248,6 +250,7 @@ const PlayerSearch = () => {
                 )}
             </div>
         </div>
+        </Fragment>
     );
 };
 

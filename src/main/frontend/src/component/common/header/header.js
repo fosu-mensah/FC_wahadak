@@ -20,7 +20,6 @@ const Header = (props) => {
     const escFunction = useCallback((event) => {
         if (event.keyCode === 27) {
             setsearchValue("");
-
             setSearchResult([]);
         }
     }, []);
@@ -113,6 +112,10 @@ const Header = (props) => {
         }
     };
 
+    const handleMouseLeave = () => {
+        setSearchResult([]); // 검색창을 벗어날 때 검색 결과 초기화
+    };
+
     const logout = () => {
         handleLogout();
         setIsLoggedIn(false);
@@ -155,11 +158,11 @@ const Header = (props) => {
                     <ul className="nav-menus">
                         <li>
                             <Form className="form-inline search-form" action="#javascript" method="get">
-                                <div className="form-group">
+                                <div className="form-group" onMouseLeave={handleMouseLeave}>
                                     <div className="Typeahead Typeahead--twitterUsers">
                                         <div className="u-posRelative">
                                             <input className="Typeahead-input form-control-plaintext" id="demo-input" type="text"
-                                                   placeholder="선수를 검색하세요..." value={searchValue}
+                                                   placeholder="선수를 검색하세요...!" value={searchValue}
                                                    onChange={(e) => handleSearchKeyword(e.target.value)}
                                                    onBlur={handleInputBlur} // 입력 필드 포커스가 벗어날 때 검색 결과 초기화
                                                    autoComplete={"off"} />

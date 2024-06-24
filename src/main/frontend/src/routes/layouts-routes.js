@@ -190,6 +190,9 @@ import TeamQuestions from "../component/community/TeamQuestions";
 import PostForm from "../component/community/PostForm";
 import PostDetail from "../component/community/PostDetail";
 
+// RefreshTimeLsit
+import RefreshTimeList from "../component/refresh-time-list/RefreshTimeList";
+
 export const routes = [
   {
     path: `${process.env.PUBLIC_URL}/dashboard/default`,
@@ -206,19 +209,19 @@ export const routes = [
   },
   {
     path: `${process.env.PUBLIC_URL}/player/:pid`,
-    Component: < PlayerDetails />,
+    Component: <PlayerDetails />,
   },
   {
     path: `${process.env.PUBLIC_URL}/squad-maker`,
-    Component: < MakeSquad />,
+    Component: <MakeSquad />,
   },
   {
     path: `${process.env.PUBLIC_URL}/squad-maker/:squadId`,
-    Component: < MakeTeam />,
+    Component: <MakeTeam />,
   },
   {
     path: `${process.env.PUBLIC_URL}/squad-list`,
-    Component: < SquadList />,
+    Component: <SquadList />,
   },
   {
     path: `${process.env.PUBLIC_URL}/enhancement`,
@@ -226,7 +229,11 @@ export const routes = [
   },
   {
     path: `${process.env.PUBLIC_URL}/team-color-list`,
-    Component:<SearchTeamColor/>,
+    Component:<SearchTeamColor />,
+  },
+  {
+    path: `${process.env.PUBLIC_URL}/refresh-time-list`,
+    Component:<RefreshTimeList />,
   },
   {
     path: `${process.env.PUBLIC_URL}/warning`,

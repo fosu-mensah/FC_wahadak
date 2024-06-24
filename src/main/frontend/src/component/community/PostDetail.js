@@ -143,7 +143,7 @@ const PostDetail = () => {
                 <Row className="justify-content-center">
                     <Col sm="12" xl="8">
                         <Card style={{ borderColor: '#6c63ff' }}>
-                            <CardHeader className="bg-primary text-white">
+                            <CardHeader className="bg-primary text-white d-flex justify-content-between align-items-center">
                                 <h5>{post.title}</h5>
                                 {post.memberNickname === currentUser.nickname && (
                                     <div>

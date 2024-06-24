@@ -1,0 +1,51 @@
+/* 기존 CSS 유지, 설명 문구 스타일 추가 */
+
+.instructions {
+    background-color: #e6e6fa; /* 연보라색 배경 */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.instructions strong {
+    font-weight: bold;
+}
+
+.player-list {
+    list-style: none;
+    padding: 0;
+}
+
+.player-list-item {
+    background: #f9f9f9;
+    margin: 10px 0;
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.player-list-item strong {
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+.player-button {
+    background-color: #6200ea;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 14px;
+}
+
+.player-button:hover {
+    background-color: #3700b3;
+}

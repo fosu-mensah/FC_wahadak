@@ -20,13 +20,33 @@
     border-bottom: 1px solid #ddd;
 }
 
-.post-list li h3 {
+.post-list .post-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.post-list .post-title {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+
+.post-list .post-title h3 {
     margin: 0;
     font-size: 18px;
 }
 
-.post-list li p {
-    margin: 5px 0 0;
+.post-list .post-title p {
+    margin: 0 0 0 10px;
     font-size: 14px;
     color: #666;
+    display: flex;
+    align-items: center;
+}
+
+.post-list .post-title p .fa-heart {
+    margin-right: 5px; /* 아이콘과 텍스트 사이의 간격 조정 */
+    color: red; /* 아이콘 색상 */
 }

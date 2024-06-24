@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, Fragment} from 'react';
 import axios from 'axios';
 import '../../../assets/scss/squadmaker/squadmake.scss';
 import soccerField from '../../../assets/images/football-stadium/soccer-field.png';
 import { useNavigate } from 'react-router-dom'; // react-router-dom의 useNavigate 훅 사용
 import Warning from '../../common/warning/Warning';
+import { getUserInfo } from '../../../services/authService'; // getUserInfo 함수 임포트
+import Breadcrumb from "../../common/breadcrumb/breadcrumb";
+import "./MakeSquad.css"
 
 const formationCoordinates = {
     "3-4-3": {
@@ -461,6 +464,23 @@ const MakeSquad = () => {
         fetchFormations();
     }, []);
 
+
+    useEffect(() => {
+        const fetchUserInfo = async () => {
+            try {
+                const userInfo = await getUserInfo();
+                setUserNickname(userInfo.nickname);
+            } catch (error) {
+                console.error('Failed to load user info:', error);
+                alert("로그인이 필요합니다.");
+                navigate('/FC_wahadak/signin'); // 로그인 페이지로 리디렉션
+            }
+        };
+
+        fetchUserInfo();
+    }, [navigate]);
+
+
     const handleFormationChange = async (formation) => {
         if (formation) {
             setFormationId(formation.formationId);
@@ -537,17 +557,15 @@ const MakeSquad = () => {
     };
 
     return (
+        <Fragment>
+            <Breadcrumb parent="스쿼드 메이커" title="나만의 포메이션 만들기" />
         <div className="make-squad">
             <h1>스쿼드 만들기</h1>
             <div className="form-container">
                 <form onSubmit={handleSubmit} className="squad-form">
                     <div className="form-group">
                         <label>유저 닉네임:</label>
-                        <input
-                            type="text"
-                            value={userNickname}
-                            onChange={(e) => setUserNickname(e.target.value)}
-                        />
+                        <div className="readonly-field">{userNickname}</div>
                     </div>
                     <div className="form-group">
                         <label>스쿼드 이름:</label>
@@ -611,6 +629,7 @@ const MakeSquad = () => {
                 onConfirm={handleModalConfirm}
             />
         </div>
+        </Fragment>
     );
 };
 
