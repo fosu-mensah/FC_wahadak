@@ -1,0 +1,86 @@
+.team-color-list {
+  .team-color-item {
+    background-color: #f8f9fa;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+    .view-players-button {
+      background-color: #007bff;
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 1rem;
+
+      &:hover {
+        background-color: #0056b3;
+      }
+    }
+
+    .player-list {
+      background-color: #e9ecef;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-top: 1rem;
+
+      h2 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .player-item {
+        margin-bottom: 0.5rem;
+        padding: 0.5rem;
+        background-color: #ffffff;
+        border-radius: 4px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .close-button {
+        background-color: #dc3545;
+        color: #fff;
+        padding: 0.5rem 1rem;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 1rem;
+
+        &:hover {
+          background-color: #c82333;
+        }
+      }
+    }
+  }
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+
+    button {
+      background-color: #007bff;
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 4px;
+      margin: 0 0.25rem;
+      cursor: pointer;
+
+      &.active {
+        background-color: #0056b3;
+      }
+
+      &:hover:not(.active) {
+        background-color: #0056b3;
+      }
+
+      &:disabled {
+        background-color: #6c757d;
+        cursor: not-allowed;
+      }
+    }
+  }
+}

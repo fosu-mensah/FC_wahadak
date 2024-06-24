@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import './LeagueRanking.css'; // 스타일링을 위한 CSS 파일
+import './LeagueRanking.css';
 
 const BASE_URL = 'http://localhost:8080/api';
 
@@ -20,7 +20,7 @@ const LeagueRanking = () => {
 
     return (
         <div className="league-ranking">
-            <h2 className="fixed-title">리그 순위</h2>
+            <div className="fixed-title">🏅리그 순위</div>
             <div className="league-tabs fixed-tabs">
                 {['프리미어리그', '라리가', '분데스리가', '세리에A', '리그1', '에레디비시'].map(league => (
                     <button
