@@ -106,16 +106,6 @@ const Header = (props) => {
         setSearchResult([]); // 검색 결과 초기화하여 목록 창 닫기
     };
 
-    const handleInputBlur = () => {
-        if (searchValue.length === 0) {
-            setSearchResult([]); // 입력 필드가 비어 있을 때 검색 결과 초기화
-        }
-    };
-
-    const handleMouseLeave = () => {
-        setSearchResult([]); // 검색창을 벗어날 때 검색 결과 초기화
-    };
-
     const logout = () => {
         handleLogout();
         setIsLoggedIn(false);
@@ -158,13 +148,12 @@ const Header = (props) => {
                     <ul className="nav-menus">
                         <li>
                             <Form className="form-inline search-form" action="#javascript" method="get">
-                                <div className="form-group" onMouseLeave={handleMouseLeave}>
+                                <div className="form-group">
                                     <div className="Typeahead Typeahead--twitterUsers">
                                         <div className="u-posRelative">
                                             <input className="Typeahead-input form-control-plaintext" id="demo-input" type="text"
                                                    placeholder="선수를 검색하세요...!" value={searchValue}
                                                    onChange={(e) => handleSearchKeyword(e.target.value)}
-                                                   onBlur={handleInputBlur} // 입력 필드 포커스가 벗어날 때 검색 결과 초기화
                                                    autoComplete={"off"} />
                                             <div className={`spinner-border Typeahead-spinner ${spinner === true ? "show" : ""}`}
                                                  role="status">
@@ -230,12 +219,12 @@ const Header = (props) => {
                         )}
                         <li className="nav-item">
                             {isLoggedIn ? (
-                                <button className="btn btn-link" onClick={logout}>
-                                    <FaSignOutAlt style={{ color: 'purple', fontSize: '24px' }} />
+                                <button className="btn btn-link" onClick={logout} style={{ color: 'purple', textDecoration: 'none' }}>
+                                    <FaSignOutAlt style={{ color: 'purple', fontSize: '24px' }} /> Logout
                                 </button>
                             ) : (
-                                <button className="btn btn-link" onClick={redirectToLogin}>
-                                    <FaSignInAlt style={{ color: 'purple', fontSize: '24px' }} />
+                                <button className="btn btn-link" onClick={redirectToLogin} style={{ color: 'purple', textDecoration: 'none' }}>
+                                    Login <FaSignInAlt style={{ color: 'purple', fontSize: '24px' }} />
                                 </button>
                             )}
                         </li>
