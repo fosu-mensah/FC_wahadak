@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, Fragment} from 'react';
 import { useParams } from 'react-router-dom';
 import apiClient from '../../../api/apiClient';
 import '../../../assets/scss/playerDetail/playerDetail.scss';
 import '../../../../src/assets/scss/statColor/statColor.scss';
+import Breadcrumb from "../../common/breadcrumb/breadcrumb";
 
 const nation = {
     '알바니아': 'Albania.png',
@@ -154,8 +155,9 @@ const PlayerDetails = () => {
     };
 
     return (
+        <Fragment>
+            <Breadcrumb parent="선수 검색" title="선수 검색 결과" />
         <div className="player-details">
-            <div style={{fontSize:'3rem',marginBottom:'1rem'}}>선수 검색 결과</div>
             <div className="player-info-wrapper">
                 <div className="player-card">
                     <div className="player-header">
@@ -335,6 +337,7 @@ const PlayerDetails = () => {
                 </div>
             </div>
         </div>
+        </Fragment>
     );
 };
 

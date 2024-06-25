@@ -190,6 +190,9 @@ import TeamQuestions from "../component/community/TeamQuestions";
 import PostForm from "../component/community/PostForm";
 import PostDetail from "../component/community/PostDetail";
 
+// RefreshTimeLsit
+import RefreshTimeList from "../component/refresh-time-list/RefreshTimeList";
+
 export const routes = [
   {
     path: `${process.env.PUBLIC_URL}/dashboard/default`,
