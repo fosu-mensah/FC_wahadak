@@ -201,35 +201,35 @@ export const routes = [
     Component: <Ecommerce />,
   },
   {
-    path: `${process.env.PUBLIC_URL}/search`,
+    path: `/search`,
     Component: <PlayerSearch />,
   },
   {
-    path: `${process.env.PUBLIC_URL}/player/:pid`,
+    path: `/player/:pid`,
     Component: < PlayerDetails />,
   },
   {
-    path: `${process.env.PUBLIC_URL}/squad-maker`,
+    path: `/squad-maker`,
     Component: < MakeSquad />,
   },
   {
-    path: `${process.env.PUBLIC_URL}/squad-maker/:squadId`,
+    path: `/squad-maker/:squadId`,
     Component: < MakeTeam />,
   },
   {
-    path: `${process.env.PUBLIC_URL}/squad-list`,
+    path: `/squad-list`,
     Component: < SquadList />,
   },
   {
-    path: `${process.env.PUBLIC_URL}/enhancement`,
+    path: `/enhancement`,
     Component: <Enhancement />,
   },
   {
-    path: `${process.env.PUBLIC_URL}/team-color-list`,
+    path: `/team-color-list`,
     Component:<SearchTeamColor/>,
   },
   {
-    path: `${process.env.PUBLIC_URL}/warning`,
+    path: `/warning`,
     Component: <Warning/>,
   },
   {
@@ -246,7 +246,7 @@ export const routes = [
     Component: <Typography />,
   },
   {
-    path: `${process.env.PUBLIC_URL}/ui-element/button`,
+    path: `/ui-element/button`,
     Component: <Button />,
   },
   {
@@ -283,11 +283,11 @@ export const routes = [
     Component: <Tooltip />,
   },
   {
-    path: `${process.env.PUBLIC_URL}/ui-element/spinner`,
+    path: `/ui-element/spinner`,
     Component: <Spinner />,
   },
   {
-    path: `${process.env.PUBLIC_URL}/ui-element/dropdownComponent`,
+    path: `/ui-element/dropdownComponent`,
     Component: <Dropdown />,
   },
   {

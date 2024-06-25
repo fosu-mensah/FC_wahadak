@@ -4,18 +4,13 @@ import thunkMiddleware from "redux-thunk";
 // Import custom components
 import reducers from "../redux/index";
 
+const composeEnhancers =
+  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
 const store = createStore(
   reducers,
-  compose(
-    applyMiddleware(thunkMiddleware),
-
-    //For working redux dev tools in chrome (https://github.com/zalmoxisus/redux-devtools-extension)
-    window.devToolsExtension
-      ? window.devToolsExtension()
-      : function (f) {
-          return f;
-        }
-  )
+  composeEnhancers(applyMiddleware(thunkMiddleware))
 );
+
 
 export default store;

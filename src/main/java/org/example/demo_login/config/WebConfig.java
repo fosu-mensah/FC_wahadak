@@ -15,7 +15,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowedOrigins(
                         "http://ec2-3-139-91-37.us-east-2.compute.amazonaws.com",
                         "http://localhost:3000", //개발환경 테스트를 위해 유지.
-                        "/*"
+                        "http://www.fcwahadak.com"
                 )
                 .allowedMethods("GET","POST","PUT","DELETE")
                 .allowedHeaders("*")
@@ -27,7 +27,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry){
         registry.addResourceHandler("/images/**")
-                .addResourceLocations("file:///C:/Workspace/images/");
+                .addResourceLocations("file:/home/ec2-user/FC_waha/step1/FC_wahadak/src/main/resources/static/images/");
     }
 
     //RestTemplate 빈을 설정하고 주입받도록 코드를 약간 더 개선

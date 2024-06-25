@@ -6,11 +6,13 @@ import org.example.demo_login.service.SquadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@CrossOrigin(origins = {"http://localhost:3000", "http://www.fcwahadak.com"})
 @RestController
 @RequestMapping("/api/squad")
 public class SquadController {

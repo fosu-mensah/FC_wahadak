@@ -2,7 +2,7 @@
   "name": "poco-react",
   "version": "0.1.0",
   "private": true,
-  "homepage": "/",
+  "homepage": ".",
   "dependencies": {
     "@fullcalendar/daygrid": "^6.1.5",
     "@fullcalendar/interaction": "^6.1.5",
@@ -93,7 +93,7 @@
   },
   "scripts": {
     "start": "react-scripts --max_old_space_size=8096 start",
-    "build": "react-scripts --max_old_space_size=8096 build",
+    "build": "PUBLIC_URL=http://www.fcwahadak.com react-scripts --max_old_space_size=8096 build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "server": "node server.js"

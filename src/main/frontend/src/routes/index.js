@@ -20,22 +20,22 @@ import LoginSuccess from "../auth/LoginSuccess";
 const MainRoutes = () => {
     return (
         <Routes>
-            <Route path={`${process.env.PUBLIC_URL}/`} element={<AppLayout />}>
+            <Route path={`/`} element={<AppLayout />}>
                 {routes.map(({ path, Component }, i) => (
                     <Route path={path} element={Component} key={i} />
                 ))}
             </Route>
-            <Route path={`${process.env.PUBLIC_URL}/signin`} element={<Signin />} />
-            <Route path={`${process.env.PUBLIC_URL}/pages/error-400`} element={<Error400 />} />
-            <Route path={`${process.env.PUBLIC_URL}/pages/error-404`} element={<Error404 />} />
-            <Route path={`${process.env.PUBLIC_URL}/pages/error-500`} element={<Error500 />} />
-            <Route path={`${process.env.PUBLIC_URL}/pages/maintenance`} element={<Maintenance />} />
-            <Route path={`${process.env.PUBLIC_URL}/pages/login`} element={<Login />} />
-            <Route path={`${process.env.PUBLIC_URL}/pages/register`} element={<Register />} />
-            <Route path={`${process.env.PUBLIC_URL}/pages/forget-password`} element={<Forgetpwd />} />
-            <Route path={`${process.env.PUBLIC_URL}/pages/comingsoon`} element={<Comingsoon />} />
-            <Route path={`${process.env.PUBLIC_URL}/pages/comingsoon-bg-image`} element={<ComingsoonImg />} />
-            <Route path={`${process.env.PUBLIC_URL}/login/success`} element={<LoginSuccess />} />
+            <Route path={`/signin`} element={<Signin />} />
+            <Route path={`/pages/error-400`} element={<Error400 />} />
+            <Route path={`/pages/error-404`} element={<Error404 />} />
+            <Route path={`/pages/error-500`} element={<Error500 />} />
+            <Route path={`/pages/maintenance`} element={<Maintenance />} />
+            <Route path={`/pages/login`} element={<Login />} />
+            <Route path={`/pages/register`} element={<Register />} />
+            <Route path={`/pages/forget-password`} element={<Forgetpwd />} />
+            <Route path={`/pages/comingsoon`} element={<Comingsoon />} />
+            <Route path={`/pages/comingsoon-bg-image`} element={<ComingsoonImg />} />
+            <Route path={`/login/success`} element={<LoginSuccess />} />
         </Routes>
     );
 }

@@ -9,10 +9,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+@CrossOrigin(origins = {"http://localhost:3000", "http://www.fcwahadak.com"})
 @RestController
 @RequestMapping("/api/posts")
 public class PostController {
