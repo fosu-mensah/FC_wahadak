@@ -1,60 +1,69 @@
-# 프로젝트 이름
+# AWS Cloud Fundamentals - FC wahadak
 
-AWS Cloud Fundamentals - FC wahadak
+이 프로젝트는 한국의 최대 규모 온라인 게임 기업인 넥슨의 스포츠 게임인 FC Online의 선수 데이터를 활용하여, 선수 검색 및 비교, 팀스쿼드 제작을
+위한 웹 서비스입니다. 저희 팀은 서로의 취미와 관심사를 공유하는 과정에서 FC Online 게임을 좋아하는 공통점을 발견했습니다. FC Online을 하며 느꼈던 
+아쉬운 점들을 해결하기 위해, AWS Cloud를 활용한 FC Online 게임 도우미 웹 프로젝트를 만들게 되었습니다.
 
-## 목차
+## 개발 기간
 
-- [소개](#소개)
-- [기능](#기능)
-- [설치](#설치)
-- [사용법](#사용법)
-- [기여](#기여)
-- [라이선스](#라이선스)
+- 시작일: 2024.04.19
+- 종료일: 2024.06.25
 
-## 소개
+## 개발자 소개 및 역할 분담
 
-- 넥슨의 FC Online 게임 홈페이지에서 제공하는 선수 데이터를 **Python의 BeautifulSoup와 Selenium을 활용**하여 약 30,000명의 선수 데이터를 수집하고, 이를 AWS RDS와 연동된 MySQL 데이터베이스에 저장하였습니다. 또한 BestEleven, FourFourTwo의 축구 관련 뉴스 사이트의 뉴스 기사, 넥슨 FC Online 공식 이벤트, 해외 축구 리그 순위 정보 등의 데이터도 크롤링을 하여 데이터화 하였습니다.
-- 저장된 데이터를 **MyBatis**를 활용하여, 선수 검색, 스쿼드 메이커, 팀 컬러 목록 조회, 국내/해외 축구 기사 조회, FC Online 이벤트 목록 조회, 유럽 5대 리그 순위 조회 기능을 구현하였습니다.
-- 추가적으로, 기본적인 게시판 기능인 게시물 CRUD, 댓글 CRUD, 게시물/댓글 좋아요 기능, Spring Security와 JWT 토큰을 활용한 이메일 로그인 방식과 Google OAuth2를 활용한 소셜 로그인 기능을 구현하였습니다.
-- 기존의 다른 서비스와 차별화 되는 기능으로, **AWS Lambda, API Gateway, Cloud Watch, Amazon DynamoDB, Event Bridge**를 활용한 특정 선수 이적시장 갱신시간 10분 전 텔레그렘 알림 기능을 구현하였습니다.
-- **AWS EC2 인스턴스**를 생성하여 **S3, CloudFront, WAF, EFS, Route 53, AWS RDS** 서비스를 연결하고 배포하였습니다. 또한 **SSL 인증서**를 구매하여 적용하였습니다. **PuTTY 클라이언트**를 사용하여 EC2 인스턴스에 접속 후 작업을 수행하였습니다.
-- 프론트엔드 쪽은 유료 템플릿을 구매하여 필요한 부분만 걸러내고, 그 부분을 저희 입맛대로 수정하여 사용하였습니다.
-- **배포 과정:**
-    - **AWS EC2 인스턴스 설정**:
-        - AWS 콘솔을 통해 EC2 인스턴스를 생성하였습니다.
-        - 보안 그룹을 설정하여 SSH, HTTP, HTTPS 포트를 열었습니다.
-    - **PuTTY를 사용하여 EC2 인스턴스에 접속**:
-        - 로컬 컴퓨터에서 PuTTY 클라이언트를 사용하여 EC2 인스턴스에 SSH로 접속하였습니다.
-    - **Nginx 설치 및 설정**:
-        - EC2 인스턴스에 Nginx를 설치하였습니다.
-        - Nginx 설정 파일을 수정하여 리액트 애플리케이션을 서비스할 수 있도록 설정하였습니다.
-        - 리액트 애플리케이션을 빌드한 후, Nginx의 루트 디렉토리에 배포하였습니다.
-    - **Spring Boot 애플리케이션 배포**:
-        - 로컬에서 빌드한 Spring Boot 애플리케이션의 JAR 파일을 EC2 인스턴스에 업로드하였습니다.
-        - EC2 인스턴스에서 해당 JAR 파일을 실행하여 Spring Boot 애플리케이션을 서비스하였습니다.
-    - **AWS 서비스 연동**:
-        - **S3**: 정적 파일을 저장하고 배포하기 위해 S3 버킷을 생성하고 설정하였습니다.
-        - **CloudFront**: 전세계 사용자에게 빠른 콘텐츠 제공을 위해 CloudFront 배포를 설정하였습니다.
-        - **RDS**: 애플리케이션의 데이터베이스로 사용하기 위해 RDS 인스턴스를 생성하고 MySQL을 설정하였습니다.
-        - **WAF**: 웹 애플리케이션 방화벽을 설정하여 보안을 강화하였습니다.
-        - **EFS**: 파일 스토리지를 위해 EFS를 설정하고 EC2 인스턴스에 마운트하였습니다.
-        - **Route 53**: 도메인 이름을 설정하고 Route 53을 통해 트래픽을 관리하였습니다.
-    - **SSL 인증서 적용**:
-        - SSL 인증서를 구매하여 Nginx에 설정하였습니다.
-        - HTTPS를 통해 애플리케이션을 안전하게 서비스할 수 있도록 Nginx 설정 파일을 수정하였습니다.
+저희는 서경대학교 소프트웨어학과 학생으로, "서경 SW전문 인재양성 교육"의 팀 프로젝트 파트너로 만나게 되었습니다.
+기능별로 작업 분량을 나누어, 기획/디자인, 데이터 수집, 백앤드, 프론트앤드 작업 등을 각각 실시하였습니다.
 
-## 기능
+- **김영재** 
+- **이은학** 
 
-- 주요 기능 1
-- 주요 기능 2
-- 주요 기능 3
+## 개발 환경
 
-## 설치
+- 운영 체제: 
+- IDE: IntelliJ IDEA
+- 기타 도구: Postman, Swaager
 
-프로젝트를 로컬 환경에 설치하는 방법을 설명합니다. 필요한 전제 조건(예: Python, Node.js 버전 등)과 설치 단계를 나열합니다.
+## 사용기술 및 라이브러리
 
-```bash
-# 예시 설치 명령어
-git clone https://github.com/username/repository-name.git
-cd repository-name
-npm install
+- 언어:
+    - Python (BeautifulSoup, Selenium)
+    - Java (Spring Boot)
+    - JavaScript (React)
+- 프론트엔드:
+    - SCSS
+    - JavaScript
+    - React
+- 백앤드
+    - java (Spring Boot, Spring Security, MyBatis)
+    - Python (데이터 크롤링)
+- 데이터베이스
+    - MySQL (AWS RDS 연동)
+- DevOps 및 클라우드 서비스:
+    - AWS (EC2, S3, CloudFront, WAF, EFS, Route 53, RDS, Lambda, API Gateway, CloudWatch, DynamoDB, EventBridge)
+    - Jenkins (CI/CD)
+- 기타 도구
+    - Git Bash / GitHub (버전 관리 및 협업)
+    - PuTTY (EC2 인스턴스 접속)
+    - JWT (인증)
+    - Google OAuth2 (소셜 로그인)
+    - SSL 인증서
+
+## 주요 기능
+
+- 기능 1: 설명
+- 기능 2: 설명
+- 기능 3: 설명
+
+## 프로젝트 아키텍처
+
+
+
+## 참고 및 출처
+
+- [자료 1](링크)
+- [자료 2](링크)
+- [자료 3](링크)
+
+## 버전 및 업데이트
+
+추후 업데이트 될 예정입니다.
